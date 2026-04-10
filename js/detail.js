@@ -36,8 +36,14 @@ function loadGuardianDetails() {
         alert('图片加载失败，请检查图片文件是否存在');
     };
     
-    // 设置音频
+    // 设置音频并自动播放
+    const audioPlayer = document.getElementById('audioPlayer');
     const audioSource = document.getElementById('audioSource');
     audioSource.src = zodiac.audio;
-    document.getElementById('audioPlayer').load();
+    audioPlayer.load();
+    
+    // 尝试自动播放
+    audioPlayer.play().catch(function(error) {
+        console.log('自动播放被浏览器阻止，需要用户交互后才能播放:', error);
+    });
 }
