@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">生肖守护神</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="guardian-page">
+        <div class="image-full-container">
+            <img id="guardianImage" src="" alt="守护神图片" class="guardian-image-full">
+            
+            <div class="overlay-content">
+                <h2 class="zodiac-name" id="zodiacName"></h2>
+                <h3 class="guardian-name" id="guardianName"></h3>
+                
+                <div class="blessing-section">
+                    <p class="blessing-text" id="blessingText"></p>
+                </div>
+
+                <div class="audio-section">
+                    <audio id="audioPlayer" controls class="audio-player">
+                        <source id="audioSource" src="" type="audio/mpeg">
+                        您的浏览器不支持音频播放
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/zodiac-data.js"></script>
+    <script src="js/detail.js"></script>
+</body>
+</html>
