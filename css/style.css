@@ -164,34 +164,28 @@ body {
 .zodiac-name {
     font-size: 1.4rem;
     color: #ffd700;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     font-weight: 600;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
 }
 
-.guardian-name {
-    font-size: 2rem;
-    color: #fff;
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
-}
-
-.blessing-section {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    padding: 15px 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
 .blessing-text {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #fff;
-    line-height: 1.6;
+    line-height: 1.8;
     font-weight: 500;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.description-text {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.8;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    margin-bottom: 20px;
+    font-style: italic;
 }
 
 .audio-section {
@@ -315,12 +309,11 @@ body {
         font-size: 1.2rem;
     }
 
-    .guardian-name {
-        font-size: 1.6rem;
-        margin-bottom: 15px;
+    .blessing-text {
+        font-size: 1rem;
     }
 
-    .blessing-text {
+    .description-text {
         font-size: 0.9rem;
     }
 
@@ -359,12 +352,12 @@ body {
         font-size: 1.6rem;
     }
 
-    .guardian-name {
-        font-size: 2.4rem;
+    .blessing-text {
+        font-size: 1.2rem;
     }
 
-    .blessing-text {
-        font-size: 1.1rem;
+    .description-text {
+        font-size: 1rem;
     }
 
     .zodiac-mini-grid {
