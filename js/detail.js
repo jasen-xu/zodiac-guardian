@@ -22,7 +22,6 @@ function loadGuardianDetails() {
     document.title = `${zodiac.name} - ${zodiac.guardian} | 十二生肖守护神`;
     
     // 更新页面内容
-    document.getElementById('zodiacName').textContent = `生肖${zodiac.name}`;
     document.getElementById('blessingText').textContent = zodiac.blessing;
     document.getElementById('descriptionText').textContent = zodiac.description;
     
