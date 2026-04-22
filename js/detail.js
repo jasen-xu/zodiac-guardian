@@ -21,9 +21,19 @@ function loadGuardianDetails() {
     // 更新页面标题
     document.title = `${zodiac.name} - ${zodiac.guardian} | 十二生肖守护神`;
     
-    // 更新页面内容
-    document.getElementById('blessingText').textContent = zodiac.blessing;
-    document.getElementById('descriptionText').textContent = zodiac.description;
+    // 更新页面内容 - 分两列显示
+    const blessingText = zodiac.blessing;
+    const descriptionText = zodiac.description;
+    
+    // 将祝福文字分成两列
+    const blessingHalf = Math.ceil(blessingText.length / 2);
+    document.getElementById('blessingCol1').textContent = blessingText.substring(0, blessingHalf);
+    document.getElementById('blessingCol2').textContent = blessingText.substring(blessingHalf);
+    
+    // 将说明文字分成两列
+    const descHalf = Math.ceil(descriptionText.length / 2);
+    document.getElementById('descriptionCol1').textContent = descriptionText.substring(0, descHalf);
+    document.getElementById('descriptionCol2').textContent = descriptionText.substring(descHalf);
     
     // 设置图片
     const imgElement = document.getElementById('guardianImage');
