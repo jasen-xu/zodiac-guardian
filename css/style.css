@@ -39,6 +39,45 @@ body {
     animation: fadeInUp 0.8s ease-out;
 }
 
+/* 每日一签入口按钮 */
+.fortune-entrance {
+    margin-top: 30px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.fortune-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 35px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 8px 25px rgba(255, 165, 0, 0.4);
+    transition: all 0.3s ease;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.fortune-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 165, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.fortune-icon {
+    font-size: 1.5rem;
+    animation: shake 2s infinite;
+}
+
+@keyframes shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+}
+
 .guardian-title {
     font-size: 2.5rem;
     font-weight: bold;
@@ -307,6 +346,63 @@ body {
     box-shadow: 0 6px 20px rgba(0,0,0,0.4);
 }
 
+/* 子页面底部每日一签入口 */
+.fortune-entrance-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0) 100%);
+    padding: 30px 20px 25px;
+    text-align: center;
+    z-index: 100;
+}
+
+.fortune-button-bottom {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(255, 165, 0, 0.4);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 12px;
+}
+
+.fortune-button-bottom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 165, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.fortune-icon-bottom {
+    font-size: 1.2rem;
+    animation: shake 2s infinite;
+}
+
+.home-link-bottom {
+    display: inline-block;
+    margin-left: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.home-link-bottom:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
 /* 导航区域 */
 .navigation-section {
     background: #1a1a2e;
@@ -478,6 +574,311 @@ body {
     .zodiac-mini-card {
         padding: 12px 8px;
         font-size: 0.85rem;
+    }
+    
+    /* 手机端每日一签入口 */
+    .fortune-entrance-bottom {
+        padding: 20px 15px 20px;
+    }
+    
+    .fortune-button-bottom {
+        padding: 10px 25px;
+        font-size: 0.95rem;
+    }
+    
+    .home-link-bottom {
+        font-size: 0.85rem;
+        padding: 6px 15px;
+    }
+}
+
+/* 每日一签页面样式 */
+.fortune-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6347 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.fortune-container {
+    max-width: 600px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.fortune-header {
+    margin-bottom: 40px;
+}
+
+.fortune-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #FF6347;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fortune-date {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.fortune-content {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fortune-placeholder {
+    padding: 40px 20px;
+}
+
+.shake-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    animation: shake 1.5s infinite;
+}
+
+.shake-text {
+    font-size: 1.3rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.draw-button {
+    padding: 18px 50px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #FF6347 0%, #FF4500 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(255, 99, 71, 0.4);
+    transition: all 0.3s ease;
+}
+
+.draw-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 99, 71, 0.6);
+}
+
+.draw-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.fortune-result {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.fortune-result.show {
+    animation: slideIn 0.6s ease-out;
+}
+
+.fortune-level {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 15px;
+}
+
+.fortune-fortune {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #FF6347;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 诗词样式 */
+.poem-container {
+    background: linear-gradient(135deg, #fff5e6 0%, #ffe0b2 100%);
+    border-radius: 20px;
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    border: 2px solid #FFD700;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.poem-line {
+    font-size: 1.4rem;
+    color: #8B4513;
+    font-family: 'STKaiti', 'KaiTi', 'Microsoft YaHei', serif;
+    line-height: 2.2;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.poem-line:last-child {
+    margin-bottom: 0;
+}
+
+.fortune-content-text {
+    font-size: 1.2rem;
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    padding: 0 10px;
+}
+
+.fortune-advice {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.advice-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.advice-item:last-child {
+    margin-bottom: 0;
+}
+
+.advice-label {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #FF6347;
+    min-width: 50px;
+    text-align: left;
+}
+
+.advice-text {
+    font-size: 1.1rem;
+    color: #333;
+    flex: 1;
+    text-align: left;
+}
+
+.fortune-blessing {
+    font-size: 1.4rem;
+    color: #FFA500;
+    font-weight: bold;
+    margin-bottom: 30px;
+    font-family: 'STKaiti', 'KaiTi', serif;
+    letter-spacing: 3px;
+}
+
+/* 解读按钮样式 */
+.interpret-button {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #FF6347 0%, #FF4500 100%);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 99, 71, 0.4);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.interpret-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 99, 71, 0.6);
+}
+
+/* 签文解读区域 */
+.interpretation-header {
+    margin-bottom: 20px;
+}
+
+.interpretation-header h3 {
+    font-size: 1.6rem;
+    color: #FF6347;
+    font-weight: bold;
+}
+
+.interpretation-text {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 2;
+    text-align: justify;
+    padding: 25px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 20px;
+    border-left: 5px solid #FF6347;
+}
+
+.fortune-share {
+    margin-top: 20px;
+}
+
+.share-button {
+    padding: 12px 30px;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+}
+
+.fortune-footer {
+    margin-top: 40px;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 12px 30px;
+    color: #667eea;
+    text-decoration: none;
+    font-size: 1rem;
+    border: 2px solid #667eea;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: #667eea;
+    color: #fff;
+}
+
+.drawing {
+    animation: drawing 1.5s ease-in-out;
+}
+
+@keyframes drawing {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.95); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
