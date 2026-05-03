@@ -165,3 +165,12 @@ function shareFortune() {
         });
     }
 }
+
+// 返回上级页面
+function goBack() {
+    if (document.referrer) {
+        window.history.back();
+    } else {
+        window.location.href = 'index.html';
+    }
+}
