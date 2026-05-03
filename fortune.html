@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日一签 - 十二生肖守护神</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="fortune-page">
+        <div class="fortune-container">
+            <div class="fortune-header">
+                <h1 class="fortune-title">每日一签</h1>
+                <p class="fortune-date" id="fortuneDate"></p>
+            </div>
+
+            <div class="fortune-content" id="fortuneContent">
+                <div class="fortune-placeholder">
+                    <div class="shake-icon">🎋</div>
+                    <p class="shake-text">点击抽签,获取今日运势</p>
+                    <button class="draw-button" id="drawButton" onclick="drawFortune()">
+                        开始抽签
+                    </button>
+                </div>
+            </div>
+
+            <div id="interpretationSection" style="display: none;">
+                <div class="interpretation-content" id="interpretationContent"></div>
+            </div>
+
+            <div class="fortune-footer">
+                <a href="index.html" class="back-button">返回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/fortune-data.js"></script>
+    <script src="js/fortune.js"></script>
+</body>
+</html>
