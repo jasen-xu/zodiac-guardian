@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六爻问卦 - 十二生肖守护神</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="liuyao-page">
+        <div class="liuyao-container">
+            <div class="liuyao-header">
+                <h1 class="liuyao-title">🔮 六爻问卦</h1>
+                <p class="liuyao-subtitle">易经六爻，预测吉凶</p>
+            </div>
+
+            <div class="liuyao-content">
+                <!-- 输入区域 -->
+                <div class="question-section" id="questionSection">
+                    <div class="question-input-area">
+                        <label class="question-label">请输入您所问之事：</label>
+                        <textarea 
+                            id="questionInput" 
+                            class="question-textarea" 
+                            placeholder="例如：我的事业发展如何？近期财运怎样？感情婚姻前景？"
+                            rows="4"
+                        ></textarea>
+                        <button class="divine-button" onclick="startDivination()">
+                            🎋 开始起卦
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 起卦动画 -->
+                <div class="divining-animation" id="diviningAnimation" style="display: none;">
+                    <div class="coin-toss">
+                        <div class="coin coin-1">🪙</div>
+                        <div class="coin coin-2">🪙</div>
+                        <div class="coin coin-3">🪙</div>
+                    </div>
+                    <p class="divining-text">起卦中...</p>
+                </div>
+
+                <!-- 卦象展示 -->
+                <div class="hexagram-result" id="hexagramResult" style="display: none;">
+                    <div class="hexagram-display">
+                        <div class="hexagram-name" id="hexagramName"></div>
+                        <div class="hexagram-symbol" id="hexagramSymbol"></div>
+                        <div class="hexagram-meaning" id="hexagramMeaning"></div>
+                    </div>
+                    
+                    <div class="hexagram-lines" id="hexagramLines"></div>
+                    
+                    <div class="interpretation-section">
+                        <h3 class="interp-title">📖 卦象解读</h3>
+                        <div class="interp-content" id="interpContent"></div>
+                    </div>
+                    
+                    <div class="answer-section">
+                        <h3 class="answer-title">💡 综合解答</h3>
+                        <div class="answer-content" id="answerContent"></div>
+                    </div>
+                    
+                    <button class="redivine-button" onclick="resetDivination()">
+                        🔄 重新问卦
+                    </button>
+                </div>
+            </div>
+
+            <div class="liuyao-footer">
+                <button class="back-button" onclick="goBack()">返回</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/liuyao-data.js"></script>
+    <script src="js/liuyao.js"></script>
+</body>
+</html>
