@@ -43,6 +43,10 @@ body {
 .fortune-entrance {
     margin-top: 30px;
     animation: fadeInUp 1s ease-out;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .fortune-button {
@@ -906,4 +910,268 @@ body {
     color: white;
     font-size: 8rem;
     font-weight: bold;
+}
+
+/* 六爻问卦页面样式 */
+.liuyao-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.liuyao-container {
+    max-width: 800px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.liuyao-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.liuyao-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #0f3460;
+    margin-bottom: 10px;
+}
+
+.liuyao-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.question-input-area {
+    text-align: center;
+}
+
+.question-label {
+    display: block;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.question-textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    resize: vertical;
+    margin-bottom: 20px;
+    font-family: inherit;
+}
+
+.question-textarea:focus {
+    outline: none;
+    border-color: #0f3460;
+}
+
+.divine-button {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(15, 52, 96, 0.4);
+    transition: all 0.3s ease;
+}
+
+.divine-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(15, 52, 96, 0.6);
+}
+
+/* 起卦动画 */
+.divining-animation {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.coin-toss {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.coin {
+    font-size: 4rem;
+    animation: toss 1s infinite;
+}
+
+.coin-1 {
+    animation-delay: 0s;
+}
+
+.coin-2 {
+    animation-delay: 0.2s;
+}
+
+.coin-3 {
+    animation-delay: 0.4s;
+}
+
+@keyframes toss {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(180deg); }
+}
+
+.divining-text {
+    font-size: 1.3rem;
+    color: #0f3460;
+    font-weight: 600;
+}
+
+/* 卦象展示 */
+.hexagram-result {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.hexagram-display {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 20px;
+}
+
+.hexagram-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #0f3460;
+    margin-bottom: 15px;
+}
+
+.hexagram-symbol {
+    font-size: 3rem;
+    color: #1a1a2e;
+    margin-bottom: 15px;
+    letter-spacing: 10px;
+}
+
+.hexagram-meaning {
+    font-size: 1.2rem;
+    color: #666;
+    font-style: italic;
+}
+
+.hexagram-lines {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 15px;
+    border: 2px solid #eee;
+}
+
+.hexagram-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    margin-bottom: 8px;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.hexagram-line:last-child {
+    margin-bottom: 0;
+}
+
+.line-position {
+    font-size: 0.9rem;
+    color: #666;
+    min-width: 60px;
+}
+
+.line-symbol {
+    font-size: 1.5rem;
+    color: #0f3460;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.line-type {
+    font-size: 1rem;
+    color: #333;
+    min-width: 40px;
+}
+
+.interpretation-section,
+.answer-section {
+    margin-bottom: 30px;
+    padding: 25px;
+    background: linear-gradient(135deg, #fff5e6 0%, #ffe0b2 100%);
+    border-radius: 20px;
+    border-left: 5px solid #0f3460;
+}
+
+.interp-title,
+.answer-title {
+    font-size: 1.4rem;
+    color: #0f3460;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.interp-content,
+.answer-content {
+    font-size: 1.05rem;
+    color: #333;
+    line-height: 2;
+}
+
+.redivine-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+}
+
+.redivine-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+}
+
+.liuyao-footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.liuyao-footer .back-button {
+    display: inline-block;
+    padding: 10px 30px;
+    color: #0f3460;
+    background: rgba(15, 52, 96, 0.1);
+    border: 2px solid #0f3460;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.liuyao-footer .back-button:hover {
+    background: #0f3460;
+    color: #fff;
 }
