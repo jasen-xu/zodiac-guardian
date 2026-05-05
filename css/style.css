@@ -1102,6 +1102,37 @@ body {
     color: #0f3460;
     font-weight: bold;
     letter-spacing: 2px;
+    width: 80px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 阳爻 - 一根不中断的横线 */
+.yang-line {
+    background: #0f3460;
+    height: 8px;
+    width: 70px;
+    border-radius: 2px;
+}
+
+/* 阴爻 - 中间断开的两根短横线 */
+.yin-line {
+    display: flex;
+    gap: 8px;
+    width: 70px;
+    justify-content: center;
+}
+
+.yin-line::before,
+.yin-line::after {
+    content: '';
+    background: #0f3460;
+    height: 8px;
+    width: 28px;
+    border-radius: 2px;
+    display: block;
 }
 
 .line-type {
@@ -1174,4 +1205,203 @@ body {
 .liuyao-footer .back-button:hover {
     background: #0f3460;
     color: #fff;
+}
+
+/* 专业解答样式 */
+.professional-answer {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.answer-section-item {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 3px solid #ffd700;
+}
+
+.answer-section-item.highlight {
+    background: rgba(255, 215, 0, 0.1);
+    border-left: 4px solid #ffd700;
+}
+
+.answer-section-item h4 {
+    font-size: 1.2rem;
+    color: #ffd700;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.answer-section-item p {
+    line-height: 1.8;
+    color: #f0e6d3;
+    margin-bottom: 10px;
+}
+
+.answer-section-item ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.answer-section-item ul li {
+    padding: 8px 0 8px 20px;
+    position: relative;
+    color: #f0e6d3;
+    line-height: 1.6;
+}
+
+.answer-section-item ul li:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #ffd700;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+/* 运势等级标签 */
+.fortune-badge {
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.fortune-badge.auspicious {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #8b0000;
+}
+
+.fortune-badge.caution {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    color: #fff;
+}
+
+.fortune-badge.neutral {
+    background: linear-gradient(135deg, #87ceeb, #a8d8ea);
+    color: #333;
+}
+
+/* 六爻专业解读样式 */
+.professional-liuyao {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.professional-liuyao .intro-text {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+    padding: 15px 20px;
+    border-radius: 10px;
+    border-left: 4px solid #ffd700;
+}
+
+.professional-liuyao .intro-text p {
+    color: #ffd700;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.liuyao-section {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 3px solid #ffd700;
+}
+
+.liuyao-section.highlight {
+    background: rgba(255, 215, 0, 0.1);
+    border-left: 4px solid #ffd700;
+}
+
+.liuyao-section h4 {
+    font-size: 1.2rem;
+    color: #ffd700;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.liuyao-section p {
+    line-height: 1.8;
+    color: #f0e6d3;
+    margin-bottom: 10px;
+}
+
+.liuyao-section ul,
+.liuyao-section ol {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.liuyao-section ul li,
+.liuyao-section ol li {
+    padding: 8px 0;
+    color: #f0e6d3;
+    line-height: 1.6;
+}
+
+/* 信息网格 */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.info-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.info-item span {
+    display: block;
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.info-item strong {
+    display: block;
+    color: #ffd700;
+    font-size: 1.1rem;
+}
+
+/* 分析提示 */
+.analysis-tip {
+    background: rgba(255, 215, 0, 0.08);
+    padding: 12px 15px;
+    border-radius: 8px;
+    border-left: 3px solid #ffd700;
+    font-style: italic;
+    color: #ffd700;
+    margin-top: 15px;
+}
+
+/* 神煞标签 */
+.shensha-吉 {
+    display: inline-block;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #8b0000;
+    border-radius: 15px;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.shensha-凶 {
+    display: inline-block;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    color: #fff;
+    border-radius: 15px;
+    font-weight: bold;
+    margin-right: 8px;
 }
