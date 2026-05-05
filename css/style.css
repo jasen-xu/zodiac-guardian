@@ -1043,37 +1043,42 @@ body {
 .hexagram-display {
     text-align: center;
     margin-bottom: 30px;
-    padding: 30px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 30px 20px;
+    background: rgba(15, 52, 96, 0.4);
     border-radius: 20px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 .hexagram-name {
     font-size: 2rem;
     font-weight: bold;
-    color: #0f3460;
+    color: #ffffff;
     margin-bottom: 15px;
 }
 
 .hexagram-symbol {
     font-size: 3rem;
-    color: #1a1a2e;
+    color: #ffe566;
     margin-bottom: 15px;
     letter-spacing: 10px;
 }
 
 .hexagram-meaning {
     font-size: 1.2rem;
-    color: #666;
+    color: #b8d4e8;
     font-style: italic;
 }
 
 .hexagram-lines {
     margin-bottom: 30px;
     padding: 20px;
-    background: #fff;
+    background: rgba(15, 52, 96, 0.4);
     border-radius: 15px;
-    border: 2px solid #eee;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .hexagram-line {
@@ -1083,7 +1088,7 @@ body {
     gap: 20px;
     padding: 10px;
     margin-bottom: 8px;
-    background: #f9f9f9;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
 }
 
@@ -1093,13 +1098,13 @@ body {
 
 .line-position {
     font-size: 0.9rem;
-    color: #666;
+    color: #b8d4e8;
     min-width: 60px;
 }
 
 .line-symbol {
     font-size: 1.5rem;
-    color: #0f3460;
+    color: #ffffff;
     font-weight: bold;
     letter-spacing: 2px;
     width: 80px;
@@ -1111,7 +1116,7 @@ body {
 
 /* 阳爻 - 一根不中断的横线 */
 .yang-line {
-    background: #0f3460;
+    background: #ffffff;
     height: 8px;
     width: 70px;
     border-radius: 2px;
@@ -1128,7 +1133,7 @@ body {
 .yin-line::before,
 .yin-line::after {
     content: '';
-    background: #0f3460;
+    background: #ffffff;
     height: 8px;
     width: 28px;
     border-radius: 2px;
@@ -1137,23 +1142,25 @@ body {
 
 .line-type {
     font-size: 1rem;
-    color: #333;
+    color: #ffffff;
     min-width: 40px;
 }
 
 .interpretation-section,
 .answer-section {
     margin-bottom: 30px;
-    padding: 25px;
-    background: linear-gradient(135deg, #fff5e6 0%, #ffe0b2 100%);
+    padding: 25px 20px;
+    background: rgba(15, 52, 96, 0.4);
     border-radius: 20px;
-    border-left: 5px solid #0f3460;
+    border-left: 5px solid #ffd700;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .interp-title,
 .answer-title {
     font-size: 1.4rem;
-    color: #0f3460;
+    color: #ffe566;
     margin-bottom: 15px;
     font-weight: bold;
 }
@@ -1161,7 +1168,7 @@ body {
 .interp-content,
 .answer-content {
     font-size: 1.05rem;
-    color: #333;
+    color: #ffffff;
     line-height: 2;
 }
 
@@ -1433,4 +1440,222 @@ body {
     border-radius: 15px;
     font-weight: bold;
     margin-right: 8px;
+}
+
+/* 六爻页面手机端适配 */
+@media (max-width: 768px) {
+    .liuyao-page {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .liuyao-container {
+        padding: 20px 15px;
+        border-radius: 20px;
+    }
+
+    .liuyao-title {
+        font-size: 1.8rem;
+    }
+
+    .liuyao-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .question-label {
+        font-size: 1rem;
+    }
+
+    .question-textarea {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    .divine-button {
+        padding: 12px 30px;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    .coin {
+        font-size: 3rem;
+    }
+
+    .divining-text {
+        font-size: 1.1rem;
+    }
+
+    .hexagram-display {
+        padding: 20px 15px;
+    }
+
+    .hexagram-name {
+        font-size: 1.5rem;
+    }
+
+    .hexagram-symbol {
+        font-size: 2.2rem;
+        letter-spacing: 5px;
+    }
+
+    .hexagram-meaning {
+        font-size: 1rem;
+    }
+
+    .hexagram-lines {
+        padding: 15px 10px;
+    }
+
+    .hexagram-line {
+        gap: 10px;
+        padding: 8px;
+    }
+
+    .line-position {
+        font-size: 0.8rem;
+        min-width: 50px;
+    }
+
+    .line-symbol {
+        width: 60px;
+        height: 16px;
+    }
+
+    .yang-line {
+        width: 55px;
+        height: 6px;
+    }
+
+    .yin-line {
+        width: 55px;
+        gap: 6px;
+    }
+
+    .yin-line::before,
+    .yin-line::after {
+        height: 6px;
+        width: 22px;
+    }
+
+    .line-type {
+        font-size: 0.85rem;
+        min-width: 35px;
+    }
+
+    .interpretation-section,
+    .answer-section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .interp-title,
+    .answer-title {
+        font-size: 1.2rem;
+    }
+
+    .interp-content,
+    .answer-content {
+        font-size: 0.95rem;
+    }
+
+    .redivine-button {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .liuyao-footer .back-button {
+        padding: 8px 25px;
+        font-size: 0.9rem;
+    }
+
+    /* 专业解读手机端适配 */
+    .professional-answer,
+    .professional-liuyao {
+        gap: 15px;
+    }
+
+    .answer-section-item,
+    .liuyao-section {
+        padding: 15px;
+    }
+
+    .answer-section-item h4,
+    .liuyao-section h4 {
+        font-size: 1.05rem;
+    }
+
+    .answer-section-item p,
+    .liuyao-section p,
+    .answer-section-item ul li,
+    .liuyao-section ul li,
+    .liuyao-section ol li {
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .info-item {
+        padding: 10px;
+    }
+
+    .info-item span {
+        font-size: 0.8rem;
+    }
+
+    .info-item strong {
+        font-size: 0.95rem;
+    }
+
+    .analysis-tip {
+        padding: 12px;
+        font-size: 0.85rem;
+    }
+
+    .fortune-badge {
+        padding: 5px 15px;
+        font-size: 0.95rem;
+    }
+
+    .shensha-吉,
+    .shensha-凶 {
+        padding: 3px 10px;
+        font-size: 0.85rem;
+    }
+}
+
+/* 小屏手机适配 */
+@media (max-width: 480px) {
+    .liuyao-container {
+        padding: 15px 12px;
+    }
+
+    .liuyao-title {
+        font-size: 1.5rem;
+    }
+
+    .hexagram-name {
+        font-size: 1.3rem;
+    }
+
+    .hexagram-symbol {
+        font-size: 1.8rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .answer-section-item h4,
+    .liuyao-section h4 {
+        font-size: 1rem;
+    }
+
+    .answer-section-item p,
+    .liuyao-section p {
+        font-size: 0.85rem;
+    }
 }
