@@ -389,6 +389,9 @@ function getWisdomQuote(hexagram, level) {
 // ========== AI 智能解卦功能 ==========
 let currentHexagram = null;
 
+// AI 解卦 API 地址（可配置为 Vercel 或其他后端地址）
+const AI_API_BASE = 'https://zodiac-guardian.vercel.app';
+
 // 保存当前卦象信息供 AI 解卦使用
 const originalDisplayHexagram = displayHexagram;
 displayHexagram = function(hexagram) {
@@ -448,7 +451,7 @@ async function requestAIDivination() {
             shiying: currentHexagram.shiying || null
         };
 
-        const response = await fetch('/api/divine', {
+        const response = await fetch(AI_API_BASE + '/api/divine', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(requestBody)
