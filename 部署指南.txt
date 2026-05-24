@@ -1,0 +1,104 @@
+# 十二生肖守护神网站 - GitHub Pages 部署指南
+
+## 第一步:创建GitHub仓库
+
+1. **登录GitHub**: 访问 https://github.com 并登录
+
+2. **创建新仓库**:
+   - 点击右上角的 **"+"** 号
+   - 选择 **"New repository"**
+
+3. **填写仓库信息**:
+   - Repository name: `zodiac-guardian` (或其他您喜欢的名字)
+   - 选择 **Public** (公开,这样别人才能访问)
+   - **不要**勾选 "Add a README file"
+   - 点击 **"Create repository"**
+
+## 第二步:上传网站文件
+
+### 方法A:使用网页上传(推荐新手)
+
+1. **打开刚创建的仓库页面**
+
+2. **点击 "uploading an existing file"** 链接
+
+3. **上传所有文件**:
+   - 把 `d:\千问\zodiac-guardian` 文件夹里的所有文件和文件夹拖进去
+   - 包括: `index.html`, `guardian.html`, `css`文件夹, `js`文件夹, `images`文件夹, `audio`文件夹
+
+4. **提交文件**:
+   - 在 "Commit changes" 框中输入: "Initial commit - 十二生肖守护神网站"
+   - 点击 **"Commit changes"** 按钮
+
+5. **等待上传完成**
+
+### 方法B:使用Git命令行(如果您熟悉Git)
+
+```bash
+cd d:\千问\zodiac-guardian
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/您的用户名/zodiac-guardian.git
+git branch -M main
+git push -u origin main
+```
+
+## 第三步:启用GitHub Pages
+
+1. **进入仓库设置**:
+   - 在仓库页面,点击 **"Settings"** (设置)标签
+
+2. **找到Pages设置**:
+   - 在左侧菜单中找到 **"Pages"**
+
+3. **配置Pages**:
+   - Source: 选择 **"Deploy from a branch"**
+   - Branch: 选择 **"main"** 分支
+   - Folder: 选择 **"/ (root)"**
+   - 点击 **"Save"**
+
+4. **等待部署**:
+   - 等待1-2分钟
+   - 页面顶部会显示您的网站地址
+   - 格式: `https://您的用户名.github.io/zodiac-guardian/`
+
+## 第四步:访问您的网站
+
+1. **复制网站地址**: `https://您的用户名.github.io/zodiac-guardian/`
+
+2. **在浏览器中打开**,就能看到您的网站了!
+
+3. **分享给朋友**,他们也能访问了!
+
+## 注意事项
+
+1. **图片显示**: 
+   - 确保所有图片都已上传到 `images` 文件夹
+   - 如果图片不显示,检查文件名是否完全匹配(包括大小写)
+
+2. **音频文件**:
+   - 确保所有音频都已上传到 `audio` 文件夹
+   - 格式应为 `.mp3`
+
+3. **更新网站**:
+   - 修改文件后,重新上传到GitHub
+   - GitHub Pages会在几分钟内自动更新
+
+4. **自定义域名**(可选):
+   - 如果您有自己的域名,可以在Pages设置中添加
+
+## 常见问题
+
+**Q: 网站显示404错误?**
+A: 等待几分钟,GitHub Pages需要时间部署
+
+**Q: 图片不显示?**
+A: 检查文件名是否正确,GitHub是区分大小写的
+
+**Q: 如何更新网站?**
+A: 修改本地文件后,重新上传到GitHub即可
+
+---
+
+祝您部署顺利! 🎉

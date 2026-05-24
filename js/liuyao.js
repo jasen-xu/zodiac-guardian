@@ -79,6 +79,26 @@ function displayHexagram(hexagram) {
         const answer = generateAnswer(hexagram, currentQuestion);
         document.getElementById('answerContent').innerHTML = `<p>${answer}</p>`;
     }
+
+    // 添加 AI 智能解卦按钮
+    const aiButtonHTML = `
+        <div class="ai-divine-section" style="margin-top: 20px; text-align: center;">
+            <button class="ai-divine-button" onclick="requestAIDivination()" style="
+                background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+                color: #fff8eb;
+                border: none;
+                padding: 14px 32px;
+                font-size: 16px;
+                border-radius: 30px;
+                cursor: pointer;
+                box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
+                transition: all 0.3s ease;
+            ">✨ 大师解卦</button>
+            <p style="color: #6b4423; font-size: 12px; margin-top: 8px;">AI 大师结合易经专业知识，为您深度解读卦象</p>
+            <div id="aiResult" style="display: none; margin-top: 20px; text-align: left;"></div>
+        </div>
+    `;
+    document.getElementById('answerContent').innerHTML += aiButtonHTML;
 }
 
 // 生成综合解答
@@ -364,4 +384,145 @@ function getWisdomQuote(hexagram, level) {
         '天行健，君子以自强不息；地势坤，君子以厚德载物'
     ];
     return quotes[Math.floor(Math.random() * quotes.length)];
+}
+
+// ========== AI 智能解卦功能 ==========
+let currentHexagram = null;
+
+// 保存当前卦象信息供 AI 解卦使用
+const originalDisplayHexagram = displayHexagram;
+displayHexagram = function(hexagram) {
+    currentHexagram = hexagram;
+    originalDisplayHexagram(hexagram);
+};
+
+// 请求 AI 解卦
+async function requestAIDivination() {
+    const aiResult = document.getElementById('aiResult');
+    const button = document.querySelector('.ai-divine-button');
+
+    if (!currentHexagram || !currentQuestion) {
+        alert('请先起卦并输入问题');
+        return;
+    }
+
+    // 显示加载状态
+    button.disabled = true;
+    button.textContent = '✨ AI 解卦中，请稍候...';
+    button.style.opacity = '0.7';
+    aiResult.style.display = 'block';
+    aiResult.innerHTML = `
+        <div style="
+            background: linear-gradient(135deg, #fff8eb 0%, #f5ebe0 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(139, 69, 19, 0.2);
+        ">
+            <div style="font-size: 24px; margin-bottom: 10px;">🔮</div>
+            <p style="color: #6b4423;">AI 大师正在深度解析卦象...</p>
+            <div style="
+                width: 40px; height: 40px;
+                border: 3px solid #8b4513;
+                border-top: 3px solid transparent;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin: 10px auto;
+            "></div>
+        </div>
+        <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+    `;
+
+    try {
+        const requestBody = {
+            question: currentQuestion,
+            hexagramName: currentHexagram.name,
+            hexagramSymbol: currentHexagram.symbol,
+            meaning: currentHexagram.meaning,
+            lines: currentHexagram.lines,
+            category: currentHexagram.category || '',
+            fortune: currentHexagram.fortune || '',
+            najia: currentHexagram.najia || null,
+            liuqin: currentHexagram.liuqin || [],
+            liushen: currentHexagram.liushen || [],
+            shiying: currentHexagram.shiying || null
+        };
+
+        const response = await fetch('/api/divine', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // 打字机效果显示结果
+            aiResult.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #fff8eb 0%, #f5ebe0 100%);
+                    border: 1px solid rgba(139, 69, 19, 0.3);
+                    border-radius: 12px;
+                    padding: 25px;
+                    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.1);
+                ">
+                    <h4 style="color: #8b4513; margin-bottom: 15px; font-size: 1.3rem; border-bottom: 2px solid #cd853f; padding-bottom: 10px;">🧠 AI 大师解读</h4>
+                    <div id="aiText" style="line-height: 2; color: #3e2723; font-size: 15px; white-space: pre-wrap;"></div>
+                </div>
+            `;
+            typeWriter(document.getElementById('aiText'), result.data.interpretation, 0);
+        } else {
+            throw new Error(result.error || 'AI 服务异常');
+        }
+
+    } catch (error) {
+        aiResult.innerHTML = `
+            <div style="
+                background: #fff5f5;
+                border: 1px solid #fed7d7;
+                border-radius: 12px;
+                padding: 16px;
+                color: #8b0000;
+            ">
+                <p>⚠️ AI 解卦服务暂时不可用</p>
+                <p style="font-size: 12px; color: #6b4423; margin-top: 8px;">原因: ${error.message}</p>
+                <p style="font-size: 12px; color: #6b4423;">提示: 请确保后端服务已启动且配置了 DASHSCOPE_API_KEY</p>
+            </div>
+        `;
+    } finally {
+        button.disabled = false;
+        button.textContent = '✨ 重新 AI 解卦';
+        button.style.opacity = '1';
+    }
+}
+
+// 打字机效果
+function typeWriter(element, text, index) {
+    if (index < text.length) {
+        // 处理 Markdown 粗体 **text**
+        if (text.charAt(index) === '*' && text.charAt(index + 1) === '*') {
+            const endBold = text.indexOf('**', index + 2);
+            if (endBold !== -1) {
+                const boldText = text.substring(index + 2, endBold);
+                element.innerHTML += '<strong style="color:#6b3a1f;">' + boldText + '</strong>';
+                setTimeout(() => typeWriter(element, text, endBold + 2), 15);
+                return;
+            }
+        }
+        // 处理 Markdown 分隔线 ---
+        if (text.charAt(index) === '-' && text.charAt(index + 1) === '-' && text.charAt(index + 2) === '-') {
+            const lineEnd = text.indexOf('\n', index);
+            const skipTo = lineEnd !== -1 ? lineEnd + 1 : text.length;
+            element.innerHTML += '<hr style="border:none;border-top:1px solid #cd853f;margin:15px 0;">';
+            setTimeout(() => typeWriter(element, text, skipTo), 15);
+            return;
+        }
+        const char = text.charAt(index);
+        if (char === '\n') {
+            element.innerHTML += '<br>';
+        } else {
+            element.innerHTML += char;
+        }
+        setTimeout(() => typeWriter(element, text, index + 1), 15);
+    }
 }

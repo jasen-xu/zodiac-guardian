@@ -110,12 +110,12 @@ class LiuyaoProfessional {
     // 分析世应关系
     analyzeShiying() {
         const shiying = this.hexagram.shiying;
-        if (!shiying) return { relation: '无明显世应关系', desc: '' };
+        if (!shiying) return { relation: '无明显世应关系', desc: '此卦未标注世应信息' };
         
         const relations = [
-            { type: '世应相生', desc: '世应相生,主事情顺利,有人相助' },
-            { type: '世应相克', desc: '世应相克,主事情有阻碍,需努力克服' },
-            { type: '世应比和', desc: '世应比和,主事情平稳,无大波折' }
+            { relation: '世应相生', desc: '世应相生，主事情顺利，有人相助' },
+            { relation: '世应相克', desc: '世应相克，主事情有阻碍，需努力克服' },
+            { relation: '世应比和', desc: '世应比和，主事情平稳，无大波折' }
         ];
         
         return relations[Math.floor(Math.random() * relations.length)];

@@ -1,0 +1,18 @@
+# 图片文件重命名映射表
+# 请按照以下对应关系手动重命名images文件夹中的图片文件
+
+# 原文件名 -> 新文件名
+qianshou-guanyin（鼠）.jpeg -> rat.jpg
+xukongzang（牛）.jpeg -> ox.jpg
+xukongzang（虎）.jpeg -> tiger.jpg
+wenshu（兔）.jpeg -> rabbit.jpg
+puxian（龙）.jpeg -> dragon.jpg
+puxian（蛇）.jpeg -> snake.jpg
+dashizhi（马）.jpeg -> horse.jpg
+dari（羊）.jpg -> goat.jpg
+dari（猴）.jpg -> monkey.jpg
+budong（鸡）.jpeg -> rooster.jpg
+emituo（狗）.jpeg -> dog.jpg
+emituo（猪）.jpeg -> pig.jpg
+
+# 重命名完成后,更新数据配置文件
