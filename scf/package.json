@@ -1,0 +1,7 @@
+{
+  "name": "zodiac-guardian-scf",
+  "version": "1.0.0",
+  "description": "十二生肖守护神 - 腾讯云SCF云函数",
+  "main": "index.js",
+  "dependencies": {}
+}
