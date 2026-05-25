@@ -1,16 +1,68 @@
 /**
  * 十二生肖守护神 - 腾讯云 SCF 云函数
- * 入口函数：main_handler
- * 触发方式：API 网关触发
+ * 同时托管前端页面和 AI 解卦 API
  * 
  * 环境变量：
  *   DASHSCOPE_API_KEY - 通义千问 API Key（必填）
  *   MODEL - AI 模型（可选，默认 qwen-plus）
  */
 
+const fs = require('fs');
+const path = require('path');
+
 const DASHSCOPE_API_KEY = process.env.DASHSCOPE_API_KEY || '';
 const DASHSCOPE_API_URL = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation';
 const MODEL = process.env.MODEL || 'qwen-plus';
+
+// 静态文件 MIME 类型映射
+const MIME_TYPES = {
+    '.html': 'text/html; charset=utf-8',
+    '.css': 'text/css; charset=utf-8',
+    '.js': 'application/javascript; charset=utf-8',
+    '.json': 'application/json; charset=utf-8',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml',
+    '.ico': 'image/x-icon',
+    '.mp3': 'audio/mpeg',
+    '.wav': 'audio/wav',
+    '.woff': 'font/woff',
+    '.woff2': 'font/woff2',
+};
+
+// 静态文件根目录（打包时 static/ 文件夹与 index.js 同级）
+const STATIC_ROOT = path.join(__dirname, 'static');
+
+/**
+ * 提供静态文件
+ */
+function serveStatic(filePath) {
+    const ext = path.extname(filePath).toLowerCase();
+    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+
+    try {
+        const fullPath = path.join(STATIC_ROOT, filePath);
+        // 安全检查：防止路径穿越
+        if (!fullPath.startsWith(STATIC_ROOT)) {
+            return null;
+        }
+        const content = fs.readFileSync(fullPath);
+        const isBase64 = !contentType.startsWith('text') && !contentType.includes('javascript') && !contentType.includes('json');
+        return {
+            isBase64Encoded: isBase64,
+            statusCode: 200,
+            headers: {
+                'Content-Type': contentType,
+                'Cache-Control': 'public, max-age=86400'
+            },
+            body: isBase64 ? content.toString('base64') : content.toString('utf-8')
+        };
+    } catch (e) {
+        return null;
+    }
+}
 
 // 易经解卦系统提示词
 const SYSTEM_PROMPT = `你是一位精通易经六爻占卜的大师，拥有数十年的解卦经验。你深谙《易经》、《增删卜易》、《卜筮正宗》等经典著作，能够结合纳甲、六亲、六神、世应等专业知识进行深度解读。
@@ -113,21 +165,20 @@ function buildResponse(statusCode, body) {
  * SCF 入口函数
  */
 exports.main_handler = async (event, context) => {
-    console.log('收到请求:', JSON.stringify(event).substring(0, 200));
-
     // 解析 API 网关事件
     const httpMethod = event.httpMethod || (event.requestContext && event.requestContext.httpMethod) || 'GET';
-    const path = event.path || '/';
+    let reqPath = event.path || '/';
 
     // 处理 OPTIONS 预检请求
     if (httpMethod === 'OPTIONS') {
         return buildResponse(200, { status: 'ok' });
     }
 
+    // ========== API 路由 ==========
+
     // POST /api/divine - AI 解卦
-    if (path.includes('/api/divine') && httpMethod === 'POST') {
+    if (reqPath.includes('/api/divine') && httpMethod === 'POST') {
         try {
-            // 解析请求体
             let body = event.body || '{}';
             if (event.isBase64Encoded) {
                 body = Buffer.from(body, 'base64').toString('utf-8');
@@ -169,15 +220,12 @@ exports.main_handler = async (event, context) => {
             };
 
             console.log(`[解卦] 问题: "${question}", 卦名: ${hexagramName}`);
-
             const interpretation = await callQwenAPI(question, hexagramInfo);
 
             return buildResponse(200, {
                 success: true,
                 data: {
-                    question,
-                    hexagramName,
-                    interpretation,
+                    question, hexagramName, interpretation,
                     timestamp: new Date().toISOString()
                 }
             });
@@ -192,7 +240,7 @@ exports.main_handler = async (event, context) => {
     }
 
     // GET /api/health - 健康检查
-    if (path.includes('/api/health') && httpMethod === 'GET') {
+    if (reqPath.includes('/api/health') && httpMethod === 'GET') {
         return buildResponse(200, {
             status: 'ok',
             service: 'zodiac-guardian-scf',
@@ -201,9 +249,28 @@ exports.main_handler = async (event, context) => {
         });
     }
 
-    // 其他路由 - 返回 404
+    // ========== 静态文件路由 ==========
+
+    // 根路径 -> index.html
+    if (reqPath === '/') {
+        reqPath = '/index.html';
+    }
+
+    // 尝试提供静态文件
+    const staticResponse = serveStatic(reqPath);
+    if (staticResponse) {
+        return staticResponse;
+    }
+
+    // 未找到文件，返回 index.html（支持前端路由）
+    const indexResponse = serveStatic('/index.html');
+    if (indexResponse) {
+        return indexResponse;
+    }
+
+    // 404
     return buildResponse(404, {
         success: false,
-        error: `未找到路由: ${httpMethod} ${path}`
+        error: `未找到: ${httpMethod} ${reqPath}`
     });
 };

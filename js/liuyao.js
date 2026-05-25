@@ -389,8 +389,16 @@ function getWisdomQuote(hexagram, level) {
 // ========== AI 智能解卦功能 ==========
 let currentHexagram = null;
 
-// AI 解卦 API 地址（可配置为 Vercel 或其他后端地址）
-const AI_API_BASE = 'https://zodiac-guardian.vercel.app';
+// AI 解卦 API 地址（自动检测当前环境）
+const AI_API_BASE = (function() {
+    var host = window.location.hostname;
+    // 腾讯云 SCF 或本地环境：使用同源 API
+    if (host.includes('tencentcs.com') || host.includes('localhost') || host.includes('127.0.0.1')) {
+        return '';
+    }
+    // GitHub Pages 或其他静态托管：指向 Vercel 后端
+    return 'https://zodiac-guardian.vercel.app';
+})();
 
 // 保存当前卦象信息供 AI 解卦使用
 const originalDisplayHexagram = displayHexagram;
