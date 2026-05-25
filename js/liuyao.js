@@ -392,8 +392,12 @@ let currentHexagram = null;
 // AI 解卦 API 地址（自动检测当前环境）
 const AI_API_BASE = (function() {
     var host = window.location.hostname;
-    // 腾讯云 SCF 或本地环境：使用同源 API
-    if (host.includes('tencentcs.com') || host.includes('localhost') || host.includes('127.0.0.1')) {
+    // 腾讯云 SCF / CloudBase 或本地环境：使用同源或SCF API
+    if (host.includes('tencentcs.com') || host.includes('tcloudbaseapp.com') || host.includes('localhost') || host.includes('127.0.0.1')) {
+        // CloudBase 静态托管需要指向 SCF 后端
+        if (host.includes('tcloudbaseapp.com')) {
+            return 'https://1436877587-kdjwbq6ikf.ap-guangzhou.tencentscf.com';
+        }
         return '';
     }
     // GitHub Pages 或其他静态托管：指向腾讯云 SCF 后端（国内可访问）
