@@ -19,6 +19,13 @@ mkdir -p "$BUILD_DIR/static"
 cp "$PROJECT_DIR/scf/index.js" "$BUILD_DIR/"
 cp "$PROJECT_DIR/scf/package.json" "$BUILD_DIR/"
 
+# 复制 Web 函数启动脚本（如果存在）
+if [ -f "$PROJECT_DIR/scf/scf_bootstrap" ]; then
+    cp "$PROJECT_DIR/scf/scf_bootstrap" "$BUILD_DIR/"
+    chmod +x "$BUILD_DIR/scf_bootstrap"
+    echo "    ✅ scf_bootstrap (Web函数启动脚本)"
+fi
+
 # 复制前端静态文件
 echo "  复制前端文件..."
 for file in index.html guardian.html fortune.html liuyao.html; do

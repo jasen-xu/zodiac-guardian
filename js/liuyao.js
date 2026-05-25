@@ -396,8 +396,8 @@ const AI_API_BASE = (function() {
     if (host.includes('tencentcs.com') || host.includes('localhost') || host.includes('127.0.0.1')) {
         return '';
     }
-    // GitHub Pages 或其他静态托管：指向 Vercel 后端
-    return 'https://zodiac-guardian.vercel.app';
+    // GitHub Pages 或其他静态托管：指向腾讯云 SCF 后端（国内可访问）
+    return 'https://1436877587-kdjwbq6ikf.ap-guangzhou.tencentscf.com';
 })();
 
 // 保存当前卦象信息供 AI 解卦使用
