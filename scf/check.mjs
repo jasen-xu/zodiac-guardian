@@ -1,0 +1,1 @@
+import https from 'https'; https.get('https://1436877587-1kd9vq3oux.ap-hongkong.tencentscf.com/', r => { console.log('ALL HEADERS:'); Object.entries(r.headers).forEach(([k,v]) => console.log(k + ': ' + v)); });

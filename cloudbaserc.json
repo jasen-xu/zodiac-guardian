@@ -1,0 +1,31 @@
+{
+  "envId": "{{your-hk-env-id}}",
+  "framework": {
+    "name": "none",
+    "plugins": {
+      "hosting": {
+        "use": "@cloudbase/framework-plugin-website",
+        "inputs": {
+          "localPath": "./",
+          "cloudPath": "/",
+          "ignore": [
+            ".git",
+            ".gitignore",
+            ".vercel",
+            ".vercel-tmp",
+            ".vercelignore",
+            "node_modules",
+            "server",
+            "scf",
+            "vercel.json",
+            "cloudbaserc.json",
+            "package.json",
+            "package-lock.json",
+            "rename-images.txt",
+            "部署指南.txt"
+          ]
+        }
+      }
+    }
+  }
+}

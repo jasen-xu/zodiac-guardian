@@ -1,0 +1,67 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "guardian.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "fortune.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "liuyao.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "css/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "js/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server/server.js"
+    },
+    {
+      "src": "/index\\.html",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/guardian\\.html",
+      "dest": "/guardian.html"
+    },
+    {
+      "src": "/fortune\\.html",
+      "dest": "/fortune.html"
+    },
+    {
+      "src": "/liuyao\\.html",
+      "dest": "/liuyao.html"
+    },
+    {
+      "src": "/(css|js|assets)/(.*)",
+      "dest": "/$1/$2"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+.vercel-tmp
+.vercelignore
+zodiac-guardian-miniapp
+server/node_modules
+server/.env
+server/.env.example
+server/部署指南.md
+.env

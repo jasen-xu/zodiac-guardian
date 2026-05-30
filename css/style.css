@@ -1372,32 +1372,33 @@ body {
 /* 信息网格 */
 .info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
 }
 
 .info-item {
     background: rgba(255, 248, 235, 0.9);
-    padding: 15px;
-    border-radius: 8px;
+    padding: 8px 6px;
+    border-radius: 6px;
     text-align: center;
-    border: 1px solid rgba(139, 69, 19, 0.2);
+    border: 1px solid rgba(139, 69, 19, 0.15);
 }
 
 .info-item span {
-    display: block;
+    display: inline;
     color: #6b4423;
-    font-size: 0.9rem;
-    margin-bottom: 8px;
+    font-size: 0.8rem;
+    margin-bottom: 0;
     font-weight: 500;
 }
 
 .info-item strong {
-    display: block;
+    display: inline;
     color: #3e2723;
-    font-size: 1.1rem;
+    font-size: 0.85rem;
     font-weight: bold;
+    margin-left: 2px;
 }
 
 /* 分析提示 */
@@ -1587,15 +1588,19 @@ body {
     }
 
     .info-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
     }
 
     .info-item {
-        padding: 10px;
+        padding: 6px 4px;
     }
 
     .info-item span {
+        font-size: 0.75rem;
+    }
+
+    .info-item strong {
         font-size: 0.8rem;
     }
 
@@ -1639,7 +1644,7 @@ body {
     }
 
     .info-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .answer-section-item h4,
@@ -1650,5 +1655,159 @@ body {
     .answer-section-item p,
     .liuyao-section p {
         font-size: 0.85rem;
+    }
+}
+
+/* ========== 日签分享弹窗 ========== */
+
+.share-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.share-modal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.share-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.share-modal-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 90vw;
+    max-height: 90vh;
+    animation: modalSlideUp 0.3s ease;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.share-modal-close {
+    position: absolute;
+    top: -15px;
+    right: -10px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #666;
+    font-size: 22px;
+    line-height: 36px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 0;
+}
+
+.share-modal-close:hover {
+    background: #fff;
+    color: #333;
+}
+
+.share-card-preview {
+    max-height: 70vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.share-card-preview img {
+    display: block;
+    max-width: 340px;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    border-radius: 12px;
+}
+
+.share-modal-buttons {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.share-btn-save {
+    background: rgba(255, 255, 255, 0.95);
+    color: #5C4033;
+}
+
+.share-btn-save:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.share-btn-share {
+    background: linear-gradient(135deg, #C41E3A, #D4760A);
+    color: #fff;
+}
+
+.share-btn-share:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+}
+
+.share-btn-icon {
+    font-size: 18px;
+}
+
+/* 移动端适配 */
+@media (max-width: 480px) {
+    .share-card-preview img {
+        max-width: 85vw;
+    }
+    
+    .share-modal-buttons {
+        gap: 12px;
+    }
+    
+    .share-btn {
+        padding: 10px 22px;
+        font-size: 14px;
     }
 }

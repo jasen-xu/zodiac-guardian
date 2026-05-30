@@ -1,0 +1,1 @@
+const https = require('https'); https.get('https://1436877587-1kd9vq3oux.ap-hongkong.tencentscf.com/', r => { Object.keys(r.headers).forEach(k => console.log(k + ': ' + r.headers[k])); });

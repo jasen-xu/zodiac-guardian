@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>每日一签 - 十二生肖守护神</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=20260526">
 </head>
 <body>
     <div class="fortune-page">
@@ -34,7 +34,28 @@
         </div>
     </div>
 
-    <script src="js/fortune-data.js"></script>
-    <script src="js/fortune.js"></script>
+    <!-- 日签分享弹窗 -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-overlay" onclick="closeShareModal()"></div>
+        <div class="share-modal-content">
+            <button class="share-modal-close" onclick="closeShareModal()">&times;</button>
+            <div class="share-card-preview">
+                <img id="shareCardImage" src="" alt="日签图片">
+            </div>
+            <div class="share-modal-buttons">
+                <button class="share-btn share-btn-save" onclick="downloadCard()">
+                    <span class="share-btn-icon">💾</span>
+                    <span>保存图片</span>
+                </button>
+                <button class="share-btn share-btn-share" onclick="shareCardNative()">
+                    <span class="share-btn-icon">📤</span>
+                    <span>分享好友</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/fortune-data.js?v=20260526"></script>
+    <script src="js/fortune.js?v=20260526"></script>
 </body>
 </html>

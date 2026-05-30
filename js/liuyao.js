@@ -94,7 +94,7 @@ function displayHexagram(hexagram) {
                 box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
                 transition: all 0.3s ease;
             ">✨ 大师解卦</button>
-            <p style="color: #6b4423; font-size: 12px; margin-top: 8px;">AI 大师结合易经专业知识，为您深度解读卦象</p>
+            <p style="color: #6b4423; font-size: 12px; margin-top: 8px;">大师结合易经，为您深度解读</p>
             <div id="aiResult" style="display: none; margin-top: 20px; text-align: left;"></div>
         </div>
     `;
@@ -389,19 +389,33 @@ function getWisdomQuote(hexagram, level) {
 // ========== AI 智能解卦功能 ==========
 let currentHexagram = null;
 
+// ==========================================
+// 🔧 API 配置 —— 部署后修改这里
+// ==========================================
+// SCF 云函数 HTTP 触发器地址（部署香港 SCF 后替换）
+const SCF_HK_URL = 'https://1436877587-1kd9vq3oux.ap-hongkong.tencentscf.com';
+
 // AI 解卦 API 地址（自动检测当前环境）
 const AI_API_BASE = (function() {
     var host = window.location.hostname;
-    // 腾讯云 SCF / CloudBase 或本地环境：使用同源或SCF API
-    if (host.includes('tencentcs.com') || host.includes('tcloudbaseapp.com') || host.includes('localhost') || host.includes('127.0.0.1')) {
-        // CloudBase 静态托管需要指向 SCF 后端
-        if (host.includes('tcloudbaseapp.com')) {
-            return 'https://1436877587-kdjwbq6ikf.ap-guangzhou.tencentscf.com';
-        }
+    // 自定义域名（yi-yao.net）→ 使用香港 SCF
+    if (host === 'yi-yao.net' || host === 'www.yi-yao.net') {
+        return SCF_HK_URL;
+    }
+    // CloudBase 默认域名 → 使用香港 SCF
+    if (host.includes('tcloudbaseapp.com')) {
+        return SCF_HK_URL;
+    }
+    // 腾讯云 SCF 网关域名
+    if (host.includes('tencentcs.com')) {
+        return ''; // 同源，SCF 网关自带静态托管
+    }
+    // 本地开发 → 同源（server/server.js）
+    if (host.includes('localhost') || host.includes('127.0.0.1')) {
         return '';
     }
-    // GitHub Pages 或其他静态托管：指向腾讯云 SCF 后端（国内可访问）
-    return 'https://1436877587-kdjwbq6ikf.ap-guangzhou.tencentscf.com';
+    // 兜底：使用香港 SCF
+    return SCF_HK_URL;
 })();
 
 // 保存当前卦象信息供 AI 解卦使用
@@ -423,7 +437,7 @@ async function requestAIDivination() {
 
     // 显示加载状态
     button.disabled = true;
-    button.textContent = '✨ AI 解卦中，请稍候...';
+    button.textContent = '解卦中，请稍后';
     button.style.opacity = '0.7';
     aiResult.style.display = 'block';
     aiResult.innerHTML = `
@@ -435,7 +449,7 @@ async function requestAIDivination() {
             border: 1px solid rgba(139, 69, 19, 0.2);
         ">
             <div style="font-size: 24px; margin-bottom: 10px;">🔮</div>
-            <p style="color: #6b4423;">AI 大师正在深度解析卦象...</p>
+            <p style="color: #6b4423;">大师正在深度解释卦象……</p>
             <div style="
                 width: 40px; height: 40px;
                 border: 3px solid #8b4513;
@@ -481,7 +495,7 @@ async function requestAIDivination() {
                     padding: 25px;
                     box-shadow: 0 4px 15px rgba(139, 69, 19, 0.1);
                 ">
-                    <h4 style="color: #8b4513; margin-bottom: 15px; font-size: 1.3rem; border-bottom: 2px solid #cd853f; padding-bottom: 10px;">🧠 AI 大师解读</h4>
+                    <h4 style="color: #8b4513; margin-bottom: 15px; font-size: 1.3rem; border-bottom: 2px solid #cd853f; padding-bottom: 10px;">🧠 大师解读</h4>
                     <div id="aiText" style="line-height: 2; color: #3e2723; font-size: 15px; white-space: pre-wrap;"></div>
                 </div>
             `;
@@ -506,7 +520,7 @@ async function requestAIDivination() {
         `;
     } finally {
         button.disabled = false;
-        button.textContent = '✨ 重新 AI 解卦';
+        button.textContent = '✨ 重新大师解卦';
         button.style.opacity = '1';
     }
 }
@@ -514,6 +528,18 @@ async function requestAIDivination() {
 // 打字机效果
 function typeWriter(element, text, index) {
     if (index < text.length) {
+        // 处理 Markdown 标题 ### / ## / #
+        const remaining = text.substring(index);
+        const headerMatch = remaining.match(/^(#{1,4})\s+(.+?)(\n|$)/);
+        if (headerMatch && (index === 0 || text.charAt(index - 1) === '\n')) {
+            const level = headerMatch[1].length;
+            const headerText = headerMatch[2];
+            const sizes = { 1: '1.4rem', 2: '1.25rem', 3: '1.1rem', 4: '1rem' };
+            const fontSize = sizes[level] || '1rem';
+            element.innerHTML += '<div style="font-size:' + fontSize + ';font-weight:bold;color:#5d3a1a;margin:14px 0 8px 0;border-bottom:1px solid #e0c9a6;padding-bottom:4px;">' + headerText + '</div>';
+            setTimeout(() => typeWriter(element, text, index + headerMatch[0].length), 15);
+            return;
+        }
         // 处理 Markdown 粗体 **text**
         if (text.charAt(index) === '*' && text.charAt(index + 1) === '*') {
             const endBold = text.indexOf('**', index + 2);
@@ -530,6 +556,13 @@ function typeWriter(element, text, index) {
             const skipTo = lineEnd !== -1 ? lineEnd + 1 : text.length;
             element.innerHTML += '<hr style="border:none;border-top:1px solid #cd853f;margin:15px 0;">';
             setTimeout(() => typeWriter(element, text, skipTo), 15);
+            return;
+        }
+        // 处理列表项 🔹 / 🔸 / ✅ / ⚠️ / 1️⃣ 等 emoji 开头
+        const bulletMatch = remaining.match(/^[🔹🔸✅⚠️1️⃣2️⃣3️⃣•·]\s*/);
+        if (bulletMatch && (index === 0 || text.charAt(index - 1) === '\n')) {
+            element.innerHTML += '<span style="display:inline-block;margin-left:8px;">' + bulletMatch[0] + '</span>';
+            setTimeout(() => typeWriter(element, text, index + bulletMatch[0].length), 15);
             return;
         }
         const char = text.charAt(index);

@@ -1,9 +1,25 @@
+# Dependencies
 node_modules/
+**/node_modules/
+
+# Environment & secrets
 .env
 .DS_Store
+
+# Vercel
 .vercel/
 .vercel-tmp/
+
+# Build artifacts
+*.zip
+scf/scf-deploy.zip
+scf/build/
+scf/test_zip/
+deploy-static.zip
+
+# Mini app
 zodiac-guardian-miniapp/node_modules/
 zodiac-guardian-miniapp/dist/
+
+# Logs
 *.log
-scf/scf-deploy.zip
