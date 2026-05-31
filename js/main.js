@@ -39,9 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (nav) {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 20) {
-                nav.style.background = 'rgba(240, 230, 208, 0.99)';
+                nav.style.background = 'rgba(249, 246, 240, 0.99)';
+                nav.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)';
             } else {
-                nav.style.background = 'rgba(240, 230, 208, 0.95)';
+                nav.style.background = 'rgba(249, 246, 240, 0.96)';
+                nav.style.boxShadow = 'none';
             }
         });
     }

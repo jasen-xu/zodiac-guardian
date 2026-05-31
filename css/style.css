@@ -1813,15 +1813,14 @@ body {
 }
 
 /* ================================
-   主页改版样式 - 中国风暖色调
+   主页改版样式 - 国学书卷风
+   宣纸底色 / 墨色文字 / 鎏金点缀 / 朱红印章
    ================================ */
 
-/* 主页背景 - 淡雅宣纸风 */
+/* 主页背景 - 宣纸质感 */
 body.home-page {
-    background: #F0E6D0;
-    background-image: 
-        radial-gradient(ellipse at 20% 50%, rgba(237, 220, 186, 0.4) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(240, 224, 192, 0.3) 0%, transparent 50%);
+    background-color: #F9F6F0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     min-height: 100vh;
 }
 
@@ -1832,13 +1831,13 @@ body.home-page {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(240, 230, 208, 0.95);
+    background: rgba(249, 246, 240, 0.96);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+    border-bottom: 1px solid #DCD2C0;
 }
 
 .nav-inner {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 24px;
     height: 60px;
@@ -1850,29 +1849,30 @@ body.home-page {
 .nav-brand {
     font-size: 1.6rem;
     font-weight: bold;
-    color: #8B4513;
+    color: #1A1A1A;
     text-decoration: none;
-    letter-spacing: 4px;
-    font-family: 'SimSun', 'STSong', serif;
+    letter-spacing: 6px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
 
 .nav-links {
     display: flex;
-    gap: 8px;
+    gap: 4px;
 }
 
 .nav-link {
-    color: #5D4E37;
+    color: #333333;
     text-decoration: none;
     padding: 8px 16px;
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 0.9rem;
     transition: all 0.3s;
+    letter-spacing: 1px;
 }
 
 .nav-link:hover {
-    color: #8B4513;
-    background: rgba(139, 69, 19, 0.06);
+    color: #D4AF37;
+    background: rgba(212, 175, 55, 0.06);
 }
 
 .nav-toggle {
@@ -1888,7 +1888,7 @@ body.home-page {
 .nav-toggle span {
     width: 24px;
     height: 2px;
-    background: #8B4513;
+    background: #1A1A1A;
     border-radius: 2px;
     transition: 0.3s;
 }
@@ -1896,9 +1896,9 @@ body.home-page {
 .nav-mobile {
     display: none;
     flex-direction: column;
-    background: rgba(240, 230, 208, 0.98);
+    background: rgba(249, 246, 240, 0.98);
     padding: 12px 24px 20px;
-    border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+    border-bottom: 1px solid #DCD2C0;
 }
 
 .nav-mobile.active {
@@ -1906,22 +1906,34 @@ body.home-page {
 }
 
 .nav-mobile-link {
-    color: #5D4E37;
+    color: #333333;
     text-decoration: none;
     padding: 12px 0;
-    border-bottom: 1px solid rgba(139, 69, 19, 0.06);
+    border-bottom: 1px solid rgba(220, 210, 192, 0.5);
     font-size: 0.95rem;
     transition: color 0.3s;
+    letter-spacing: 1px;
 }
 
 .nav-mobile-link:hover {
-    color: #8B4513;
+    color: #D4AF37;
 }
 
-/* 主视觉区 */
+/* 云纹装饰线 */
+.cloud-divider {
+    text-align: center;
+    padding: 8px 0;
+    color: #D4AF37;
+    opacity: 0.4;
+    font-size: 1.2rem;
+    letter-spacing: 12px;
+    user-select: none;
+}
+
+/* 主视觉区 - 水墨横幅 */
 .hero {
     position: relative;
-    padding: 140px 24px 80px;
+    padding: 140px 24px 60px;
     text-align: center;
     overflow: hidden;
 }
@@ -1929,25 +1941,50 @@ body.home-page {
 .hero-content {
     position: relative;
     z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .hero-title {
-    font-size: 4.5rem;
+    font-size: 3rem;
     font-weight: bold;
-    color: #8B4513;
-    letter-spacing: 16px;
-    margin-bottom: 16px;
-    font-family: 'SimSun', 'STSong', serif;
-    text-shadow: 0 2px 20px rgba(139, 69, 19, 0.1);
-    animation: fadeInDown 0.8s ease-out;
+    color: #1A1A1A;
+    letter-spacing: 20px;
+    margin-bottom: 20px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    animation: fadeInDown 1.2s ease-out;
+}
+
+/* 竖排副标题 */
+.hero-subtitle-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    display: inline-block;
+    font-size: 1rem;
+    color: #D4AF37;
+    letter-spacing: 8px;
+    margin: 24px auto;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    line-height: 2;
+    animation: fadeInUp 1.2s ease-out;
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
-    color: #8B7355;
-    letter-spacing: 6px;
-    margin-bottom: 48px;
-    animation: fadeInUp 0.8s ease-out;
+    font-size: 1.1rem;
+    color: #666;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+/* 鎏金分割线 */
+.gold-line {
+    width: 60px;
+    height: 1px;
+    background: #D4AF37;
+    margin: 24px auto;
+    opacity: 0.6;
 }
 
 .hero-actions {
@@ -1955,47 +1992,49 @@ body.home-page {
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
-    animation: fadeInUp 1s ease-out;
+    animation: fadeInUp 1.5s ease-out;
 }
 
 .hero-btn {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 16px 40px;
-    border-radius: 50px;
-    font-size: 1.1rem;
+    padding: 14px 36px;
+    border-radius: 4px;
+    font-size: 1rem;
     font-weight: 500;
     text-decoration: none;
     transition: all 0.3s;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
+    letter-spacing: 2px;
 }
 
 .hero-btn-primary {
-    background: linear-gradient(135deg, #C41E3A, #D4760A);
-    color: #fff;
-    box-shadow: 0 8px 30px rgba(196, 30, 58, 0.3);
+    background: #1A1A1A;
+    color: #F9F6F0;
+    box-shadow: 0 4px 16px rgba(26, 26, 26, 0.15);
 }
 
 .hero-btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(196, 30, 58, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26, 26, 26, 0.2);
+    background: #333;
 }
 
 .hero-btn-secondary {
     background: transparent;
-    color: #8B4513;
-    border-color: rgba(139, 69, 19, 0.3);
+    color: #1A1A1A;
+    border-color: #DCD2C0;
 }
 
 .hero-btn-secondary:hover {
-    background: rgba(139, 69, 19, 0.05);
-    border-color: #8B4513;
-    transform: translateY(-3px);
+    border-color: #D4AF37;
+    color: #D4AF37;
+    transform: translateY(-2px);
 }
 
 .hero-btn-icon {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .hero-decoration {
@@ -2007,47 +2046,94 @@ body.home-page {
 }
 
 .hero-circle {
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     border-radius: 50%;
-    border: 1px solid rgba(139, 69, 19, 0.06);
+    border: 1px solid rgba(212, 175, 55, 0.08);
     position: relative;
 }
 
 .hero-circle::after {
     content: '';
     position: absolute;
-    top: 30px;
-    left: 30px;
-    right: 30px;
-    bottom: 30px;
+    top: 25px;
+    left: 25px;
+    right: 25px;
+    bottom: 25px;
     border-radius: 50%;
-    border: 1px solid rgba(139, 69, 19, 0.04);
+    border: 1px solid rgba(212, 175, 55, 0.05);
+}
+
+/* 仿古印章 */
+.seal-stamp {
+    position: fixed;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-8deg);
+    z-index: 10;
+    width: 64px;
+    height: 64px;
+    border: 2.5px solid #BC2C24;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'SimSun', 'STSong', serif;
+    font-size: 1.2rem;
+    color: #BC2C24;
+    writing-mode: vertical-rl;
+    letter-spacing: 4px;
+    opacity: 0.35;
+    user-select: none;
+    transition: opacity 0.3s;
+}
+
+.seal-stamp:hover {
+    opacity: 0.6;
 }
 
 /* 板块入口区 */
 .sections-wrapper {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 40px 24px 60px;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-heading-title {
+    font-size: 1.5rem;
+    color: #1A1A1A;
+    letter-spacing: 6px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.section-heading-sub {
+    font-size: 0.85rem;
+    color: #999;
+    letter-spacing: 2px;
 }
 
 .sections-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 20px;
 }
 
 .section-card {
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(139, 69, 19, 0.1);
-    border-radius: 16px;
-    padding: 36px 28px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
+    padding: 32px 24px;
     text-align: center;
     transition: all 0.4s;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 2px 12px rgba(139, 69, 19, 0.05);
 }
 
 .section-card::before {
@@ -2056,17 +2142,17 @@ body.home-page {
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #8B4513, transparent);
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
     opacity: 0;
     transition: opacity 0.4s;
 }
 
 .section-card:hover {
-    background: #fff;
-    border-color: rgba(139, 69, 19, 0.15);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(139, 69, 19, 0.08);
+    background: rgba(255, 255, 255, 0.6);
+    border-color: #D4AF37;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .section-card:hover::before {
@@ -2074,137 +2160,141 @@ body.home-page {
 }
 
 .section-card-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-bottom: 16px;
 }
 
 .section-card-title {
-    font-size: 1.4rem;
-    color: #8B4513;
-    margin-bottom: 12px;
+    font-size: 1.25rem;
+    color: #1A1A1A;
+    margin-bottom: 10px;
     font-weight: 600;
-    letter-spacing: 2px;
-    font-family: 'SimSun', 'STSong', serif;
+    letter-spacing: 3px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
 
 .section-card-desc {
-    font-size: 0.9rem;
-    color: #8B7355;
-    line-height: 1.7;
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.75;
     margin-bottom: 20px;
 }
 
 .section-card-link {
     display: inline-block;
-    color: #8B4513;
+    color: #D4AF37;
     text-decoration: none;
-    font-size: 0.9rem;
-    padding: 8px 24px;
-    border: 1px solid rgba(139, 69, 19, 0.25);
-    border-radius: 25px;
+    font-size: 0.85rem;
+    padding: 7px 22px;
+    border: 1px solid #DCD2C0;
+    border-radius: 4px;
     transition: all 0.3s;
+    letter-spacing: 1px;
 }
 
 .section-card-link:hover {
-    background: rgba(139, 69, 19, 0.06);
-    border-color: #8B4513;
+    border-color: #D4AF37;
+    background: rgba(212, 175, 55, 0.06);
 }
 
 .section-card-soon {
-    opacity: 0.6;
+    opacity: 0.55;
 }
 
 .section-card-soon .section-card-link {
-    color: #B8A692;
-    border-color: rgba(139, 69, 19, 0.12);
+    color: #BBB;
+    border-color: #DCD2C0;
     cursor: default;
 }
 
 /* 生肖速查区 */
 .zodiac-quick {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 60px 24px 80px;
+    padding: 50px 24px 70px;
 }
 
 .zodiac-quick-title {
     text-align: center;
-    font-size: 2rem;
-    color: #8B4513;
-    letter-spacing: 6px;
-    margin-bottom: 12px;
-    font-family: 'SimSun', 'STSong', serif;
+    font-size: 1.5rem;
+    color: #1A1A1A;
+    letter-spacing: 8px;
+    margin-bottom: 10px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    font-weight: 600;
 }
 
 .zodiac-quick-subtitle {
     text-align: center;
-    color: #8B7355;
-    margin-bottom: 40px;
-    font-size: 0.95rem;
+    color: #999;
+    margin-bottom: 36px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
 }
 
 /* 主页生肖卡片覆盖 */
 .home-page .zodiac-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
 }
 
 .home-page .zodiac-card {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(139, 69, 19, 0.1);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
     display: block;
-    transition: all 0.3s;
-    animation: fadeInUp 0.5s ease-out;
-    box-shadow: 0 2px 8px rgba(139, 69, 19, 0.04);
+    transition: all 0.4s;
+    animation: fadeInUp 0.8s ease-out;
 }
 
 .home-page .zodiac-card:hover {
-    background: rgba(255, 255, 255, 0.8);
-    border-color: rgba(139, 69, 19, 0.2);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(139, 69, 19, 0.1);
+    background: rgba(255, 255, 255, 0.7);
+    border-color: #D4AF37;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
 .home-page .zodiac-card-image {
     width: 100%;
-    height: 140px;
+    height: 100px;
     object-fit: cover;
-    background: linear-gradient(135deg, #F5EDE0, #F0E8D8);
+    background: linear-gradient(135deg, #F5EDE0, #EDE4D3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4rem;
-    color: #8B4513;
+    font-size: 2.8rem;
+    color: #1A1A1A;
     font-family: 'SimSun', 'STSong', serif;
 }
 
 .home-page .zodiac-card-image .placeholder-image {
-    font-size: 4rem;
-    color: #8B4513;
+    font-size: 2.8rem;
+    color: #1A1A1A;
     font-family: 'SimSun', 'STSong', serif;
     font-weight: bold;
 }
 
 .home-page .zodiac-card-content {
-    padding: 12px;
+    padding: 10px 8px;
     text-align: center;
 }
 
 .home-page .zodiac-card-name {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: bold;
-    color: #8B4513;
-    margin-bottom: 4px;
+    color: #1A1A1A;
+    margin-bottom: 3px;
+    letter-spacing: 2px;
 }
 
 .home-page .zodiac-card-guardian {
-    font-size: 0.8rem;
-    color: #8B7355;
+    font-size: 0.75rem;
+    color: #999;
+    letter-spacing: 1px;
 }
 
 .home-page .zodiac-card-blessing {
@@ -2213,8 +2303,8 @@ body.home-page {
 
 /* 底部 */
 .site-footer {
-    border-top: 1px solid rgba(139, 69, 19, 0.08);
-    padding: 48px 24px;
+    border-top: 1px solid #DCD2C0;
+    padding: 40px 24px;
     text-align: center;
 }
 
@@ -2224,22 +2314,24 @@ body.home-page {
 }
 
 .footer-brand {
-    font-size: 1.5rem;
-    color: #8B4513;
-    letter-spacing: 8px;
+    font-size: 1.3rem;
+    color: #1A1A1A;
+    letter-spacing: 10px;
     margin-bottom: 8px;
-    font-family: 'SimSun', 'STSong', serif;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
 
 .footer-desc {
-    color: #8B7355;
-    font-size: 0.85rem;
+    color: #999;
+    font-size: 0.8rem;
     margin-bottom: 16px;
+    letter-spacing: 2px;
 }
 
 .footer-copy {
-    color: #B8A692;
-    font-size: 0.75rem;
+    color: #BBB;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
 }
 
 /* 主页响应式 */
@@ -2247,9 +2339,17 @@ body.home-page {
     .sections-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .home-page .zodiac-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .seal-stamp {
+        display: none;
+    }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .nav-links {
         display: none;
     }
@@ -2258,49 +2358,90 @@ body.home-page {
         display: flex;
     }
 
+    .hero {
+        padding: 110px 20px 40px;
+    }
+
     .hero-title {
-        font-size: 3rem;
+        font-size: 2rem;
         letter-spacing: 10px;
     }
 
-    .hero-subtitle {
-        font-size: 1rem;
+    .hero-subtitle-vertical {
+        writing-mode: horizontal-tb;
         letter-spacing: 3px;
+        font-size: 0.85rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 2px;
     }
 
     .hero-circle {
-        width: 280px;
-        height: 280px;
+        width: 220px;
+        height: 220px;
     }
 
     .sections-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 14px;
     }
 
     .section-card {
-        padding: 28px 20px;
+        padding: 24px 18px;
+    }
+
+    .section-card-title {
+        font-size: 1.1rem;
+    }
+
+    .section-card-desc {
+        font-size: 0.8rem;
     }
 
     .home-page .zodiac-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
+        gap: 10px;
     }
 
     .home-page .zodiac-card-image {
-        height: 100px;
-        font-size: 2.5rem;
+        height: 72px;
+        font-size: 1.8rem;
+    }
+
+    .home-page .zodiac-card-image .placeholder-image {
+        font-size: 1.8rem;
+    }
+
+    .home-page .zodiac-card-name {
+        font-size: 0.85rem;
+    }
+
+    .home-page .zodiac-card-guardian {
+        font-size: 0.7rem;
+    }
+
+    .zodiac-quick-title {
+        font-size: 1.2rem;
+        letter-spacing: 4px;
+    }
+
+    .section-heading-title {
+        font-size: 1.2rem;
+        letter-spacing: 4px;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 380px) {
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 1.6rem;
+        letter-spacing: 6px;
     }
 
     .hero-btn {
-        padding: 14px 28px;
-        font-size: 1rem;
+        padding: 10px 20px;
+        font-size: 0.85rem;
     }
 
     .home-page .zodiac-grid {
