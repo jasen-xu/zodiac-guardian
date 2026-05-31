@@ -1811,3 +1811,494 @@ body {
         font-size: 14px;
     }
 }
+
+/* ================================
+   主页改版样式 - 中国风暖色调
+   ================================ */
+
+/* 主页背景 */
+body.home-page {
+    background: linear-gradient(160deg, #1a0a0a 0%, #2d1810 40%, #1a0f08 100%);
+    min-height: 100vh;
+}
+
+/* 顶部导航 */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(26, 10, 10, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-brand {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #D4AF37;
+    text-decoration: none;
+    letter-spacing: 4px;
+    font-family: 'SimSun', 'STSong', serif;
+}
+
+.nav-links {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.nav-link:hover {
+    color: #D4AF37;
+    background: rgba(212, 175, 55, 0.08);
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.nav-toggle span {
+    width: 24px;
+    height: 2px;
+    background: #D4AF37;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.nav-mobile {
+    display: none;
+    flex-direction: column;
+    background: rgba(26, 10, 10, 0.98);
+    padding: 12px 24px 20px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.nav-mobile.active {
+    display: flex;
+}
+
+.nav-mobile-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+.nav-mobile-link:hover {
+    color: #D4AF37;
+}
+
+/* 主视觉区 */
+.hero {
+    position: relative;
+    padding: 140px 24px 80px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 4.5rem;
+    font-weight: bold;
+    color: #D4AF37;
+    letter-spacing: 16px;
+    margin-bottom: 16px;
+    font-family: 'SimSun', 'STSong', serif;
+    text-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+    animation: fadeInDown 0.8s ease-out;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 6px;
+    margin-bottom: 48px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.hero-btn-primary {
+    background: linear-gradient(135deg, #C41E3A, #D4760A);
+    color: #fff;
+    box-shadow: 0 8px 30px rgba(196, 30, 58, 0.3);
+}
+
+.hero-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(196, 30, 58, 0.4);
+}
+
+.hero-btn-secondary {
+    background: transparent;
+    color: #D4AF37;
+    border-color: rgba(212, 175, 55, 0.4);
+}
+
+.hero-btn-secondary:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: #D4AF37;
+    transform: translateY(-3px);
+}
+
+.hero-btn-icon {
+    font-size: 1.3rem;
+}
+
+.hero-decoration {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.hero-circle {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.06);
+    position: relative;
+}
+
+.hero-circle::after {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.04);
+}
+
+/* 板块入口区 */
+.sections-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+}
+
+.sections-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.section-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    border-radius: 16px;
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.section-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.section-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(212, 175, 55, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.section-card:hover::before {
+    opacity: 1;
+}
+
+.section-card-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.section-card-title {
+    font-size: 1.4rem;
+    color: #D4AF37;
+    margin-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-family: 'SimSun', 'STSong', serif;
+}
+
+.section-card-desc {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.section-card-link {
+    display: inline-block;
+    color: #D4AF37;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 24px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 25px;
+    transition: all 0.3s;
+}
+
+.section-card-link:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: #D4AF37;
+}
+
+.section-card-soon {
+    opacity: 0.6;
+}
+
+.section-card-soon .section-card-link {
+    color: rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.15);
+    cursor: default;
+}
+
+/* 生肖速查区 */
+.zodiac-quick {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+}
+
+.zodiac-quick-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #D4AF37;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+    font-family: 'SimSun', 'STSong', serif;
+}
+
+.zodiac-quick-subtitle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 40px;
+    font-size: 0.95rem;
+}
+
+/* 主页生肖卡片覆盖 */
+.home-page .zodiac-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+}
+
+.home-page .zodiac-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: all 0.3s;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.home-page .zodiac-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(212, 175, 55, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.home-page .zodiac-card-image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(196, 30, 58, 0.08));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: rgba(212, 175, 55, 0.5);
+    font-family: 'SimSun', 'STSong', serif;
+}
+
+.home-page .zodiac-card-image .placeholder-image {
+    font-size: 4rem;
+    color: rgba(212, 175, 55, 0.5);
+    font-family: 'SimSun', 'STSong', serif;
+    font-weight: bold;
+}
+
+.home-page .zodiac-card-content {
+    padding: 12px;
+    text-align: center;
+}
+
+.home-page .zodiac-card-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #D4AF37;
+    margin-bottom: 4px;
+}
+
+.home-page .zodiac-card-guardian {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.home-page .zodiac-card-blessing {
+    display: none;
+}
+
+/* 底部 */
+.site-footer {
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.footer-brand {
+    font-size: 1.5rem;
+    color: #D4AF37;
+    letter-spacing: 8px;
+    margin-bottom: 8px;
+    font-family: 'SimSun', 'STSong', serif;
+}
+
+.footer-desc {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+}
+
+.footer-copy {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 0.75rem;
+}
+
+/* 主页响应式 */
+@media (max-width: 900px) {
+    .sections-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        letter-spacing: 10px;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        letter-spacing: 3px;
+    }
+
+    .hero-circle {
+        width: 280px;
+        height: 280px;
+    }
+
+    .sections-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .section-card {
+        padding: 28px 20px;
+    }
+
+    .home-page .zodiac-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .home-page .zodiac-card-image {
+        height: 100px;
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-btn {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+
+    .home-page .zodiac-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

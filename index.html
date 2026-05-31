@@ -3,37 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>十二生肖守护神 - 祈福纳祥</title>
+    <title>易道 - 风水易学文化</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="container">
-        <header class="header">
-            <h1 class="main-title">十二生肖守护神</h1>
-            <p class="subtitle">寻找您的专属守护神，聆听梵音祝福</p>
-            
-            <div class="fortune-entrance">
-                <a href="fortune.html" class="fortune-button">
-                    <span class="fortune-icon">🎋</span>
-                    <span class="fortune-text">每日一签</span>
+<body class="home-page">
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">易道</a>
+            <div class="nav-links">
+                <a href="#zodiac" class="nav-link">生肖守护</a>
+                <a href="#wuxing" class="nav-link">五行平衡</a>
+                <a href="#caishen" class="nav-link">五路财神</a>
+                <a href="liuyao.html" class="nav-link">六爻问卦</a>
+                <a href="fortune.html" class="nav-link">每日一签</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="nav-mobile" id="navMobile">
+            <a href="#zodiac" class="nav-mobile-link">生肖守护</a>
+            <a href="#wuxing" class="nav-mobile-link">五行平衡</a>
+            <a href="#caishen" class="nav-mobile-link">五路财神</a>
+            <a href="liuyao.html" class="nav-mobile-link">六爻问卦</a>
+            <a href="fortune.html" class="nav-mobile-link">每日一签</a>
+        </div>
+    </nav>
+
+    <!-- 主视觉区 -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">易道</h1>
+            <p class="hero-subtitle">探索易学玄机，领悟人生智慧</p>
+            <div class="hero-actions">
+                <a href="fortune.html" class="hero-btn hero-btn-primary">
+                    <span class="hero-btn-icon">🎋</span>
+                    <span>每日一签</span>
                 </a>
-                <a href="liuyao.html" class="fortune-button liuyao-button">
-                    <span class="fortune-icon">🔮</span>
-                    <span class="fortune-text">六爻问卦</span>
+                <a href="liuyao.html" class="hero-btn hero-btn-secondary">
+                    <span class="hero-btn-icon">🔮</span>
+                    <span>六爻问卦</span>
                 </a>
             </div>
-        </header>
+        </div>
+        <div class="hero-decoration">
+            <div class="hero-circle"></div>
+        </div>
+    </header>
 
-        <main class="main-content">
-            <div class="zodiac-grid" id="zodiacGrid">
-                <!-- 生肖卡片将通过JavaScript动态生成 -->
+    <!-- 板块入口 -->
+    <section class="sections-wrapper">
+        <div class="sections-grid">
+            <!-- 生肖守护神 -->
+            <div class="section-card" id="zodiac">
+                <div class="section-card-icon">🐲</div>
+                <h2 class="section-card-title">生肖守护神</h2>
+                <p class="section-card-desc">十二生肖各有守护佛菩萨，查看你的专属守护神，聆听梵音祈福</p>
+                <a href="guardian.html" class="section-card-link">查看守护神 →</a>
             </div>
-        </main>
 
-        <footer class="footer">
-            <p>© 2026 十二生肖守护神 | 祈福纳祥，平安吉祥</p>
-        </footer>
-    </div>
+            <!-- 五行平衡 -->
+            <div class="section-card" id="wuxing">
+                <div class="section-card-icon">☯️</div>
+                <h2 class="section-card-title">五行平衡</h2>
+                <p class="section-card-desc">金木水火土，五行相生相克，了解你的五行属性与调理之道</p>
+                <a href="#" class="section-card-link" onclick="alert('五行平衡功能开发中，敬请期待');return false;">即将上线</a>
+            </div>
+
+            <!-- 五路财神 -->
+            <div class="section-card" id="caishen">
+                <div class="section-card-icon">💰</div>
+                <h2 class="section-card-title">五路财神</h2>
+                <p class="section-card-desc">东西南北中五路财神，查询你的本命财神与求财方位</p>
+                <a href="#" class="section-card-link" onclick="alert('五路财神功能开发中，敬请期待');return false;">即将上线</a>
+            </div>
+
+            <!-- 六爻问卦 -->
+            <div class="section-card">
+                <div class="section-card-icon">🔮</div>
+                <h2 class="section-card-title">六爻问卦</h2>
+                <p class="section-card-desc">心中默念所问之事，摇卦得出卦象，AI 为你深度解读</p>
+                <a href="liuyao.html" class="section-card-link">开始问卦 →</a>
+            </div>
+
+            <!-- 每日一签 -->
+            <div class="section-card">
+                <div class="section-card-icon">🎋</div>
+                <h2 class="section-card-title">每日一签</h2>
+                <p class="section-card-desc">每日虔诚一拜，抽取今日签文，诗词解签指点迷津</p>
+                <a href="fortune.html" class="section-card-link">抽签祈福 →</a>
+            </div>
+
+            <!-- 黄历择日（预留） -->
+            <div class="section-card section-card-soon">
+                <div class="section-card-icon">📅</div>
+                <h2 class="section-card-title">黄历择日</h2>
+                <p class="section-card-desc">每日宜忌查询，婚嫁出行搬家开业，择吉日而行</p>
+                <a href="#" class="section-card-link" onclick="alert('黄历择日功能开发中，敬请期待');return false;">即将上线</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 生肖速查 -->
+    <section class="zodiac-quick" id="zodiacQuick">
+        <h2 class="zodiac-quick-title">十二生肖速查</h2>
+        <p class="zodiac-quick-subtitle">点击你的生肖，查看守护神与运势</p>
+        <div class="zodiac-grid" id="zodiacGrid">
+            <!-- 生肖卡片通过 JavaScript 动态生成 -->
+        </div>
+    </section>
+
+    <!-- 底部 -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="footer-brand">易道</p>
+            <p class="footer-desc">传承千年易学智慧，融合现代科技呈现</p>
+            <p class="footer-copy">© 2026 易道 | 仅供文化学习与娱乐参考，不构成任何决策建议</p>
+        </div>
+    </footer>
 
     <script src="js/zodiac-data.js"></script>
     <script src="js/main.js"></script>
