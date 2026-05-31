@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (nav) {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 20) {
-                nav.style.background = 'rgba(26, 10, 10, 0.98)';
+                nav.style.background = 'rgba(240, 230, 208, 0.99)';
             } else {
-                nav.style.background = 'rgba(26, 10, 10, 0.92)';
+                nav.style.background = 'rgba(240, 230, 208, 0.95)';
             }
         });
     }
