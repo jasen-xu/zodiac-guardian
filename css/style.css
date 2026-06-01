@@ -1447,6 +1447,84 @@ body {
     line-height: 2;
 }
 
+/* 微信二维码联系区域 */
+.contact-qrcode-section {
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
+}
+
+.contact-divider-line {
+    width: 40px;
+    height: 2px;
+    background: #D4AF37;
+    margin: 0 auto 20px;
+}
+
+.contact-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+}
+
+.contact-desc {
+    font-size: 0.85rem;
+    color: #888;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.contact-qrcode-box {
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.qrcode-placeholder {
+    width: 160px;
+    height: 160px;
+    background: #fff;
+    border: 2px dashed #DCD2C0;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto;
+}
+
+.qrcode-icon {
+    font-size: 2.5rem;
+}
+
+.qrcode-hint {
+    font-size: 0.75rem;
+    color: #aaa;
+    letter-spacing: 1px;
+}
+
+.qrcode-image {
+    width: 160px;
+    height: 160px;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.contact-wechat-id {
+    font-size: 0.8rem;
+    color: #999;
+    letter-spacing: 1px;
+}
+
 .redivine-button {
     display: block;
     width: 100%;
