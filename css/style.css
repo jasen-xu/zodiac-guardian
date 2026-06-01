@@ -476,6 +476,201 @@ body {
     }
 }
 
+/* ==================== 文创雅集页面样式 ==================== */
+
+.wenchuang-page {
+    min-height: 100vh;
+    background-color: #F9F6F0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    padding-top: 64px;
+}
+
+.wenchuang-hero {
+    text-align: center;
+    padding: 60px 24px 40px;
+    animation: fadeIn 1.2s ease-out;
+}
+
+.wenchuang-hero-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    letter-spacing: 10px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    margin-bottom: 8px;
+}
+
+.wenchuang-hero-slogan {
+    font-size: 1.1rem;
+    color: #D4AF37;
+    letter-spacing: 6px;
+    margin-bottom: 20px;
+    font-family: 'STKaiti', 'KaiTi', serif;
+}
+
+.wenchuang-hero-desc {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.8;
+    max-width: 500px;
+    margin: 0 auto;
+    letter-spacing: 1px;
+}
+
+/* 品类筛选 */
+.wenchuang-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 24px 50px;
+}
+
+.wenchuang-filter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.wenchuang-filter-btn {
+    padding: 8px 22px;
+    font-size: 0.9rem;
+    color: #666;
+    background: transparent;
+    border: 1px solid #DCD2C0;
+    border-radius: 20px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    font-family: 'STKaiti', 'KaiTi', serif;
+}
+
+.wenchuang-filter-btn:hover {
+    border-color: #D4AF37;
+    color: #D4AF37;
+}
+
+.wenchuang-filter-btn.active {
+    background: #D4AF37;
+    border-color: #D4AF37;
+    color: #fff;
+}
+
+/* 产品网格 */
+.wenchuang-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* 产品卡片 */
+.wenchuang-card {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.4s, box-shadow 0.4s;
+    animation: fadeIn 1.2s ease-out;
+}
+
+.wenchuang-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.wenchuang-card-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.wenchuang-card-image .card-series-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.7rem;
+    color: #fff;
+    background: #BC2C24;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+}
+
+.wenchuang-card-body {
+    padding: 16px;
+}
+
+.wenchuang-card-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+    font-family: 'SimSun', 'STSong', serif;
+}
+
+.wenchuang-card-desc {
+    font-size: 0.8rem;
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    min-height: 2.6em;
+}
+
+.wenchuang-card-price {
+    font-size: 1rem;
+    color: #D4AF37;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.wenchuang-card-link {
+    display: inline-block;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    color: #fff;
+    background: #D4AF37;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+}
+
+.wenchuang-card-link:hover {
+    background: #C49B2F;
+}
+
+/* 品牌理念 */
+.wenchuang-philosophy {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 24px 50px;
+    text-align: center;
+}
+
+.wenchuang-philosophy-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    letter-spacing: 8px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+}
+
+.wenchuang-philosophy-text {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 2.2;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    font-family: 'STKaiti', 'KaiTi', serif;
+}
+
 /* 响应式设计 - 优先移动端 */
 @media (max-width: 768px) {
     /* 手机端全屏模式 */
@@ -3985,6 +4180,39 @@ body.home-page {
 
     .fortune-container {
         padding: 50px 18px 30px;
+    }
+
+    /* 文创雅集移动端 */
+    .wenchuang-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .wenchuang-hero-title {
+        font-size: 1.6rem;
+        letter-spacing: 6px;
+    }
+
+    .wenchuang-hero-slogan {
+        font-size: 0.95rem;
+        letter-spacing: 4px;
+    }
+
+    .wenchuang-filter-btn {
+        padding: 6px 16px;
+        font-size: 0.8rem;
+    }
+
+    .wenchuang-card-body {
+        padding: 12px;
+    }
+
+    .wenchuang-card-name {
+        font-size: 0.9rem;
+    }
+
+    .wenchuang-card-desc {
+        font-size: 0.75rem;
     }
 }
 

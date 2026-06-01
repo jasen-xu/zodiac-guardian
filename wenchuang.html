@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文创雅集 - 易道</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="wenchuang-page">
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">易道</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">返回首页</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <header class="wenchuang-hero">
+        <h1 class="wenchuang-hero-title">文创雅集</h1>
+        <div class="gold-line" style="margin:12px auto;"></div>
+        <p class="wenchuang-hero-slogan">以器载道，以物传心</p>
+        <p class="wenchuang-hero-desc">匠心手作，融古意于今用。甄选祈福饰品、文化艺术品与风水雅器，让传统文化融入日常生活</p>
+    </header>
+
+    <div class="cloud-divider">☁ ☁ ☁</div>
+
+    <!-- 品类筛选 -->
+    <section class="wenchuang-section">
+        <div class="wenchuang-filter">
+            <button class="wenchuang-filter-btn active" data-category="all" onclick="filterProducts('all', this)">全部</button>
+            <button class="wenchuang-filter-btn" data-category="prayer" onclick="filterProducts('prayer', this)">祈愿系列</button>
+            <button class="wenchuang-filter-btn" data-category="art" onclick="filterProducts('art', this)">墨韵系列</button>
+            <button class="wenchuang-filter-btn" data-category="fengshui" onclick="filterProducts('fengshui', this)">堪舆系列</button>
+        </div>
+
+        <!-- 产品网格 -->
+        <div class="wenchuang-grid" id="wenchuangGrid">
+            <!-- 产品卡片通过 JS 动态生成 -->
+        </div>
+    </section>
+
+    <div class="cloud-divider">☁ ☁ ☁</div>
+
+    <!-- 品牌理念 -->
+    <section class="wenchuang-philosophy">
+        <h2 class="wenchuang-philosophy-title">匠心理念</h2>
+        <div class="gold-line" style="margin:12px auto;"></div>
+        <p class="wenchuang-philosophy-text">
+            每一件文创产品，都是传统文化的当代诠释。我们深入经典，寻访匠人，以敬畏之心甄选每一件器物——<br>
+            从千年古刹的开光法器，到文人书房的雅致清供；从护佑平安的随身佩饰，到调和风水镇宅的铜器摆件。<br>
+            器以载道，物以传心。愿这些承载千年智慧的文创雅物，成为连接古今的桥梁，安顿当下的心灵。
+        </p>
+    </section>
+
+    <div class="cloud-divider">☁ ☁ ☁</div>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="footer-brand">易道</p>
+            <p class="footer-desc">传承千年易学智慧，融合现代科技呈现</p>
+            <p class="footer-copy">© 2026 易道 | 仅供文化学习与娱乐参考，不构成任何决策建议</p>
+        </div>
+    </footer>
+
+    <script src="js/wenchuang-data.js"></script>
+</body>
+</html>
