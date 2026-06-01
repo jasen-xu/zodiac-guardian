@@ -2404,7 +2404,7 @@ body.home-page {
    东方境·人居 页面样式
    ============================ */
 .renju-page {
-    background-color: #F5F7FA;
+    background-color: #F7F8FB;
     min-height: 100vh;
     font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
 }
@@ -2492,11 +2492,11 @@ body.home-page {
 }
 
 .renju-hero-title {
-    font-size: 2.6rem;
+    font-size: 2.4rem;
     color: #1A1A1A;
     font-weight: 300;
-    line-height: 1.5;
-    letter-spacing: 4px;
+    line-height: 1.6;
+    letter-spacing: 6px;
     margin-bottom: 20px;
     font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
@@ -3154,13 +3154,13 @@ body.home-page {
 }
 
 .zuting-hero-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
     color: #2A2A2A;
-    font-weight: 400;
-    line-height: 1.7;
+    font-weight: 600;
+    line-height: 1.8;
     letter-spacing: 6px;
     margin-bottom: 20px;
-    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    font-family: 'SimSun', 'STSong', 'KaiTi', 'STKaiti', 'Noto Serif SC', serif;
 }
 
 .zuting-hero-line {
@@ -3240,7 +3240,7 @@ body.home-page {
     color: #2A2A2A;
     letter-spacing: 8px;
     margin-bottom: 14px;
-    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    font-family: 'SimSun', 'STSong', 'KaiTi', 'STKaiti', 'Noto Serif SC', serif;
     font-weight: 600;
 }
 
@@ -3279,7 +3279,7 @@ body.home-page {
     color: #2A2A2A;
     letter-spacing: 4px;
     margin-bottom: 14px;
-    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    font-family: 'SimSun', 'STSong', 'KaiTi', 'STKaiti', 'Noto Serif SC', serif;
 }
 
 .zuting-survey-desc {
@@ -3530,7 +3530,7 @@ body.home-page {
     color: #2A2A2A;
     letter-spacing: 4px;
     margin-bottom: 14px;
-    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    font-family: 'SimSun', 'STSong', 'KaiTi', 'STKaiti', 'Noto Serif SC', serif;
 }
 
 .zuting-heritage-desc {
