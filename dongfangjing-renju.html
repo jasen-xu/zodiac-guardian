@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>东方境·人居 - 环境风水美学</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="renju-page">
+    <!-- 顶部导航 -->
+    <nav class="renju-nav">
+        <div class="renju-nav-inner">
+            <a href="index.html" class="renju-nav-brand">易道</a>
+            <div class="renju-nav-links">
+                <a href="index.html" class="renju-nav-link">返回首页</a>
+                <a href="dongfangjing-zuting.html" class="renju-nav-link">祖庭文化</a>
+                <a href="#booking" class="renju-nav-link">预约服务</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <header class="renju-hero">
+        <div class="renju-hero-bg"></div>
+        <div class="renju-hero-content">
+            <p class="renju-hero-tag">东方境 · 人居</p>
+            <h1 class="renju-hero-title">科学视角<br>重新定义居住美学</h1>
+            <div class="renju-hero-line"></div>
+            <p class="renju-hero-desc">融合环境心理学与传统风水智慧，以科学方法分析空间能量，<br>打造健康、舒适、充满正能量的理想居所</p>
+            <a href="#assessment" class="renju-hero-btn">免费测评您的空间 →</a>
+        </div>
+        <div class="renju-hero-decoration">
+            <div class="renju-hero-circle renju-hero-circle-1"></div>
+            <div class="renju-hero-circle renju-hero-circle-2"></div>
+            <div class="renju-hero-circle renju-hero-circle-3"></div>
+        </div>
+    </header>
+
+    <!-- 智能测评工具 -->
+    <section class="renju-section" id="assessment">
+        <div class="renju-section-inner">
+            <div class="renju-section-header">
+                <p class="renju-section-tag">SMART ANALYSIS</p>
+                <h2 class="renju-section-title">智能空间测评</h2>
+                <p class="renju-section-desc">输入基本信息，AI 为您生成采光、通风、动线分析报告</p>
+            </div>
+            <div class="renju-assessment-box">
+                <div class="renju-form-grid">
+                    <div class="renju-form-group">
+                        <label class="renju-label">房屋面积</label>
+                        <select class="renju-select" id="renjuArea">
+                            <option value="">请选择</option>
+                            <option value="60">60㎡以下</option>
+                            <option value="90">60-90㎡</option>
+                            <option value="120">90-120㎡</option>
+                            <option value="150">120-150㎡</option>
+                            <option value="200">150㎡以上</option>
+                        </select>
+                    </div>
+                    <div class="renju-form-group">
+                        <label class="renju-label">主要朝向</label>
+                        <select class="renju-select" id="renjuDirection">
+                            <option value="">请选择</option>
+                            <option value="south">朝南</option>
+                            <option value="north">朝北</option>
+                            <option value="east">朝东</option>
+                            <option value="west">朝西</option>
+                            <option value="south-north">南北通透</option>
+                        </select>
+                    </div>
+                    <div class="renju-form-group">
+                        <label class="renju-label">楼层</label>
+                        <select class="renju-select" id="renjuFloor">
+                            <option value="">请选择</option>
+                            <option value="low">低层（1-6）</option>
+                            <option value="mid">中层（7-15）</option>
+                            <option value="high">高层（16+）</option>
+                        </select>
+                    </div>
+                    <div class="renju-form-group">
+                        <label class="renju-label">户型</label>
+                        <select class="renju-select" id="renjuLayout">
+                            <option value="">请选择</option>
+                            <option value="1r">一居室</option>
+                            <option value="2r">两居室</option>
+                            <option value="3r">三居室</option>
+                            <option value="4r">四居室及以上</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="renju-form-action">
+                    <button class="renju-submit-btn" onclick="runAssessment()">获取分析报告</button>
+                </div>
+                <div class="renju-result-box" id="renjuResult" style="display:none;">
+                    <h3 class="renju-result-title">📊 空间分析摘要</h3>
+                    <div class="renju-result-content" id="renjuResultContent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务场景展示 -->
+    <section class="renju-section renju-section-alt" id="services">
+        <div class="renju-section-inner">
+            <div class="renju-section-header">
+                <p class="renju-section-tag">OUR SERVICES</p>
+                <h2 class="renju-section-title">专业服务场景</h2>
+                <p class="renju-section-desc">从选址到入住，全链路环境美学服务</p>
+            </div>
+            <div class="renju-services-grid">
+                <div class="renju-service-card">
+                    <div class="renju-service-icon">🔍</div>
+                    <h3 class="renju-service-title">选址分析</h3>
+                    <p class="renju-service-desc">综合地理环境、周边配套、社区气场，运用专业工具评估候选地块与楼盘，帮您找到最适合的居住方位</p>
+                    <ul class="renju-service-list">
+                        <li>地理磁场检测</li>
+                        <li>日照轨迹模拟</li>
+                        <li>周边环境能量评估</li>
+                    </ul>
+                </div>
+                <div class="renju-service-card renju-service-card-featured">
+                    <div class="renju-service-badge">热门</div>
+                    <div class="renju-service-icon">🏠</div>
+                    <h3 class="renju-service-title">空间布局</h3>
+                    <p class="renju-service-desc">根据户型结构与居住者五行属性，优化空间动线、功能分区与家具摆放，提升整体居住能量场</p>
+                    <ul class="renju-service-list">
+                        <li>动线优化设计</li>
+                        <li>五行能量布局</li>
+                        <li>财位/桃花位激活</li>
+                    </ul>
+                </div>
+                <div class="renju-service-card">
+                    <div class="renju-service-icon">🎨</div>
+                    <h3 class="renju-service-title">软装搭配</h3>
+                    <p class="renju-service-desc">结合色彩心理学与五行配色理论，精选窗帘、挂画、绿植、摆件等软装元素，营造和谐氛围</p>
+                    <ul class="renju-service-list">
+                        <li>色彩方案定制</li>
+                        <li>风水摆件推荐</li>
+                        <li>季节轮转调整</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 空间美学百科 -->
+    <section class="renju-section" id="wiki">
+        <div class="renju-section-inner">
+            <div class="renju-section-header">
+                <p class="renju-section-tag">KNOWLEDGE BASE</p>
+                <h2 class="renju-section-title">空间美学百科</h2>
+                <p class="renju-section-desc">用环境心理学解读传统风水，让知识为你的家赋能</p>
+            </div>
+            <div class="renju-articles-grid">
+                <div class="renju-article-card">
+                    <div class="renju-article-cover renju-article-cover-1">
+                        <div class="renju-article-cover-text">采光的科学</div>
+                    </div>
+                    <div class="renju-article-body">
+                        <span class="renju-article-tag">环境心理学</span>
+                        <h3 class="renju-article-title">为什么"坐北朝南"不只是风水？</h3>
+                        <p class="renju-article-desc">从日照角度、维生素D合成到心理健康，解读传统朝向观念背后的科学逻辑。自然光不仅影响体温调节，更与褪黑素分泌密切相关...</p>
+                        <a href="javascript:void(0)" class="renju-article-link" onclick="alert('文章详情页开发中，敬请期待')">阅读全文 →</a>
+                    </div>
+                </div>
+                <div class="renju-article-card">
+                    <div class="renju-article-cover renju-article-cover-2">
+                        <div class="renju-article-cover-text">气场与动线</div>
+                    </div>
+                    <div class="renju-article-body">
+                        <span class="renju-article-tag">空间能量</span>
+                        <h3 class="renju-article-title">"藏风聚气"的现代解读</h3>
+                        <p class="renju-article-desc">空气流动、负离子浓度与人体舒适度的关系。传统风水所说的"气"，在环境科学中对应哪些物理指标？</p>
+                        <a href="javascript:void(0)" class="renju-article-link" onclick="alert('文章详情页开发中，敬请期待')">阅读全文 →</a>
+                    </div>
+                </div>
+                <div class="renju-article-card">
+                    <div class="renju-article-cover renju-article-cover-3">
+                        <div class="renju-article-cover-text">色彩与五行</div>
+                    </div>
+                    <div class="renju-article-body">
+                        <span class="renju-article-tag">色彩心理学</span>
+                        <h3 class="renju-article-title">五行配色的科学依据</h3>
+                        <p class="renju-article-desc">金白、木青、水黑、火赤、土黄的色彩体系，如何在现代家居设计中既遵循风水原则又满足审美需求？</p>
+                        <a href="javascript:void(0)" class="renju-article-link" onclick="alert('文章详情页开发中，敬请期待')">阅读全文 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 预约与交付系统 -->
+    <section class="renju-section renju-section-alt" id="booking">
+        <div class="renju-section-inner">
+            <div class="renju-section-header">
+                <p class="renju-section-tag">BOOK A SESSION</p>
+                <h2 class="renju-section-title">预约专业服务</h2>
+                <p class="renju-section-desc">选择您需要的服务类型，我们将在24小时内与您联系</p>
+            </div>
+            <div class="renju-booking-box">
+                <div class="renju-booking-types" id="bookingTypes">
+                    <div class="renju-booking-type active" data-type="selection" onclick="selectBookingType(this)">
+                        <span class="renju-booking-type-icon">🔍</span>
+                        <span>选址分析</span>
+                    </div>
+                    <div class="renju-booking-type" data-type="layout" onclick="selectBookingType(this)">
+                        <span class="renju-booking-type-icon">🏠</span>
+                        <span>空间布局</span>
+                    </div>
+                    <div class="renju-booking-type" data-type="decor" onclick="selectBookingType(this)">
+                        <span class="renju-booking-type-icon">🎨</span>
+                        <span>软装搭配</span>
+                    </div>
+                </div>
+                <div class="renju-booking-form">
+                    <div class="renju-form-group">
+                        <label class="renju-label">您的称呼</label>
+                        <input type="text" class="renju-input" placeholder="请输入您的姓名" id="bookingName">
+                    </div>
+                    <div class="renju-form-group">
+                        <label class="renju-label">联系方式</label>
+                        <input type="tel" class="renju-input" placeholder="请输入手机号码" id="bookingPhone">
+                    </div>
+                    <div class="renju-form-group renju-form-group-full">
+                        <label class="renju-label">需求描述</label>
+                        <textarea class="renju-textarea" placeholder="请简要描述您的需求，如房屋面积、所在城市、希望解决的问题等" id="bookingDesc" rows="4"></textarea>
+                    </div>
+                    <div class="renju-form-action">
+                        <button class="renju-submit-btn" onclick="submitBooking()">提交预约</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="renju-footer">
+        <div class="renju-footer-inner">
+            <div class="renju-footer-brand">东方境 · 人居</div>
+            <p class="renju-footer-desc">传承东方智慧，科学诠释居住美学</p>
+            <div class="renju-footer-links">
+                <a href="index.html">返回首页</a>
+                <span>·</span>
+                <a href="dongfangjing-zuting.html">祖庭文化</a>
+            </div>
+            <p class="renju-footer-copy">© 2026 易道 | 仅供文化学习与参考</p>
+        </div>
+    </footer>
+
+    <script>
+    // 智能测评模拟
+    function runAssessment() {
+        const area = document.getElementById('renjuArea').value;
+        const direction = document.getElementById('renjuDirection').value;
+        const floor = document.getElementById('renjuFloor').value;
+        const layout = document.getElementById('renjuLayout').value;
+
+        if (!area || !direction || !floor || !layout) {
+            alert('请完整填写所有选项后再提交');
+            return;
+        }
+
+        const dirMap = { south: '朝南', north: '朝北', east: '朝东', west: '朝西', 'south-north': '南北通透' };
+        const floorMap = { low: '低层', mid: '中层', high: '高层' };
+
+        const lightScore = direction === 'south' || direction === 'south-north' ? 92 : direction === 'east' ? 85 : 68;
+        const ventScore = direction === 'south-north' ? 95 : 78;
+        const flowScore = layout === '3r' || layout === '4r' ? 88 : layout === '2r' ? 82 : 75;
+        const energyScore = floor === 'high' ? 90 : floor === 'mid' ? 85 : 78;
+
+        const html = `
+            <div class="renju-result-grid">
+                <div class="renju-result-item">
+                    <div class="renju-result-score" style="color:#4CAF50">${lightScore}</div>
+                    <div class="renju-result-label">采光指数</div>
+                    <div class="renju-result-bar"><div class="renju-result-fill" style="width:${lightScore}%;background:#4CAF50"></div></div>
+                </div>
+                <div class="renju-result-item">
+                    <div class="renju-result-score" style="color:#2196F3">${ventScore}</div>
+                    <div class="renju-result-label">通风指数</div>
+                    <div class="renju-result-bar"><div class="renju-result-fill" style="width:${ventScore}%;background:#2196F3"></div></div>
+                </div>
+                <div class="renju-result-item">
+                    <div class="renju-result-score" style="color:#FF9800">${flowScore}</div>
+                    <div class="renju-result-label">动线指数</div>
+                    <div class="renju-result-bar"><div class="renju-result-fill" style="width:${flowScore}%;background:#FF9800"></div></div>
+                </div>
+                <div class="renju-result-item">
+                    <div class="renju-result-score" style="color:#D4AF37">${energyScore}</div>
+                    <div class="renju-result-label">能量指数</div>
+                    <div class="renju-result-bar"><div class="renju-result-fill" style="width:${energyScore}%;background:#D4AF37"></div></div>
+                </div>
+            </div>
+            <p class="renju-result-note">以上为基于基本信息的初步分析，完整报告需预约专业顾问进行实地勘测。</p>
+            <a href="#booking" class="renju-result-cta">预约深度分析 →</a>
+        `;
+
+        document.getElementById('renjuResultContent').innerHTML = html;
+        document.getElementById('renjuResult').style.display = 'block';
+        document.getElementById('renjuResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // 预约类型选择
+    function selectBookingType(el) {
+        document.querySelectorAll('.renju-booking-type').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    // 提交预约模拟
+    function submitBooking() {
+        const name = document.getElementById('bookingName').value.trim();
+        const phone = document.getElementById('bookingPhone').value.trim();
+        const desc = document.getElementById('bookingDesc').value.trim();
+        if (!name || !phone) {
+            alert('请填写称呼和联系方式');
+            return;
+        }
+        alert(`预约提交成功！\n\n${name}，感谢您的信任。\n我们将在24小时内与您联系，请保持手机畅通。`);
+        document.getElementById('bookingName').value = '';
+        document.getElementById('bookingPhone').value = '';
+        document.getElementById('bookingDesc').value = '';
+    }
+
+    // 导航滚动效果
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.querySelector('.renju-nav');
+        if (nav) {
+            window.addEventListener('scroll', () => {
+                nav.style.background = window.scrollY > 20 ? 'rgba(245,247,250,0.99)' : 'rgba(245,247,250,0.95)';
+                nav.style.boxShadow = window.scrollY > 20 ? '0 2px 12px rgba(0,0,0,0.06)' : 'none';
+            });
+        }
+        // 平滑滚动
+        document.querySelectorAll('.renju-nav-link[href^="#"], .renju-result-cta').forEach(a => {
+            a.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+                        window.scrollTo({ top, behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
