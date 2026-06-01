@@ -7,7 +7,44 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="guardian-page">
+    <!-- 生肖选择列表页（无 id 参数时显示） -->
+    <div class="guardian-list-page" id="guardianListPage">
+        <nav class="top-nav">
+            <div class="nav-inner">
+                <a href="index.html" class="nav-brand">易道</a>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">返回首页</a>
+                </div>
+            </div>
+        </nav>
+
+        <header class="guardian-list-header">
+            <h1 class="guardian-list-title">十二生肖守护神</h1>
+            <div class="gold-line"></div>
+            <p class="guardian-list-subtitle">选择你的生肖，查看专属守护佛菩萨</p>
+        </header>
+
+        <div class="cloud-divider">☁ ☁ ☁</div>
+
+        <main class="guardian-list-main">
+            <div class="guardian-zodiac-grid" id="guardianZodiacGrid">
+                <!-- 生肖卡片通过 JavaScript 动态生成 -->
+            </div>
+        </main>
+
+        <div class="cloud-divider">☁ ☁ ☁</div>
+
+        <footer class="site-footer">
+            <div class="footer-content">
+                <p class="footer-brand">易道</p>
+                <p class="footer-desc">传承千年易学智慧，融合现代科技呈现</p>
+                <p class="footer-copy">© 2026 易道 | 仅供文化学习与娱乐参考，不构成任何决策建议</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 守护神详情页（有 id 参数时显示） -->
+    <div class="guardian-page" id="guardianDetailPage" style="display:none;">
         <div class="image-full-container">
             <img id="guardianImage" src="" alt="守护神图片" class="guardian-image-full">
             
@@ -29,6 +66,11 @@
             </div>
         </div>
         
+        <!-- 返回按钮 -->
+        <div class="guardian-back-btn">
+            <a href="guardian.html" class="guardian-back-link">← 返回生肖列表</a>
+        </div>
+
         <!-- 每日一签入口 -->
         <div class="fortune-entrance-bottom">
             <a href="fortune.html" class="fortune-button-bottom">

@@ -1,57 +1,89 @@
 // 页面加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
-    loadGuardianDetails();
-});
-
-// 加载守护神详情
-function loadGuardianDetails() {
-    // 获取URL参数
     const urlParams = new URLSearchParams(window.location.search);
     const zodiacId = urlParams.get('id');
-    
-    // 查找对应的生肖数据
+
+    if (zodiacId) {
+        // 有 id 参数 → 显示详情页
+        showDetailPage(zodiacId);
+    } else {
+        // 无 id 参数 → 显示列表页
+        showListPage();
+    }
+});
+
+// 显示生肖选择列表页
+function showListPage() {
+    const listPage = document.getElementById('guardianListPage');
+    const detailPage = document.getElementById('guardianDetailPage');
+    listPage.style.display = 'block';
+    detailPage.style.display = 'none';
+    document.title = '生肖守护神 - 易道';
+
+    const grid = document.getElementById('guardianZodiacGrid');
+    zodiacData.forEach((zodiac, index) => {
+        const card = document.createElement('a');
+        card.href = `guardian.html?id=${zodiac.id}`;
+        card.className = 'guardian-zodiac-card';
+        card.style.animationDelay = `${index * 0.06}s`;
+
+        card.innerHTML = `
+            <div class="guardian-zodiac-image">
+                <img src="${zodiac.image}" alt="生肖${zodiac.name}" onerror="this.style.display='none';this.parentNode.querySelector('.zodiac-fallback').style.display='flex';">
+                <div class="zodiac-fallback">${zodiac.name}</div>
+            </div>
+            <div class="guardian-zodiac-info">
+                <div class="guardian-zodiac-name">生肖${zodiac.name}</div>
+                <div class="guardian-zodiac-guardian">${zodiac.guardian}</div>
+                <div class="guardian-zodiac-blessing">${zodiac.blessing}</div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+// 显示守护神详情页
+function showDetailPage(zodiacId) {
+    const listPage = document.getElementById('guardianListPage');
+    const detailPage = document.getElementById('guardianDetailPage');
+    listPage.style.display = 'none';
+    detailPage.style.display = 'block';
+
     const zodiac = zodiacData.find(z => z.id === zodiacId);
-    
+
     if (!zodiac) {
         alert('未找到该生肖守护神');
-        window.location.href = 'index.html';
+        window.location.href = 'guardian.html';
         return;
     }
-    
-    // 更新页面标题
-    document.title = `${zodiac.name} - ${zodiac.guardian} | 十二生肖守护神`;
-    
-    // 更新页面内容 - 分两列显示
+
+    document.title = `${zodiac.name} - ${zodiac.guardian} | 生肖守护神`;
+
+    // 更新祝福文字 - 分两列
     const blessingText = zodiac.blessing;
-    const descriptionText = zodiac.description;
-    
-    // 将祝福文字分成两列
     const blessingHalf = Math.ceil(blessingText.length / 2);
     document.getElementById('blessingCol1').textContent = blessingText.substring(0, blessingHalf);
     document.getElementById('blessingCol2').textContent = blessingText.substring(blessingHalf);
-    
-    // 将说明文字分成两列
+
+    // 更新说明文字 - 分两列
+    const descriptionText = zodiac.description;
     const descHalf = Math.ceil(descriptionText.length / 2);
     document.getElementById('descriptionCol1').textContent = descriptionText.substring(0, descHalf);
     document.getElementById('descriptionCol2').textContent = descriptionText.substring(descHalf);
-    
+
     // 设置图片
     const imgElement = document.getElementById('guardianImage');
     imgElement.src = zodiac.image;
     imgElement.alt = `${zodiac.guardian} - ${zodiac.name}之守护神`;
-    
-    // 图片加载失败时显示提示
     imgElement.onerror = function() {
         alert('图片加载失败，请检查图片文件是否存在');
     };
-    
+
     // 设置音频并自动播放
     const audioPlayer = document.getElementById('audioPlayer');
     const audioSource = document.getElementById('audioSource');
     audioSource.src = zodiac.audio;
     audioPlayer.load();
-    
-    // 尝试自动播放
     audioPlayer.play().catch(function(error) {
         console.log('自动播放被浏览器阻止，需要用户交互后才能播放:', error);
     });

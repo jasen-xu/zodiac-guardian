@@ -2207,40 +2207,52 @@ body.home-page {
     cursor: default;
 }
 
-/* 生肖速查区 */
-.zodiac-quick {
+/* 守护神列表页 */
+.guardian-list-page {
+    background-color: #F9F6F0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    min-height: 100vh;
+}
+
+.guardian-list-header {
     max-width: 900px;
     margin: 0 auto;
-    padding: 50px 24px 70px;
+    padding: 100px 24px 30px;
+    text-align: center;
 }
 
-.zodiac-quick-title {
-    text-align: center;
-    font-size: 1.5rem;
+.guardian-list-title {
+    font-size: 1.8rem;
     color: #1A1A1A;
-    letter-spacing: 8px;
-    margin-bottom: 10px;
+    letter-spacing: 12px;
+    margin-bottom: 12px;
     font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
     font-weight: 600;
+    animation: fadeInDown 1.2s ease-out;
 }
 
-.zodiac-quick-subtitle {
-    text-align: center;
-    color: #999;
-    margin-bottom: 36px;
-    font-size: 0.85rem;
-    letter-spacing: 2px;
+.guardian-list-subtitle {
+    color: #666;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    margin-top: 12px;
+    animation: fadeInUp 1.2s ease-out;
 }
 
-/* 主页生肖卡片覆盖 */
-.home-page .zodiac-grid {
+.guardian-list-main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 24px 50px;
+}
+
+.guardian-zodiac-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
 }
 
-.home-page .zodiac-card {
-    background: rgba(255, 255, 255, 0.3);
+.guardian-zodiac-card {
+    background: rgba(255, 255, 255, 0.4);
     border: 1px solid #DCD2C0;
     border-radius: 8px;
     overflow: hidden;
@@ -2251,54 +2263,91 @@ body.home-page {
     animation: fadeInUp 0.8s ease-out;
 }
 
-.home-page .zodiac-card:hover {
+.guardian-zodiac-card:hover {
     background: rgba(255, 255, 255, 0.7);
     border-color: #D4AF37;
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
-.home-page .zodiac-card-image {
+.guardian-zodiac-image {
     width: 100%;
-    height: 100px;
-    object-fit: cover;
+    height: 140px;
+    overflow: hidden;
+    position: relative;
     background: linear-gradient(135deg, #F5EDE0, #EDE4D3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.8rem;
-    color: #1A1A1A;
-    font-family: 'SimSun', 'STSong', serif;
 }
 
-.home-page .zodiac-card-image .placeholder-image {
-    font-size: 2.8rem;
+.guardian-zodiac-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.guardian-zodiac-image .zodiac-fallback {
+    display: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
     color: #1A1A1A;
     font-family: 'SimSun', 'STSong', serif;
     font-weight: bold;
 }
 
-.home-page .zodiac-card-content {
-    padding: 10px 8px;
+.guardian-zodiac-info {
+    padding: 14px 12px;
     text-align: center;
 }
 
-.home-page .zodiac-card-name {
-    font-size: 0.95rem;
-    font-weight: bold;
+.guardian-zodiac-name {
+    font-size: 1rem;
+    font-weight: 600;
     color: #1A1A1A;
-    margin-bottom: 3px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    margin-bottom: 4px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
 
-.home-page .zodiac-card-guardian {
+.guardian-zodiac-guardian {
+    font-size: 0.8rem;
+    color: #D4AF37;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+
+.guardian-zodiac-blessing {
     font-size: 0.75rem;
     color: #999;
-    letter-spacing: 1px;
+    line-height: 1.6;
 }
 
-.home-page .zodiac-card-blessing {
-    display: none;
+/* 详情页返回按钮 */
+.guardian-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.guardian-back-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid #DCD2C0;
+    border-radius: 6px;
+    color: #1A1A1A;
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    backdrop-filter: blur(6px);
+}
+
+.guardian-back-link:hover {
+    border-color: #D4AF37;
+    color: #D4AF37;
 }
 
 /* 底部 */
@@ -2334,14 +2383,14 @@ body.home-page {
     letter-spacing: 1px;
 }
 
-/* 主页响应式 */
+/* 响应式 */
 @media (max-width: 900px) {
     .sections-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .home-page .zodiac-grid {
-        grid-template-columns: repeat(4, 1fr);
+    .guardian-zodiac-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .seal-stamp {
@@ -2400,36 +2449,36 @@ body.home-page {
         font-size: 0.8rem;
     }
 
-    .home-page .zodiac-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+    .guardian-zodiac-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
 
-    .home-page .zodiac-card-image {
-        height: 72px;
-        font-size: 1.8rem;
+    .guardian-zodiac-image {
+        height: 110px;
     }
 
-    .home-page .zodiac-card-image .placeholder-image {
-        font-size: 1.8rem;
+    .guardian-zodiac-name {
+        font-size: 0.9rem;
     }
 
-    .home-page .zodiac-card-name {
-        font-size: 0.85rem;
+    .guardian-list-header {
+        padding: 90px 20px 20px;
     }
 
-    .home-page .zodiac-card-guardian {
-        font-size: 0.7rem;
-    }
-
-    .zodiac-quick-title {
-        font-size: 1.2rem;
-        letter-spacing: 4px;
+    .guardian-list-title {
+        font-size: 1.4rem;
+        letter-spacing: 8px;
     }
 
     .section-heading-title {
         font-size: 1.2rem;
         letter-spacing: 4px;
+    }
+
+    .guardian-back-link {
+        font-size: 0.8rem;
+        padding: 6px 12px;
     }
 }
 
@@ -2444,7 +2493,12 @@ body.home-page {
         font-size: 0.85rem;
     }
 
-    .home-page .zodiac-grid {
+    .guardian-zodiac-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .guardian-zodiac-image {
+        height: 90px;
     }
 }
