@@ -583,38 +583,36 @@ body {
 /* 每日一签页面样式 */
 .fortune-page {
     min-height: 100vh;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6347 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+    background-color: #F9F6F0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    padding-top: 64px;
 }
 
 .fortune-container {
     max-width: 600px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 30px;
-    padding: 40px 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    text-align: center;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
 }
 
 .fortune-header {
     margin-bottom: 40px;
+    text-align: center;
 }
 
 .fortune-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #FF6347;
-    margin-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 8px;
+    letter-spacing: 8px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
 
 .fortune-date {
-    font-size: 1.1rem;
-    color: #666;
+    font-size: 0.9rem;
+    color: #888;
+    letter-spacing: 2px;
 }
 
 .fortune-content {
@@ -635,27 +633,29 @@ body {
 }
 
 .shake-text {
-    font-size: 1.3rem;
-    color: #666;
+    font-size: 1rem;
+    color: #888;
     margin-bottom: 30px;
+    letter-spacing: 2px;
 }
 
 .draw-button {
-    padding: 18px 50px;
-    font-size: 1.3rem;
-    font-weight: bold;
+    padding: 14px 40px;
+    font-size: 1rem;
+    font-weight: 600;
     color: #fff;
-    background: linear-gradient(135deg, #FF6347 0%, #FF4500 100%);
+    background: #D4AF37;
     border: none;
-    border-radius: 50px;
+    border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 8px 25px rgba(255, 99, 71, 0.4);
-    transition: all 0.3s ease;
+    letter-spacing: 3px;
+    transition: all 0.4s;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
 .draw-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(255, 99, 71, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
 }
 
 .draw-button:disabled {
@@ -672,34 +672,37 @@ body {
 }
 
 .fortune-level {
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1A1A1A;
     margin-bottom: 20px;
     padding: 15px;
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 15px;
+    background: rgba(212, 175, 55, 0.06);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
+    letter-spacing: 4px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
 
 .fortune-fortune {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #FF6347;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #D4AF37;
     margin-bottom: 25px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    letter-spacing: 3px;
 }
 
 /* 诗词样式 */
 .poem-container {
-    background: linear-gradient(135deg, #fff5e6 0%, #ffe0b2 100%);
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
     padding: 30px 20px;
     margin-bottom: 30px;
-    border: 2px solid #FFD700;
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
 }
 
 .poem-line {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: #8B4513;
     font-family: 'STKaiti', 'KaiTi', 'Microsoft YaHei', serif;
     line-height: 2.2;
@@ -713,16 +716,17 @@ body {
 }
 
 .fortune-content-text {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #333;
-    line-height: 1.8;
+    line-height: 2;
     margin-bottom: 30px;
     padding: 0 10px;
 }
 
 .fortune-advice {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
     padding: 25px;
     margin-bottom: 30px;
 }
@@ -738,115 +742,120 @@ body {
 }
 
 .advice-label {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #FF6347;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #D4AF37;
     min-width: 50px;
     text-align: left;
 }
 
 .advice-text {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: #333;
     flex: 1;
     text-align: left;
 }
 
 .fortune-blessing {
-    font-size: 1.4rem;
-    color: #FFA500;
-    font-weight: bold;
+    font-size: 1.2rem;
+    color: #5C4033;
+    font-weight: 600;
     margin-bottom: 30px;
-    font-family: 'STKaiti', 'KaiTi', serif;
+    font-family: 'STKaiti', 'KaiTi', 'SimSun', serif;
     letter-spacing: 3px;
 }
 
 /* 解读按钮样式 */
 .interpret-button {
-    padding: 15px 40px;
-    font-size: 1.1rem;
-    font-weight: bold;
+    padding: 12px 36px;
+    font-size: 0.95rem;
+    font-weight: 600;
     color: #fff;
-    background: linear-gradient(135deg, #FF6347 0%, #FF4500 100%);
+    background: #D4AF37;
     border: none;
-    border-radius: 30px;
+    border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(255, 99, 71, 0.4);
-    transition: all 0.3s ease;
+    letter-spacing: 2px;
+    transition: all 0.4s;
     margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
 .interpret-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(255, 99, 71, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
 }
 
 /* 签文解读区域 */
 .interpretation-header {
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .interpretation-header h3 {
-    font-size: 1.6rem;
-    color: #FF6347;
-    font-weight: bold;
+    font-size: 1.3rem;
+    color: #1A1A1A;
+    font-weight: 600;
+    letter-spacing: 4px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
 
 .interpretation-text {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: #333;
     line-height: 2;
     text-align: justify;
     padding: 25px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    border-radius: 20px;
-    border-left: 5px solid #FF6347;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
+    border-left: 3px solid #D4AF37;
 }
 
 .fortune-share {
     margin-top: 20px;
+    text-align: center;
 }
 
 .share-button {
-    padding: 12px 30px;
-    font-size: 1rem;
-    color: #fff;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
-    border-radius: 25px;
+    padding: 10px 28px;
+    font-size: 0.9rem;
+    color: #D4AF37;
+    background: transparent;
+    border: 1px solid #D4AF37;
+    border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-    transition: all 0.3s ease;
+    letter-spacing: 2px;
+    transition: all 0.3s;
 }
 
 .share-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+    background: #D4AF37;
+    color: #fff;
 }
 
 .fortune-footer {
     margin-top: 40px;
+    text-align: center;
 }
 
 .back-button {
     display: inline-block;
-    padding: 10px 30px;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    padding: 10px 28px;
+    color: #666;
+    background: transparent;
     text-decoration: none;
-    font-size: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 25px;
+    font-size: 0.9rem;
+    border: 1px solid #DCD2C0;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s;
+    letter-spacing: 2px;
 }
 
 .back-button:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: #D4AF37;
+    color: #D4AF37;
 }
 
 .drawing {
@@ -906,29 +915,27 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    font-size: 8rem;
+    background: linear-gradient(135deg, #F5EDE0, #EDE4D3);
+    color: #1A1A1A;
+    font-size: 2.8rem;
     font-weight: bold;
+    font-family: 'SimSun', 'STSong', serif;
 }
 
 /* 六爻问卦页面样式 */
 .liuyao-page {
     min-height: 100vh;
-    background: linear-gradient(180deg, #f5ebe0 0%, #e8d5b7 50%, #d5b894 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+    background-color: #F9F6F0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    padding-top: 64px;
     -webkit-overflow-scrolling: touch;
 }
 
 .liuyao-container {
     max-width: 800px;
     width: 100%;
-    background: transparent;
-    border-radius: 30px;
-    padding: 40px 30px;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
 }
 
 .liuyao-header {
@@ -937,16 +944,18 @@ body {
 }
 
 .liuyao-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #8b4513;
-    margin-bottom: 10px;
-    text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.2);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 8px;
+    letter-spacing: 8px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
 
 .liuyao-subtitle {
-    font-size: 1.1rem;
-    color: #6b4423;
+    font-size: 0.9rem;
+    color: #888;
+    letter-spacing: 2px;
 }
 
 .question-input-area {
@@ -955,44 +964,49 @@ body {
 
 .question-label {
     display: block;
-    font-size: 1.2rem;
-    color: #4a3728;
+    font-size: 1rem;
+    color: #333;
     margin-bottom: 15px;
     font-weight: 600;
+    letter-spacing: 2px;
 }
 
 .question-textarea {
     width: 100%;
-    padding: 15px;
-    font-size: 1rem;
-    border: 2px solid #ddd;
-    border-radius: 15px;
+    padding: 14px;
+    font-size: 0.95rem;
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
     resize: vertical;
     margin-bottom: 20px;
     font-family: inherit;
+    background: rgba(255, 255, 255, 0.5);
+    color: #333;
 }
 
 .question-textarea:focus {
     outline: none;
-    border-color: #8b4513;
+    border-color: #D4AF37;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.08);
 }
 
 .divine-button {
-    padding: 15px 40px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    padding: 14px 40px;
+    font-size: 1rem;
+    font-weight: 600;
     color: #fff;
-    background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+    background: #D4AF37;
     border: none;
-    border-radius: 30px;
+    border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
-    transition: all 0.3s ease;
+    letter-spacing: 3px;
+    transition: all 0.4s;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
 .divine-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(139, 69, 19, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
 }
 
 /* 起卦动画 */
@@ -1031,9 +1045,10 @@ body {
 }
 
 .divining-text {
-    font-size: 1.3rem;
-    color: #8b4513;
+    font-size: 1.1rem;
+    color: #5C4033;
     font-weight: 600;
+    letter-spacing: 2px;
 }
 
 /* 卦象展示 */
@@ -1045,38 +1060,39 @@ body {
     text-align: center;
     margin-bottom: 30px;
     padding: 30px 20px;
-    background: rgba(255, 248, 235, 0.9);
-    border-radius: 15px;
-    border: 1px solid rgba(139, 69, 19, 0.3);
-    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.08);
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
 }
 
 .hexagram-name {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #3e2723;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #1A1A1A;
     margin-bottom: 15px;
+    letter-spacing: 4px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
 
 .hexagram-symbol {
-    font-size: 3rem;
-    color: #8b4513;
+    font-size: 2.5rem;
+    color: #D4AF37;
     margin-bottom: 15px;
     letter-spacing: 10px;
 }
 
 .hexagram-meaning {
-    font-size: 1.2rem;
-    color: #6b4423;
+    font-size: 1rem;
+    color: #666;
     font-style: italic;
 }
 
 .hexagram-lines {
     margin-bottom: 30px;
     padding: 20px;
-    background: rgba(255, 248, 235, 0.9);
-    border-radius: 15px;
-    border: 1px solid rgba(139, 69, 19, 0.2);
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
 }
 
 .hexagram-line {
@@ -1086,8 +1102,8 @@ body {
     gap: 20px;
     padding: 10px;
     margin-bottom: 8px;
-    background: rgba(139, 69, 19, 0.05);
-    border-radius: 10px;
+    background: rgba(212, 175, 55, 0.04);
+    border-radius: 6px;
 }
 
 .hexagram-line:last-child {
@@ -1148,45 +1164,47 @@ body {
 .answer-section {
     margin-bottom: 30px;
     padding: 25px 20px;
-    background: rgba(255, 248, 235, 0.85);
-    border-radius: 15px;
-    border-left: 5px solid #8b4513;
-    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.1);
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
+    border-left: 3px solid #D4AF37;
 }
 
 .interp-title,
 .answer-title {
-    font-size: 1.4rem;
-    color: #8b4513;
+    font-size: 1.15rem;
+    color: #1A1A1A;
     margin-bottom: 15px;
-    font-weight: bold;
+    font-weight: 600;
+    letter-spacing: 3px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
 }
 
 .interp-content,
 .answer-content {
-    font-size: 1.05rem;
-    color: #3e2723;
+    font-size: 0.95rem;
+    color: #333;
     line-height: 2;
 }
 
 .redivine-button {
     display: block;
     width: 100%;
-    padding: 15px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #fff;
-    background: linear-gradient(135deg, #a0522d 0%, #cd853f 100%);
-    border: none;
-    border-radius: 25px;
+    padding: 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #D4AF37;
+    background: transparent;
+    border: 1px solid #D4AF37;
+    border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(160, 82, 45, 0.4);
-    transition: all 0.3s ease;
+    letter-spacing: 2px;
+    transition: all 0.3s;
 }
 
 .redivine-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(160, 82, 45, 0.6);
+    background: #D4AF37;
+    color: #fff;
 }
 
 .liuyao-footer {
@@ -1196,19 +1214,20 @@ body {
 
 .liuyao-footer .back-button {
     display: inline-block;
-    padding: 10px 30px;
-    color: #8b4513;
-    background: rgba(139, 69, 19, 0.1);
-    border: 2px solid #8b4513;
-    border-radius: 25px;
+    padding: 10px 28px;
+    color: #666;
+    background: transparent;
+    border: 1px solid #DCD2C0;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    letter-spacing: 2px;
 }
 
 .liuyao-footer .back-button:hover {
-    background: #8b4513;
-    color: #fff;
+    border-color: #D4AF37;
+    color: #D4AF37;
 }
 
 /* 专业解答样式 */
@@ -1437,37 +1456,36 @@ body {
 }
 
 /* 六爻页面手机端适配 */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .liuyao-page {
-        padding: 10px;
-        align-items: flex-start;
+        padding-top: 64px;
     }
 
     .liuyao-container {
-        padding: 20px 15px;
-        border-radius: 20px;
+        padding: 40px 16px 30px;
     }
 
     .liuyao-title {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
+        letter-spacing: 6px;
     }
 
     .liuyao-subtitle {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
     }
 
     .question-label {
-        font-size: 1rem;
+        font-size: 0.92rem;
     }
 
     .question-textarea {
         padding: 12px;
-        font-size: 0.95rem;
+        font-size: 0.88rem;
     }
 
     .divine-button {
         padding: 12px 30px;
-        font-size: 1rem;
+        font-size: 0.92rem;
         width: 100%;
     }
 

@@ -3,36 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>每日一签 - 十二生肖守护神</title>
+    <title>每日一签 - 易道</title>
     <link rel="stylesheet" href="css/style.css?v=20260526">
 </head>
-<body>
-    <div class="fortune-page">
-        <div class="fortune-container">
-            <div class="fortune-header">
-                <h1 class="fortune-title">每日一签</h1>
-                <p class="fortune-date" id="fortuneDate"></p>
-            </div>
-
-            <div class="fortune-content" id="fortuneContent">
-                <div class="fortune-placeholder">
-                    <div class="shake-icon">🎋</div>
-                    <p class="shake-text">点击抽签,获取今日运势</p>
-                    <button class="draw-button" id="drawButton" onclick="drawFortune()">
-                        开始抽签
-                    </button>
-                </div>
-            </div>
-
-            <div id="interpretationSection" style="display: none;">
-                <div class="interpretation-content" id="interpretationContent"></div>
-            </div>
-
-            <div class="fortune-footer">
-                <button class="back-button" onclick="goBack()">返回</button>
+<body class="fortune-page">
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">易道</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">返回首页</a>
             </div>
         </div>
+    </nav>
+
+    <div class="fortune-container">
+        <header class="fortune-header">
+            <h1 class="fortune-title">每日一签</h1>
+            <div class="gold-line" style="margin:12px auto;"></div>
+            <p class="fortune-date" id="fortuneDate"></p>
+        </header>
+
+        <div class="fortune-content" id="fortuneContent">
+            <div class="fortune-placeholder">
+                <div class="shake-icon">🎋</div>
+                <p class="shake-text">点击抽签，获取今日运势</p>
+                <button class="draw-button" id="drawButton" onclick="drawFortune()">
+                    开始抽签
+                </button>
+            </div>
+        </div>
+
+        <div id="interpretationSection" style="display: none;">
+            <div class="interpretation-content" id="interpretationContent"></div>
+        </div>
+
+        <div class="fortune-footer">
+            <button class="back-button" onclick="goBack()">返回</button>
+        </div>
     </div>
+
+    <div class="cloud-divider">☁ ☁ ☁</div>
 
     <!-- 日签分享弹窗 -->
     <div class="share-modal" id="shareModal">
