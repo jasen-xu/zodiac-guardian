@@ -182,14 +182,17 @@ body {
 .image-full-container {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
+    background: #1A1A1A;
+    display: flex;
+    flex-direction: column;
 }
 
 .guardian-image-full {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    flex: 1;
+    object-fit: contain;
     display: block;
 }
 
@@ -477,17 +480,15 @@ body {
 @media (max-width: 768px) {
     /* 手机端全屏模式 */
     .guardian-page {
-        position: fixed;
-        top: 0;
-        left: 0;
+        position: relative;
         width: 100vw;
-        height: 100vh;
-        overflow: hidden;
+        min-height: 100vh;
+        overflow-x: hidden;
     }
     
     .image-full-container {
         width: 100vw;
-        height: 100vh;
+        min-height: 100vh;
     }
     
     /* 隐藏横向布局 */
