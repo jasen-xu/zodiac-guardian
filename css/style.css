@@ -677,49 +677,82 @@ body {
 
 .fortune-result {
     animation: fadeIn 0.5s ease-out;
+    text-align: center;
 }
 
 .fortune-result.show {
     animation: slideIn 0.6s ease-out;
 }
 
+/* 签文等级 - 大字突出 */
 .fortune-level {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1A1A1A;
-    margin-bottom: 20px;
-    padding: 15px;
-    background: rgba(212, 175, 55, 0.06);
-    border: 1px solid #DCD2C0;
-    border-radius: 8px;
-    letter-spacing: 4px;
-    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    padding: 20px 0 10px;
+    letter-spacing: 12px;
+    font-family: 'STKaiti', 'KaiTi', 'SimSun', serif;
+    position: relative;
 }
 
+.fortune-level::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: #D4AF37;
+    margin: 16px auto 0;
+}
+
+/* 运势关键词 */
 .fortune-fortune {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: #D4AF37;
-    margin-bottom: 25px;
-    letter-spacing: 3px;
+    font-size: 1.1rem;
+    color: #888;
+    margin-bottom: 35px;
+    letter-spacing: 6px;
+    font-family: 'STKaiti', 'KaiTi', serif;
 }
 
-/* 诗词样式 */
+/* 诗词区域 - 传统书卷风 */
 .poem-container {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.5);
     border: 1px solid #DCD2C0;
     border-radius: 8px;
-    padding: 30px 20px;
-    margin-bottom: 30px;
+    padding: 35px 25px;
+    margin-bottom: 35px;
+    position: relative;
+}
+
+.poem-container::before,
+.poem-container::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: #D4AF37;
+    border-style: solid;
+    opacity: 0.6;
+}
+
+.poem-container::before {
+    top: 10px;
+    left: 10px;
+    border-width: 1px 0 0 1px;
+}
+
+.poem-container::after {
+    bottom: 10px;
+    right: 10px;
+    border-width: 0 1px 1px 0;
 }
 
 .poem-line {
-    font-size: 1.2rem;
-    color: #8B4513;
+    font-size: 1.15rem;
+    color: #3C2415;
     font-family: 'STKaiti', 'KaiTi', 'Microsoft YaHei', serif;
-    line-height: 2.2;
-    margin-bottom: 10px;
-    letter-spacing: 3px;
+    line-height: 2.4;
+    margin-bottom: 6px;
+    letter-spacing: 4px;
     text-align: center;
 }
 
@@ -735,18 +768,22 @@ body {
     padding: 0 10px;
 }
 
+/* 宜忌区域 - 双列布局 */
 .fortune-advice {
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid #DCD2C0;
-    border-radius: 8px;
-    padding: 25px;
-    margin-bottom: 30px;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 35px;
 }
 
 .advice-item {
+    flex: 1;
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
+    padding: 14px 12px;
 }
 
 .advice-item:last-child {
@@ -755,26 +792,42 @@ body {
 
 .advice-label {
     font-size: 1rem;
-    font-weight: 600;
-    color: #D4AF37;
-    min-width: 50px;
-    text-align: left;
+    font-weight: 700;
+    color: #fff;
+    background: #D4AF37;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'STKaiti', 'KaiTi', serif;
+}
+
+.advice-item:last-child .advice-label {
+    background: #999;
 }
 
 .advice-text {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #333;
     flex: 1;
     text-align: left;
+    letter-spacing: 1px;
+    line-height: 1.6;
 }
 
+/* 祝福语 */
 .fortune-blessing {
-    font-size: 1.2rem;
-    color: #5C4033;
-    font-weight: 600;
-    margin-bottom: 30px;
+    font-size: 1rem;
+    color: #8B6914;
+    margin-bottom: 35px;
     font-family: 'STKaiti', 'KaiTi', 'SimSun', serif;
-    letter-spacing: 3px;
+    letter-spacing: 5px;
+    padding: 15px 0;
+    border-top: 1px solid #DCD2C0;
+    border-bottom: 1px solid #DCD2C0;
 }
 
 /* 解读按钮样式 */
@@ -789,7 +842,7 @@ body {
     cursor: pointer;
     letter-spacing: 2px;
     transition: all 0.4s;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
@@ -3907,6 +3960,31 @@ body.home-page {
 
     .zuting-heritage-card {
         padding: 28px 22px;
+    }
+
+    /* 每日一签移动端 */
+    .fortune-level {
+        font-size: 1.8rem;
+        letter-spacing: 8px;
+    }
+
+    .fortune-fortune {
+        font-size: 0.95rem;
+        letter-spacing: 4px;
+    }
+
+    .poem-line {
+        font-size: 1rem;
+        letter-spacing: 3px;
+    }
+
+    .fortune-advice {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .fortune-container {
+        padding: 50px 18px 30px;
     }
 }
 
