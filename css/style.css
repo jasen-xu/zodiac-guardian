@@ -940,6 +940,46 @@ body {
     letter-spacing: 1px;
 }
 
+/* 十字方位布局 */
+.caishen-compass {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 10px;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.compass-cell {
+    display: flex;
+    justify-content: center;
+}
+
+.compass-north {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.compass-west {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.compass-center {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.compass-east {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.compass-south {
+    grid-column: 2;
+    grid-row: 3;
+}
+
 /* 财神主题色变体 */
 .caishen-page.dong {
     background-color: #F4F8F4;
