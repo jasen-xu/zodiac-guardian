@@ -22,7 +22,7 @@ const zodiacData = [
     name: "虎",
     guardian: "虚空藏菩萨",
     blessing: "虚空无量，智慧如海，福德圆满，事业亨通",
-    image: "images/tiger.jpeg",
+    image: "images/tiger.jpg",
     audio: "audio/xukongzang-mantra.mp3",
     description: "虚空藏菩萨护佑属虎之人勇敢无畏，前程似锦。"
   },
@@ -67,7 +67,7 @@ const zodiacData = [
     name: "羊",
     guardian: "大日如来",
     blessing: "光明遍照，福慧圆满，吉祥如意，幸福安康",
-    image: "images/goat.jpg",
+    image: "images/goat.png",
     audio: "audio/dari-mantra.mp3",
     description: "大日如来是光明与理智的象征，护佑属羊之人生活美满，万事如意。"
   },
