@@ -79,6 +79,12 @@ function showDetailPage(zodiacId) {
         alert('图片加载失败，请检查图片文件是否存在');
     };
 
+    // 设置模糊背景图
+    const bgElement = document.getElementById('guardianBg');
+    if (bgElement) {
+        bgElement.src = zodiac.image;
+    }
+
     // 设置音频并自动播放
     const audioPlayer = document.getElementById('audioPlayer');
     const audioSource = document.getElementById('audioSource');

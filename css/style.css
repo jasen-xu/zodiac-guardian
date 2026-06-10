@@ -251,6 +251,21 @@ body {
     flex: 1;
     object-fit: contain;
     display: block;
+    position: relative;
+    z-index: 2;
+}
+
+/* 模糊背景填充 */
+.guardian-image-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(20px) brightness(0.6);
+    transform: scale(1.1);
+    z-index: 1;
 }
 
 .overlay-content {
