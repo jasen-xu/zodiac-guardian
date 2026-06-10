@@ -111,6 +111,12 @@ function playGuardianVideo(videoSrc, audioPlayer) {
     const video = document.getElementById('guardianVideo');
     const source = video.querySelector('source');
 
+    // 动态设置高度兑底
+    overlay.style.height = window.innerHeight + 'px';
+    window.addEventListener('resize', function() {
+        overlay.style.height = window.innerHeight + 'px';
+    });
+
     overlay.style.display = 'flex';
     source.src = videoSrc;
     video.load();

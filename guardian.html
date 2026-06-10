@@ -43,16 +43,16 @@
         </footer>
     </div>
 
+    <!-- 视频播放层（移到最外层避免 fixed 嵌套问题） -->
+    <div class="video-overlay" id="videoOverlay" style="display:none;">
+        <video id="guardianVideo" class="guardian-video" playsinline webkit-playsinline muted>
+            <source src="" type="video/mp4">
+        </video>
+        <div class="video-skip-btn" id="videoSkipBtn" onclick="skipVideo()">跳过</div>
+    </div>
+
     <!-- 守护神详情页（有 id 参数时显示） -->
     <div class="guardian-page" id="guardianDetailPage" style="display:none;">
-        <!-- 视频播放层 -->
-        <div class="video-overlay" id="videoOverlay" style="display:none;">
-            <video id="guardianVideo" class="guardian-video" playsinline webkit-playsinline muted>
-                <source src="" type="video/mp4">
-            </video>
-            <div class="video-skip-btn" id="videoSkipBtn" onclick="skipVideo()">跳过</div>
-        </div>
-
         <div class="image-full-container">
             <img id="guardianBg" src="" alt="" class="guardian-image-bg">
             <img id="guardianImage" src="" alt="守护神图片" class="guardian-image-full">
