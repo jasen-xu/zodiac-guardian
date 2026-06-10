@@ -112,10 +112,12 @@ function playGuardianVideo(videoSrc, audioPlayer) {
     video.addEventListener('ended', function onEnded() {
         video.removeEventListener('ended', onEnded);
         hideVideoOverlay();
-        // 视频结束后播放音频
-        audioPlayer.play().catch(function(error) {
-            console.log('音频自动播放被阻止:', error);
-        });
+        // 视频结束后延迟5秒播放音频
+        setTimeout(function() {
+            audioPlayer.play().catch(function(error) {
+                console.log('音频自动播放被阻止:', error);
+            });
+        }, 5000);
     });
 
     video.play().catch(function(error) {
@@ -142,9 +144,11 @@ function skipVideo() {
     const video = document.getElementById('guardianVideo');
     video.pause();
     hideVideoOverlay();
-    // 跳过后也播放音频
+    // 跳过后延迟5秒播放音频
     const audioPlayer = document.getElementById('audioPlayer');
-    audioPlayer.play().catch(function(error) {
-        console.log('音频自动播放被阻止:', error);
-    });
+    setTimeout(function() {
+        audioPlayer.play().catch(function(error) {
+            console.log('音频自动播放被阻止:', error);
+        });
+    }, 5000);
 }
