@@ -45,6 +45,14 @@
 
     <!-- 守护神详情页（有 id 参数时显示） -->
     <div class="guardian-page" id="guardianDetailPage" style="display:none;">
+        <!-- 视频播放层 -->
+        <div class="video-overlay" id="videoOverlay" style="display:none;">
+            <video id="guardianVideo" class="guardian-video" playsinline webkit-playsinline muted>
+                <source src="" type="video/mp4">
+            </video>
+            <div class="video-skip-btn" id="videoSkipBtn" onclick="skipVideo()">跳过</div>
+        </div>
+
         <div class="image-full-container">
             <img id="guardianImage" src="" alt="守护神图片" class="guardian-image-full">
             
@@ -76,6 +84,6 @@
     </div>
 
     <script src="js/zodiac-data.js?v=20260608"></script>
-    <script src="js/detail.js?v=20260528"></script>
+    <script src="js/detail.js?v=20260608"></script>
 </body>
 </html>

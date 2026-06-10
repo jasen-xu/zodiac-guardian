@@ -84,7 +84,67 @@ function showDetailPage(zodiacId) {
     const audioSource = document.getElementById('audioSource');
     audioSource.src = zodiac.audio;
     audioPlayer.load();
+
+    // 生肖羊视频播放
+    const videoMap = {
+        'goat': 'images/dairulai-goat.mp4'
+    };
+
+    if (videoMap[zodiacId]) {
+        playGuardianVideo(videoMap[zodiacId], audioPlayer);
+    } else {
+        audioPlayer.play().catch(function(error) {
+            console.log('自动播放被浏览器阻止，需要用户交互后才能播放:', error);
+        });
+    }
+}
+
+// 播放守护神视频
+function playGuardianVideo(videoSrc, audioPlayer) {
+    const overlay = document.getElementById('videoOverlay');
+    const video = document.getElementById('guardianVideo');
+    const source = video.querySelector('source');
+
+    overlay.style.display = 'flex';
+    source.src = videoSrc;
+    video.load();
+
+    video.addEventListener('ended', function onEnded() {
+        video.removeEventListener('ended', onEnded);
+        hideVideoOverlay();
+        // 视频结束后播放音频
+        audioPlayer.play().catch(function(error) {
+            console.log('音频自动播放被阻止:', error);
+        });
+    });
+
+    video.play().catch(function(error) {
+        console.log('视频自动播放被阻止:', error);
+        hideVideoOverlay();
+        audioPlayer.play().catch(function(e) {
+            console.log('音频自动播放被阻止:', e);
+        });
+    });
+}
+
+// 隐藏视频层
+function hideVideoOverlay() {
+    const overlay = document.getElementById('videoOverlay');
+    overlay.classList.add('video-fade-out');
+    setTimeout(function() {
+        overlay.style.display = 'none';
+        overlay.classList.remove('video-fade-out');
+    }, 500);
+}
+
+// 跳过视频
+function skipVideo() {
+    const video = document.getElementById('guardianVideo');
+    video.pause();
+    hideVideoOverlay();
+    // 跳过后也播放音频
+    const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.play().catch(function(error) {
-        console.log('自动播放被浏览器阻止，需要用户交互后才能播放:', error);
+        console.log('音频自动播放被阻止:', error);
     });
 }

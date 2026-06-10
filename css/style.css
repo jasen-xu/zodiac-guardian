@@ -189,6 +189,55 @@ body {
     flex-direction: column;
 }
 
+/* 视频播放层 */
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guardian-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-skip-btn {
+    position: absolute;
+    bottom: 40px;
+    right: 20px;
+    padding: 8px 20px;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    z-index: 10000;
+    backdrop-filter: blur(4px);
+}
+
+.video-skip-btn:active {
+    background: rgba(255,255,255,0.4);
+}
+
+.video-fade-out {
+    animation: videoFadeOut 0.5s ease forwards;
+}
+
+@keyframes videoFadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
 .guardian-image-full {
     width: 100%;
     flex: 1;
