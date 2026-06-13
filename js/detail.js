@@ -91,7 +91,8 @@ function showDetailPage(zodiacId) {
     audioSource.src = zodiac.audio;
     audioPlayer.load();
 
-    // 生肖羊视频播放
+    // 生肖羊视频播放（暂时禁用）
+    /*
     const videoMap = {
         'goat': 'images/dairulai-goat.mp4'
     };
@@ -99,10 +100,11 @@ function showDetailPage(zodiacId) {
     if (videoMap[zodiacId]) {
         playGuardianVideo(videoMap[zodiacId], audioPlayer);
     } else {
+    */
         audioPlayer.play().catch(function(error) {
             console.log('自动播放被浏览器阻止，需要用户交互后才能播放:', error);
         });
-    }
+    // }
 }
 
 // 播放守护神视频

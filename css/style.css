@@ -254,7 +254,7 @@ body {
 .guardian-image-full {
     width: 100%;
     flex: 1;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
     position: relative;
     z-index: 2;
@@ -1321,7 +1321,7 @@ body {
     .guardian-image-full {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
     }
     
     /* 隐藏横向布局 */
