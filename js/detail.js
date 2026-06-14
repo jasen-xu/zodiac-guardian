@@ -91,7 +91,13 @@ function showDetailPage(zodiacId) {
     audioSource.src = zodiac.audio;
     audioPlayer.load();
 
-    // 生肖羊视频播放（暂时禁用）
+    // 生肖羊印章按钮（点击播放视频）
+    const sealBtn = document.getElementById('sealBtn');
+    if (sealBtn) {
+        sealBtn.style.display = (zodiacId === 'goat') ? 'block' : 'none';
+    }
+
+    // 生肖羊视频播放（暂时禁用自动播放）
     /*
     const videoMap = {
         'goat': 'images/dairulai-goat.mp4'
@@ -105,6 +111,28 @@ function showDetailPage(zodiacId) {
             console.log('自动播放被浏览器阻止，需要用户交互后才能播放:', error);
         });
     // }
+}
+
+// 点击印章按钮播放视频
+function playSealVideo() {
+    const overlay = document.getElementById('videoOverlay');
+    const video = document.getElementById('guardianVideo');
+    const source = video.querySelector('source');
+
+    overlay.style.height = window.innerHeight + 'px';
+    overlay.style.display = 'flex';
+    source.src = 'images/dairulai-goat.mp4';
+    video.load();
+
+    video.addEventListener('ended', function onEnded() {
+        video.removeEventListener('ended', onEnded);
+        hideVideoOverlay();
+    });
+
+    video.play().catch(function(error) {
+        console.log('视频播放被阻止:', error);
+        hideVideoOverlay();
+    });
 }
 
 // 播放守护神视频
