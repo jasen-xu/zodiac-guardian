@@ -473,7 +473,7 @@ async function shareCardNative() {
         }
     } else {
         // 不支持分享，引导保存图片
-        alert('当前浏览器不支持分享功能，请长按图片保存后分享');
+        if (typeof Toast !== 'undefined') Toast.info('当前浏览器不支持分享功能，请长按图片保存后分享'); else alert('当前浏览器不支持分享功能，请长按图片保存后分享');
     }
 }
 

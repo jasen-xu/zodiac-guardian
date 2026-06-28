@@ -52,7 +52,7 @@ function showDetailPage(zodiacId) {
     const zodiac = zodiacData.find(z => z.id === zodiacId);
 
     if (!zodiac) {
-        alert('未找到该生肖守护神');
+        if (typeof Toast !== 'undefined') Toast.warning('未找到该生肖守护神'); else alert('未找到该生肖守护神');
         window.location.href = 'guardian.html';
         return;
     }
@@ -76,7 +76,7 @@ function showDetailPage(zodiacId) {
     imgElement.src = zodiac.image;
     imgElement.alt = `${zodiac.guardian} - ${zodiac.name}之守护神`;
     imgElement.onerror = function() {
-        alert('图片加载失败，请检查图片文件是否存在');
+        if (typeof Toast !== 'undefined') Toast.error('图片加载失败，请检查图片文件是否存在'); else alert('图片加载失败，请检查图片文件是否存在');
     };
 
     // 设置模糊背景图

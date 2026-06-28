@@ -22,6 +22,66 @@
       "use": "@vercel/static"
     },
     {
+      "src": "caishen.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "caishen-bei.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "caishen-dong.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "caishen-nan.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "caishen-xi.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "caishen-zhong.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "wuxing.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "wuxing-jin.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "wuxing-mu.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "wuxing-shui.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "wuxing-huo.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "wuxing-tu.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "wenchuang.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "dongfangjing-renju.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "dongfangjing-zuting.html",
+      "use": "@vercel/static"
+    },
+    {
       "src": "css/**",
       "use": "@vercel/static"
     },
@@ -54,6 +114,34 @@
     {
       "src": "/liuyao\\.html",
       "dest": "/liuyao.html"
+    },
+    {
+      "src": "/caishen\\.html",
+      "dest": "/caishen.html"
+    },
+    {
+      "src": "/caishen-(bei|dong|nan|xi|zhong)\\.html",
+      "dest": "/caishen-$1.html"
+    },
+    {
+      "src": "/wuxing\\.html",
+      "dest": "/wuxing.html"
+    },
+    {
+      "src": "/wuxing-(jin|mu|shui|huo|tu)\\.html",
+      "dest": "/wuxing-$1.html"
+    },
+    {
+      "src": "/wenchuang\\.html",
+      "dest": "/wenchuang.html"
+    },
+    {
+      "src": "/dongfangjing-renju\\.html",
+      "dest": "/dongfangjing-renju.html"
+    },
+    {
+      "src": "/dongfangjing-zuting\\.html",
+      "dest": "/dongfangjing-zuting.html"
     },
     {
       "src": "/(css|js|assets)/(.*)",

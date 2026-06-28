@@ -182,6 +182,6 @@ function handleBuyClick(event) {
     const link = event.target.getAttribute('href');
     if (link === '#') {
         event.preventDefault();
-        alert('购买渠道即将开放，敬请期待');
+        if (typeof Toast !== 'undefined') Toast.info('购买渠道即将开放，敬请期待'); else alert('购买渠道即将开放，敬请期待');
     }
 }

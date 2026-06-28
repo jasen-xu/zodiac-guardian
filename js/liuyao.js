@@ -6,7 +6,7 @@ function startDivination() {
     const question = document.getElementById('questionInput').value.trim();
     
     if (!question) {
-        alert('请输入您所问之事!');
+        if (typeof Toast !== 'undefined') Toast.warning('请输入您所问之事!'); else alert('请输入您所问之事!');
         return;
     }
     
@@ -431,7 +431,7 @@ async function requestAIDivination() {
     const button = document.querySelector('.ai-divine-button');
 
     if (!currentHexagram || !currentQuestion) {
-        alert('请先起卦并输入问题');
+        if (typeof Toast !== 'undefined') Toast.warning('请先起卦并输入问题'); else alert('请先起卦并输入问题');
         return;
     }
 

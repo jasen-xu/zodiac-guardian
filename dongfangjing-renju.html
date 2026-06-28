@@ -160,7 +160,7 @@
                         <span class="renju-article-tag">环境心理学</span>
                         <h3 class="renju-article-title">为什么"坐北朝南"不只是风水？</h3>
                         <p class="renju-article-desc">从日照角度、维生素D合成到心理健康，解读传统朝向观念背后的科学逻辑。自然光不仅影响体温调节，更与褪黑素分泌密切相关...</p>
-                        <a href="javascript:void(0)" class="renju-article-link" onclick="alert('文章详情页开发中，敬请期待')">阅读全文 →</a>
+                        <a href="javascript:void(0)" class="renju-article-link" onclick="if(typeof Toast!=='undefined') Toast.info('文章详情页开发中，敬请期待'); else alert('文章详情页开发中，敬请期待')">阅读全文 →</a>
                     </div>
                 </div>
                 <div class="renju-article-card">
@@ -171,7 +171,7 @@
                         <span class="renju-article-tag">空间能量</span>
                         <h3 class="renju-article-title">"藏风聚气"的现代解读</h3>
                         <p class="renju-article-desc">空气流动、负离子浓度与人体舒适度的关系。传统风水所说的"气"，在环境科学中对应哪些物理指标？</p>
-                        <a href="javascript:void(0)" class="renju-article-link" onclick="alert('文章详情页开发中，敬请期待')">阅读全文 →</a>
+                        <a href="javascript:void(0)" class="renju-article-link" onclick="if(typeof Toast!=='undefined') Toast.info('文章详情页开发中，敬请期待'); else alert('文章详情页开发中，敬请期待')">阅读全文 →</a>
                     </div>
                 </div>
                 <div class="renju-article-card">
@@ -182,7 +182,7 @@
                         <span class="renju-article-tag">色彩心理学</span>
                         <h3 class="renju-article-title">五行配色的科学依据</h3>
                         <p class="renju-article-desc">金白、木青、水黑、火赤、土黄的色彩体系，如何在现代家居设计中既遵循风水原则又满足审美需求？</p>
-                        <a href="javascript:void(0)" class="renju-article-link" onclick="alert('文章详情页开发中，敬请期待')">阅读全文 →</a>
+                        <a href="javascript:void(0)" class="renju-article-link" onclick="if(typeof Toast!=='undefined') Toast.info('文章详情页开发中，敬请期待'); else alert('文章详情页开发中，敬请期待')">阅读全文 →</a>
                     </div>
                 </div>
             </div>
@@ -247,6 +247,7 @@
         </div>
     </footer>
 
+    <script src="js/toast.js"></script>
     <script>
     // 智能测评模拟
     function runAssessment() {
@@ -256,7 +257,7 @@
         const layout = document.getElementById('renjuLayout').value;
 
         if (!area || !direction || !floor || !layout) {
-            alert('请完整填写所有选项后再提交');
+            if (typeof Toast !== 'undefined') Toast.warning('请完整填写所有选项后再提交'); else alert('请完整填写所有选项后再提交');
             return;
         }
 
@@ -312,10 +313,10 @@
         const phone = document.getElementById('bookingPhone').value.trim();
         const desc = document.getElementById('bookingDesc').value.trim();
         if (!name || !phone) {
-            alert('请填写称呼和联系方式');
+            if (typeof Toast !== 'undefined') Toast.warning('请填写称呼和联系方式'); else alert('请填写称呼和联系方式');
             return;
         }
-        alert(`预约提交成功！\n\n${name}，感谢您的信任。\n我们将在24小时内与您联系，请保持手机畅通。`);
+        if (typeof Toast !== 'undefined') Toast.success(name + '，预约提交成功！我们将24小时内联系您'); else alert(`预约提交成功！\n\n${name}，感谢您的信任。\n我们将在24小时内与您联系，请保持手机畅通。`);
         document.getElementById('bookingName').value = '';
         document.getElementById('bookingPhone').value = '';
         document.getElementById('bookingDesc').value = '';

@@ -28,7 +28,7 @@ fi
 
 # 复制前端静态文件
 echo "  复制前端文件..."
-for file in index.html guardian.html fortune.html liuyao.html; do
+for file in index.html guardian.html fortune.html liuyao.html caishen.html caishen-bei.html caishen-dong.html caishen-nan.html caishen-xi.html caishen-zhong.html wuxing.html wuxing-jin.html wuxing-mu.html wuxing-shui.html wuxing-huo.html wuxing-tu.html wenchuang.html dongfangjing-renju.html dongfangjing-zuting.html; do
     if [ -f "$PROJECT_DIR/$file" ]; then
         cp "$PROJECT_DIR/$file" "$BUILD_DIR/static/"
         echo "    ✅ $file"

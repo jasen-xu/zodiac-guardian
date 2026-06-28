@@ -247,15 +247,16 @@
         </div>
     </footer>
 
+    <script src="js/toast.js"></script>
     <script>
     function submitConsult() {
         const name = document.getElementById('consultName').value.trim();
         const phone = document.getElementById('consultPhone').value.trim();
         if (!name || !phone) {
-            alert('请填写称呼和联系方式');
+            if (typeof Toast !== 'undefined') Toast.warning('请填写称呼和联系方式'); else alert('请填写称呼和联系方式');
             return;
         }
-        alert('预约提交成功！\n\n' + name + '，感谢您的信任。\n我们将在48小时内与您私密联系，请保持手机畅通。所有信息严格保密。');
+        if (typeof Toast !== 'undefined') Toast.success(name + '，预约提交成功！我们将48小时内联系您'); else alert('预约提交成功！\n\n' + name + '，感谢您的信任。\n我们将在48小时内与您私密联系，请保持手机畅通。所有信息严格保密。');
         document.getElementById('consultName').value = '';
         document.getElementById('consultPhone').value = '';
         document.getElementById('consultArea').value = '';
