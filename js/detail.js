@@ -100,7 +100,7 @@ function showDetailPage(zodiacId) {
     // 生肖羊视频播放（暂时禁用自动播放）
     /*
     const videoMap = {
-        'goat': 'images/dairulai-goat.mp4'
+        'goat': (typeof CDN_MEDIA !== 'undefined' ? CDN_MEDIA : '') + '/images/dairulai-goat.mp4'
     };
 
     if (videoMap[zodiacId]) {
@@ -121,7 +121,7 @@ function playSealVideo() {
 
     overlay.style.height = window.innerHeight + 'px';
     overlay.style.display = 'flex';
-    source.src = 'images/dairulai-goat.mp4';
+    source.src = (typeof CDN_MEDIA !== 'undefined' ? CDN_MEDIA : '') + '/images/dairulai-goat.mp4';
     video.load();
 
     video.addEventListener('ended', function onEnded() {
