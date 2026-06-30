@@ -91,37 +91,44 @@ function showDetailPage(zodiacId) {
     audioSource.src = zodiac.audio;
     audioPlayer.load();
 
-    // 生肖羊印章按钮（点击播放视频）
+    // 印章视频按钮（所有生肖均显示）
     const sealBtn = document.getElementById('sealBtn');
     if (sealBtn) {
-        sealBtn.style.display = (zodiacId === 'goat') ? 'block' : 'none';
+        if (zodiac.seal) {
+            sealBtn.style.display = 'block';
+            const sealImg = sealBtn.querySelector('.seal-icon');
+            if (sealImg) sealImg.src = zodiac.seal;
+        } else {
+            sealBtn.style.display = 'none';
+        }
     }
 
-    // 生肖羊视频播放（暂时禁用自动播放）
-    /*
-    const videoMap = {
-        'goat': (typeof CDN_MEDIA !== 'undefined' ? CDN_MEDIA : '') + '/images/dairulai-goat.mp4'
-    };
-
-    if (videoMap[zodiacId]) {
-        playGuardianVideo(videoMap[zodiacId], audioPlayer);
-    } else {
-    */
+    // 视频播放（有 video 链接时启用印章点击播放，否则仅播放音频）
+    if (zodiac.video) {
+        sealBtn && sealBtn.addEventListener('click', function onSealClick() {
+            playSealVideo(zodiac.video);
+        }, { once: true });
         audioPlayer.play().catch(function(error) {
             console.log('自动播放被浏览器阻止，需要用户交互后才能播放:', error);
         });
-    // }
+    } else {
+        audioPlayer.play().catch(function(error) {
+            console.log('自动播放被浏览器阻止，需要用户交互后才能播放:', error);
+        });
+    }
 }
 
 // 点击印章按钮播放视频
-function playSealVideo() {
+function playSealVideo(videoSrc) {
     const overlay = document.getElementById('videoOverlay');
     const video = document.getElementById('guardianVideo');
     const source = video.querySelector('source');
 
+    if (!videoSrc) return;
+
     overlay.style.height = window.innerHeight + 'px';
     overlay.style.display = 'flex';
-    source.src = (typeof CDN_MEDIA !== 'undefined' ? CDN_MEDIA : '') + '/images/dairulai-goat.mp4';
+    source.src = videoSrc;
     video.load();
 
     video.addEventListener('ended', function onEnded() {
