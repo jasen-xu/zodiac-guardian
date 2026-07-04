@@ -398,8 +398,8 @@ async function requestAIAnalysis(bazi, gender, year, month, day) {
         var result = await response.json();
 
         if (result.success) {
-            aiContent.innerHTML = '<div class="ai-result-box"><div id="aiText" class="ai-result-text"></div></div>';
-            typeWriter(document.getElementById('aiText'), result.data.interpretation, 0);
+            var html = markdownToHTML(result.data.interpretation);
+            aiContent.innerHTML = '<div class="ai-result-box"><div class="ai-result-text">' + html + '</div></div>';
         } else {
             throw new Error(result.error || 'AI 服务异常');
         }
@@ -414,28 +414,111 @@ async function requestAIAnalysis(bazi, gender, year, month, day) {
 }
 
 /**
- * 打字机效果
+ * 简易 Markdown 转 HTML（支持表格、标题、加粗、列表）
  */
-function typeWriter(element, text, index) {
-    if (index < text.length) {
-        var char = text.charAt(index);
-        if (char === '\n') {
-            element.innerHTML += '<br>';
-        } else if (char === '*' && text.charAt(index + 1) === '*') {
-            // 跳过 markdown bold markers
-            index++;
-        } else if (char === '#') {
-            // 简单的标题处理
-            element.innerHTML += '<br><strong>';
-            var lineEnd = text.indexOf('\n', index);
-            if (lineEnd === -1) lineEnd = text.length;
-            element.innerHTML += text.substring(index, lineEnd) + '</strong>';
-            index = lineEnd - 1;
-        } else {
-            element.innerHTML += char;
+function markdownToHTML(md) {
+    if (!md) return '';
+    var lines = md.split('\n');
+    var html = '';
+    var inTable = false;
+    var tableRows = [];
+
+    function flushTable() {
+        if (tableRows.length === 0) return '';
+        var out = '<div class="ai-table-wrap"><table class="ai-table"><thead><tr>';
+        // First row = headers
+        var headers = tableRows[0];
+        headers.forEach(function(h) { out += '<th>' + h.trim() + '</th>'; });
+        out += '</tr></thead><tbody>';
+        // Data rows (skip separator row if present)
+        for (var i = 1; i < tableRows.length; i++) {
+            var row = tableRows[i];
+            // Skip separator rows like |---|---|---|
+            if (row.every(function(c) { return /^[-:]+$/.test(c.trim()); })) continue;
+            out += '<tr>';
+            row.forEach(function(c) { out += '<td>' + c.trim() + '</td>'; });
+            out += '</tr>';
         }
-        setTimeout(function() { typeWriter(element, text, index + 1); }, 15);
+        out += '</tbody></table></div>';
+        tableRows = [];
+        return out;
     }
+
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+        var trimmed = line.trim();
+
+        // Detect table row (starts with |)
+        if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+            var cells = trimmed.slice(1, -1).split('|');
+            tableRows.push(cells);
+            inTable = true;
+            continue;
+        } else if (inTable) {
+            // End of table
+            html += flushTable();
+            inTable = false;
+        }
+
+        // Empty line
+        if (trimmed === '') {
+            html += '<br>';
+            continue;
+        }
+
+        // Headers
+        if (trimmed.startsWith('### ')) {
+            html += '<h4 class="ai-h4">' + inlineMarkdown(trimmed.slice(4)) + '</h4>';
+            continue;
+        }
+        if (trimmed.startsWith('## ')) {
+            html += '<h3 class="ai-h3">' + inlineMarkdown(trimmed.slice(3)) + '</h3>';
+            continue;
+        }
+        if (trimmed.startsWith('# ')) {
+            html += '<h3 class="ai-h3">' + inlineMarkdown(trimmed.slice(2)) + '</h3>';
+            continue;
+        }
+
+        // Horizontal rule
+        if (/^[-*_]{3,}$/.test(trimmed)) {
+            html += '<hr class="ai-hr">';
+            continue;
+        }
+
+        // List items
+        if (/^[-*+]\s/.test(trimmed)) {
+            html += '<div class="ai-list-item">' + inlineMarkdown(trimmed.replace(/^[-*+]\s/, '')) + '</div>';
+            continue;
+        }
+
+        // Numbered list
+        if (/^\d+[.)]\s/.test(trimmed)) {
+            html += '<div class="ai-list-item ai-ol">' + inlineMarkdown(trimmed.replace(/^\d+[.)]\s/, '')) + '</div>';
+            continue;
+        }
+
+        // Regular paragraph
+        html += '<p class="ai-p">' + inlineMarkdown(trimmed) + '</p>';
+    }
+
+    // Flush remaining table
+    if (inTable) html += flushTable();
+
+    return html;
+}
+
+/**
+ * 处理行内 Markdown（加粗、斜体、行内代码）
+ */
+function inlineMarkdown(text) {
+    // Bold: **text**
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Italic: *text*
+    text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    // Inline code: `text`
+    text = text.replace(/`(.+?)`/g, '<code>$1</code>');
+    return text;
 }
 
 /**

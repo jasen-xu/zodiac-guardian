@@ -6035,6 +6035,119 @@ button:active,
     border-color: #B8976A;
 }
 
+/* ---- AI 解读内容排版 ---- */
+.ai-result-text .ai-h3 {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: #3E2723;
+    margin: 20px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(220, 210, 192, 0.5);
+    letter-spacing: 1px;
+}
+
+.ai-result-text .ai-h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #4E342E;
+    margin: 16px 0 8px;
+    letter-spacing: 1px;
+}
+
+.ai-result-text .ai-p {
+    font-size: 0.88rem;
+    color: #3E2723;
+    line-height: 1.8;
+    margin: 6px 0;
+}
+
+.ai-result-text .ai-list-item {
+    font-size: 0.85rem;
+    color: #3E2723;
+    line-height: 1.7;
+    padding: 3px 0 3px 16px;
+    position: relative;
+}
+
+.ai-result-text .ai-list-item::before {
+    content: '•';
+    position: absolute;
+    left: 2px;
+    color: #B8976A;
+    font-weight: bold;
+}
+
+.ai-result-text .ai-list-item.ai-ol::before {
+    content: '';
+}
+
+.ai-result-text .ai-hr {
+    border: none;
+    border-top: 1px solid rgba(220, 210, 192, 0.4);
+    margin: 16px 0;
+}
+
+.ai-result-text strong {
+    color: #4E342E;
+    font-weight: 700;
+}
+
+.ai-result-text em {
+    font-style: italic;
+    color: #6B4423;
+}
+
+.ai-result-text code {
+    background: rgba(184, 151, 106, 0.1);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.82rem;
+}
+
+/* AI 表格样式 */
+.ai-table-wrap {
+    overflow-x: auto;
+    margin: 12px 0;
+    border-radius: 8px;
+    border: 1px solid rgba(220, 210, 192, 0.5);
+}
+
+.ai-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+
+.ai-table thead {
+    background: rgba(184, 151, 106, 0.12);
+}
+
+.ai-table th {
+    padding: 10px 12px;
+    font-weight: 600;
+    color: #4E342E;
+    text-align: left;
+    border-bottom: 2px solid rgba(220, 210, 192, 0.5);
+    white-space: nowrap;
+    letter-spacing: 1px;
+}
+
+.ai-table td {
+    padding: 8px 12px;
+    color: #3E2723;
+    border-bottom: 1px solid rgba(220, 210, 192, 0.3);
+    line-height: 1.6;
+    vertical-align: top;
+}
+
+.ai-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.ai-table tbody tr:nth-child(even) {
+    background: rgba(245, 235, 224, 0.3);
+}
+
 /* ============================
    四柱五行精析 - 移动端适配
    ============================ */
