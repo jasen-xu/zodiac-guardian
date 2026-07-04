@@ -70,6 +70,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "wuxing-bazi.html",
+      "use": "@vercel/static"
+    },
+    {
       "src": "wenchuang.html",
       "use": "@vercel/static"
     },
@@ -130,6 +134,10 @@
     {
       "src": "/wuxing-(jin|mu|shui|huo|tu)\\.html",
       "dest": "/wuxing-$1.html"
+    },
+    {
+      "src": "/wuxing-bazi\\.html",
+      "dest": "/wuxing-bazi.html"
     },
     {
       "src": "/wenchuang\\.html",
