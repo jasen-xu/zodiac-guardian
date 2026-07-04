@@ -168,6 +168,123 @@ async function handleDivineAPI(req, res) {
     }
 }
 
+// ========== 八字五行分析 ==========
+
+const BAZI_SYSTEM_PROMPT = `你是一位精通八字命理的大师，深谙《子平真诠》、《滴天髓》、《穷通宝鉴》、《三命通会》等经典命理著作，拥有数十年的八字分析经验。
+
+分析要求（严格按照子平八字体系）：
+
+1. **日主分析**：
+   - 分析日干（日主）的五行属性及其在八字中的强弱
+   - 结合月令（月支）判断日主得令与否
+   - 分析四柱天干地支对日主的生克关系
+
+2. **喜用神与忌神**：
+   - 根据日主强弱确定喜用神（补益的五行）
+   - 明确忌神（克泄的五行）
+   - 说明喜用神选择的理由
+
+3. **五行缺失与旺衰**：
+   - 详细分析八字中五行的分布情况
+   - 指出缺失或偏弱的五行
+   - 分析过旺的五行及其影响
+
+4. **增补建议**（针对五行缺失或偏弱）：
+   - **方位**：适合的方位（如东方属木、南方属火等）
+   - **颜色**：日常穿戴、家居宜用颜色
+   - **饰品**：适合佩戴的材质和颜色
+   - **职业**：适合的行业方向（结合五行属性）
+   - **饮食**：五行对应的食疗建议
+   - **植物/宠物**：适合养殖的植物或宠物
+
+语言风格：
+- 专业但不晦涩，用通俗语言解释专业术语
+- 条理清晰，分点论述
+- 态度温和积极，给出建设性建议
+- 总字数控制在800-1200字之间`;
+
+async function callBaziQwenAPI(baziData) {
+    const pillarStr = [
+        `年柱：${baziData.yearPillar.gan}${baziData.yearPillar.zhi}`,
+        `月柱：${baziData.monthPillar.gan}${baziData.monthPillar.zhi}`,
+        `日柱：${baziData.dayPillar.gan}${baziData.dayPillar.zhi}`,
+        `时柱：${baziData.hourPillar.gan}${baziData.hourPillar.zhi}`
+    ].join('、');
+
+    const wxStr = Object.entries(baziData.fiveElements).map(([k, v]) => `${k}: ${v}`).join('、');
+    const hiddenStr = Object.entries(baziData.hiddenElements).map(([k, v]) => `${k}: ${v}`).join('、');
+
+    const userPrompt = `请为我分析以下八字命理：
+
+出生信息：${baziData.birthDate}
+性别：${baziData.gender === 'male' ? '男' : '女'}
+
+四柱八字：${pillarStr}
+日主：${baziData.dayMaster}（${baziData.dayMasterElement}）
+
+五行分布（天干地支）：${wxStr}
+藏干五行（辅助）：${hiddenStr}
+
+请严格按照子平八字体系，分析日主强弱、喜用神、忌神、五行缺失，并给出详细的增补建议。`;
+
+    const response = await fetch(DASHSCOPE_API_URL, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${DASHSCOPE_API_KEY}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            model: MODEL,
+            input: {
+                messages: [
+                    { role: 'system', content: BAZI_SYSTEM_PROMPT },
+                    { role: 'user', content: userPrompt }
+                ]
+            },
+            parameters: { result_format: 'message', max_tokens: 2000, temperature: 0.7, top_p: 0.9 }
+        })
+    });
+
+    if (!response.ok) throw new Error(`AI服务返回错误: ${response.status}`);
+    const data = await response.json();
+    if (data.output?.choices?.[0]) return data.output.choices[0].message.content;
+    throw new Error('AI服务返回格式异常');
+}
+
+async function handleBaziAPI(req, res) {
+    try {
+        const chunks = [];
+        req.on('data', c => chunks.push(c));
+        req.on('end', async () => {
+            try {
+                const params = JSON.parse(Buffer.concat(chunks).toString());
+                const { yearPillar, monthPillar, dayPillar, hourPillar, dayMaster, dayMasterElement, fiveElements, hiddenElements, gender, birthDate } = params;
+
+                if (!yearPillar || !dayPillar || !dayMaster) {
+                    return sendJSON(res, 400, { success: false, error: '缺少必要的八字数据' });
+                }
+                if (!DASHSCOPE_API_KEY) {
+                    return sendJSON(res, 500, { success: false, error: '服务器未配置 AI Key' });
+                }
+
+                console.log(`[八字] ${birthDate}, 日主: ${dayMaster}`);
+                const interpretation = await callBaziQwenAPI({
+                    yearPillar, monthPillar, dayPillar, hourPillar,
+                    dayMaster, dayMasterElement, fiveElements, hiddenElements,
+                    gender, birthDate
+                });
+
+                sendJSON(res, 200, { success: true, data: { interpretation, timestamp: new Date().toISOString() } });
+            } catch (e) {
+                console.error('八字分析错误:', e.message);
+                sendJSON(res, 500, { success: false, error: e.message });
+            }
+        });
+    } catch (e) {
+        sendJSON(res, 500, { success: false, error: e.message });
+    }
+}
+
 // ========== HTTP 服务器 ==========
 
 const server = http.createServer((req, res) => {
@@ -186,6 +303,7 @@ const server = http.createServer((req, res) => {
 
     // API 路由
     if (url.pathname === '/api/divine' && method === 'POST') return handleDivineAPI(req, res);
+    if (url.pathname === '/api/bazi' && method === 'POST') return handleBaziAPI(req, res);
     if (url.pathname === '/api/health') return sendJSON(res, 200, { status: 'ok', aiConfigured: !!DASHSCOPE_API_KEY, model: MODEL });
 
     // 静态文件

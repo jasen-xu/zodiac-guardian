@@ -1,5 +1,5 @@
 {
   "devDependencies": {
-    "@cloudbase/cli": "^3.4.0"
+    "@cloudbase/cli": "^3.5.9"
   }
 }

@@ -5529,3 +5529,659 @@ button:active,
     background: linear-gradient(to bottom, transparent, rgba(220, 210, 192, 0.2));
     pointer-events: none;
 }
+
+/* ============================
+   四柱五行精析 - 入口按钮（wuxing.html）
+   ============================ */
+.wuxing-bazi-entrance {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 10px;
+}
+
+.wuxing-bazi-divider {
+    font-size: 0.78rem;
+    color: #B8976A;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+}
+
+.wuxing-bazi-btn {
+    display: inline-block;
+    padding: 14px 48px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #F5E6C8;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #4A3728 0%, #6B4F36 50%, #8B6914 100%);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(74, 55, 40, 0.3);
+}
+
+.wuxing-bazi-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(74, 55, 40, 0.4);
+    border-color: rgba(212, 175, 55, 0.6);
+}
+
+.wuxing-bazi-desc {
+    font-size: 0.78rem;
+    color: #999;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+/* ============================
+   四柱五行精析 - 页面主体
+   ============================ */
+.wuxing-bazi-page {
+    background: linear-gradient(180deg, #F5F0E8 0%, #EDE5D8 100%);
+    min-height: 100vh;
+}
+
+.bazi-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
+}
+
+.bazi-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.bazi-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #3E2723;
+    letter-spacing: 6px;
+}
+
+.bazi-subtitle {
+    font-size: 1rem;
+    color: #6B4423;
+    letter-spacing: 3px;
+    margin-top: 6px;
+}
+
+.bazi-desc {
+    font-size: 0.82rem;
+    color: #999;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+/* ---- 表单区域 ---- */
+.bazi-form-card {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid #DCD2C0;
+    border-radius: 12px;
+    padding: 32px 28px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.bazi-form-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #3E2723;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.bazi-form-row {
+    margin-bottom: 20px;
+}
+
+.bazi-form-row-double {
+    display: flex;
+    gap: 16px;
+}
+
+.bazi-form-half {
+    flex: 1;
+}
+
+.bazi-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #6B4423;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.bazi-select {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    color: #3E2723;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B4423' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.bazi-select:focus {
+    border-color: #B8976A;
+    box-shadow: 0 0 0 3px rgba(184, 151, 106, 0.15);
+    outline: none;
+}
+
+.bazi-gender-group {
+    display: flex;
+    gap: 24px;
+}
+
+.bazi-gender-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95rem;
+    color: #3E2723;
+    cursor: pointer;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.bazi-gender-label:has(input:checked) {
+    border-color: #B8976A;
+    background: rgba(184, 151, 106, 0.1);
+}
+
+.bazi-gender-label input[type="radio"] {
+    accent-color: #8B6914;
+}
+
+.gender-icon {
+    font-size: 1.1rem;
+}
+
+.bazi-submit-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #F5E6C8;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #4A3728, #6B4F36, #8B6914);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 28px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(74, 55, 40, 0.3);
+}
+
+.bazi-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 55, 40, 0.4);
+}
+
+.bazi-submit-btn:active {
+    transform: translateY(0);
+}
+
+/* ---- 排盘结果 ---- */
+.bazi-result-card {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid #DCD2C0;
+    border-radius: 12px;
+    padding: 28px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.bazi-result-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #3E2723;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(220, 210, 192, 0.6);
+}
+
+.bazi-ai-subtitle {
+    font-size: 0.78rem;
+    color: #999;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+/* 日主信息 */
+.day-master-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 10px 16px;
+    background: rgba(184, 151, 106, 0.08);
+    border-radius: 8px;
+}
+
+.dm-label {
+    font-size: 0.78rem;
+    color: #999;
+    letter-spacing: 2px;
+}
+
+.dm-gan {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.dm-gender {
+    font-size: 0.85rem;
+    color: #6B4423;
+}
+
+/* 四柱网格 */
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.pillar-card {
+    text-align: center;
+    padding: 12px 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid #DCD2C0;
+    border-radius: 10px;
+}
+
+.pillar-label {
+    font-size: 0.72rem;
+    color: #999;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.pillar-gan, .pillar-zhi {
+    padding: 8px 4px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    border: 1px solid;
+}
+
+.pillar-char {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #3E2723;
+    line-height: 1.2;
+}
+
+.pillar-wx {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+.pillar-cang {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.cang-gan {
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.cang-gan small {
+    display: block;
+    font-size: 0.58rem;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+/* 五行分布图 */
+.wx-chart {
+    padding: 8px 0;
+}
+
+.wx-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.wx-bar-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.wx-bar-track {
+    flex: 1;
+    height: 20px;
+    background: rgba(220, 210, 192, 0.2);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.wx-bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.6s ease;
+}
+
+.wx-bar-hidden {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.wx-bar-count {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #3E2723;
+    width: 50px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.wx-bar-count small {
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: #999;
+}
+
+/* 五行摘要 */
+.wx-summary {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(220, 210, 192, 0.4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.wx-summary-item {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.wx-missing {
+    background: rgba(229, 57, 53, 0.08);
+    border: 1px solid rgba(229, 57, 53, 0.2);
+    color: #B71C1C;
+}
+
+.wx-weak {
+    background: rgba(255, 152, 0, 0.08);
+    border: 1px solid rgba(255, 152, 0, 0.2);
+    color: #E65100;
+}
+
+.wx-strong {
+    background: rgba(76, 175, 80, 0.08);
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    color: #2E7D32;
+}
+
+/* AI 分析区域 */
+.ai-loading {
+    text-align: center;
+    padding: 30px;
+}
+
+.ai-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #B8976A;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: bazi-spin 1s linear infinite;
+    margin: 0 auto 12px;
+}
+
+@keyframes bazi-spin {
+    to { transform: rotate(360deg); }
+}
+
+.ai-loading p {
+    color: #6B4423;
+    font-size: 0.9rem;
+}
+
+.ai-result-box {
+    background: linear-gradient(135deg, #FFF8EB 0%, #F5EBE0 100%);
+    border: 1px solid rgba(184, 151, 106, 0.2);
+    border-radius: 10px;
+    padding: 24px;
+}
+
+.ai-result-text {
+    line-height: 2;
+    color: #3E2723;
+    font-size: 0.92rem;
+}
+
+.ai-error {
+    background: #FFF5F5;
+    border: 1px solid #FED7D7;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    color: #8B0000;
+}
+
+.ai-error-detail {
+    font-size: 0.78rem;
+    color: #6B4423;
+    margin-top: 8px;
+}
+
+.ai-error-hint {
+    font-size: 0.78rem;
+    color: #6B4423;
+    margin-top: 4px;
+}
+
+/* 重新精析按钮 */
+.bazi-reset-btn {
+    display: block;
+    width: 200px;
+    margin: 30px auto;
+    padding: 12px;
+    font-size: 0.95rem;
+    color: #6B4423;
+    background: transparent;
+    border: 1px solid #DCD2C0;
+    border-radius: 30px;
+    cursor: pointer;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+}
+
+.bazi-reset-btn:hover {
+    background: rgba(184, 151, 106, 0.08);
+    border-color: #B8976A;
+}
+
+/* ============================
+   四柱五行精析 - 移动端适配
+   ============================ */
+@media (max-width: 768px) {
+    .bazi-container {
+        padding: 40px 16px 30px;
+    }
+
+    .bazi-title {
+        font-size: 1.5rem;
+        letter-spacing: 4px;
+    }
+
+    .bazi-subtitle {
+        font-size: 0.88rem;
+    }
+
+    .bazi-desc {
+        font-size: 0.75rem;
+    }
+
+    .bazi-form-card {
+        padding: 24px 18px;
+    }
+
+    .bazi-form-title {
+        font-size: 0.98rem;
+    }
+
+    .bazi-select {
+        padding: 10px 14px;
+        font-size: 0.88rem;
+    }
+
+    .bazi-gender-group {
+        gap: 12px;
+    }
+
+    .bazi-gender-label {
+        padding: 8px 14px;
+        font-size: 0.88rem;
+    }
+
+    .bazi-submit-btn {
+        padding: 12px;
+        font-size: 0.98rem;
+    }
+
+    .bazi-result-card {
+        padding: 20px 16px;
+    }
+
+    .pillar-char {
+        font-size: 1.2rem;
+    }
+
+    .pillar-label {
+        font-size: 0.65rem;
+    }
+
+    .wx-bar-label {
+        font-size: 0.85rem;
+    }
+
+    .wx-summary {
+        gap: 8px;
+    }
+
+    .wx-summary-item {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+    }
+
+    .ai-result-box {
+        padding: 16px;
+    }
+
+    .ai-result-text {
+        font-size: 0.85rem;
+    }
+
+    .wuxing-bazi-btn {
+        padding: 12px 36px;
+        font-size: 0.92rem;
+        letter-spacing: 3px;
+    }
+}
+
+@media (max-width: 380px) {
+    .bazi-container {
+        padding: 30px 12px 20px;
+    }
+
+    .bazi-title {
+        font-size: 1.3rem;
+        letter-spacing: 3px;
+    }
+
+    .bazi-form-card {
+        padding: 18px 14px;
+    }
+
+    .bazi-form-row-double {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .pillars-grid {
+        gap: 8px;
+    }
+
+    .pillar-char {
+        font-size: 1rem;
+    }
+
+    .pillar-gan, .pillar-zhi {
+        padding: 6px 2px;
+    }
+
+    .pillar-wx {
+        font-size: 0.6rem;
+    }
+
+    .cang-gan {
+        font-size: 0.62rem;
+    }
+
+    .day-master-bar {
+        gap: 10px;
+        padding: 8px 10px;
+    }
+
+    .dm-gan {
+        font-size: 1.1rem;
+    }
+
+    .wx-bar-row {
+        gap: 6px;
+    }
+
+    .wx-bar-count {
+        width: 40px;
+        font-size: 0.78rem;
+    }
+
+    .wuxing-bazi-btn {
+        padding: 11px 28px;
+        font-size: 0.85rem;
+    }
+}

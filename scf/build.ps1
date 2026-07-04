@@ -30,7 +30,7 @@ Write-Host "  Copying frontend files..."
 $htmlFiles = @(
     "index.html", "guardian.html", "fortune.html", "liuyao.html",
     "caishen.html", "caishen-bei.html", "caishen-dong.html", "caishen-nan.html", "caishen-xi.html", "caishen-zhong.html",
-    "wuxing.html", "wuxing-jin.html", "wuxing-mu.html", "wuxing-shui.html", "wuxing-huo.html", "wuxing-tu.html",
+    "wuxing.html", "wuxing-jin.html", "wuxing-mu.html", "wuxing-shui.html", "wuxing-huo.html", "wuxing-tu.html", "wuxing-bazi.html",
     "wenchuang.html", "dongfangjing-renju.html", "dongfangjing-zuting.html"
 )
 foreach ($file in $htmlFiles) {

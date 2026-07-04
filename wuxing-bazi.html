@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四柱五行精析 - 易道</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="wuxing-bazi-page">
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">易道</a>
+            <div class="nav-links">
+                <a href="wuxing.html" class="nav-link">返回五行</a>
+                <a href="index.html" class="nav-link">返回首页</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="bazi-container">
+        <!-- 页头 -->
+        <header class="bazi-header">
+            <h1 class="bazi-title">四柱五行精析</h1>
+            <div class="gold-line" style="margin:12px auto;"></div>
+            <p class="bazi-subtitle">探析八字命理，参悟五行本源</p>
+            <p class="bazi-desc">基于传统子平八字体系，通过年月日时四柱天干地支，精析五行旺衰与喜用神</p>
+        </header>
+
+        <!-- 表单区域 -->
+        <section class="bazi-form-section" id="baziFormSection">
+            <div class="bazi-form-card">
+                <h3 class="bazi-form-title">输入生辰信息</h3>
+
+                <div class="bazi-form-row">
+                    <label class="bazi-label">出生年份</label>
+                    <select id="baziYear" class="bazi-select"></select>
+                </div>
+
+                <div class="bazi-form-row bazi-form-row-double">
+                    <div class="bazi-form-half">
+                        <label class="bazi-label">出生月份</label>
+                        <select id="baziMonth" class="bazi-select"></select>
+                    </div>
+                    <div class="bazi-form-half">
+                        <label class="bazi-label">出生日期</label>
+                        <select id="baziDay" class="bazi-select"></select>
+                    </div>
+                </div>
+
+                <div class="bazi-form-row">
+                    <label class="bazi-label">出生时辰</label>
+                    <select id="baziHour" class="bazi-select">
+                        <option value="">请选择时辰</option>
+                        <option value="0">子时 (23:00-01:00)</option>
+                        <option value="1">丑时 (01:00-03:00)</option>
+                        <option value="2">寅时 (03:00-05:00)</option>
+                        <option value="3">卯时 (05:00-07:00)</option>
+                        <option value="4">辰时 (07:00-09:00)</option>
+                        <option value="5">巳时 (09:00-11:00)</option>
+                        <option value="6">午时 (11:00-13:00)</option>
+                        <option value="7">未时 (13:00-15:00)</option>
+                        <option value="8">申时 (15:00-17:00)</option>
+                        <option value="9">酉时 (17:00-19:00)</option>
+                        <option value="10">戌时 (19:00-21:00)</option>
+                        <option value="11">亥时 (21:00-23:00)</option>
+                    </select>
+                </div>
+
+                <div class="bazi-form-row">
+                    <label class="bazi-label">性别</label>
+                    <div class="bazi-gender-group">
+                        <label class="bazi-gender-label">
+                            <input type="radio" name="baziGender" value="male" checked>
+                            <span class="gender-icon">&#9794;</span> 男
+                        </label>
+                        <label class="bazi-gender-label">
+                            <input type="radio" name="baziGender" value="female">
+                            <span class="gender-icon">&#9792;</span> 女
+                        </label>
+                    </div>
+                </div>
+
+                <button class="bazi-submit-btn" onclick="startBaziAnalysis()">
+                    开始精析
+                </button>
+            </div>
+        </section>
+
+        <!-- 排盘结果区域 -->
+        <section class="bazi-result-section" id="baziResultSection" style="display:none;">
+            <!-- 四柱展示 -->
+            <div class="bazi-result-card">
+                <h3 class="bazi-result-title">四柱排盘</h3>
+                <div class="day-master-bar" id="dayMasterInfo"></div>
+                <div class="pillars-grid" id="pillarsDisplay"></div>
+            </div>
+
+            <!-- 五行分布 -->
+            <div class="bazi-result-card">
+                <h3 class="bazi-result-title">五行分布</h3>
+                <div class="wx-chart" id="wxChart"></div>
+                <div class="wx-summary" id="wxSummary"></div>
+            </div>
+
+            <!-- AI 解读 -->
+            <div class="bazi-result-card" id="aiAnalysisSection" style="display:none;">
+                <h3 class="bazi-result-title">大师深度解读</h3>
+                <p class="bazi-ai-subtitle">基于子平八字体系，分析喜用神与五行增补</p>
+                <div id="aiAnalysisContent"></div>
+            </div>
+
+            <!-- 微信深度咨询 -->
+            <div class="contact-qrcode-section">
+                <div class="contact-divider-line"></div>
+                <h3 class="contact-title">深度咨询</h3>
+                <p class="contact-desc">如需更详细的命理分析或个性化指导，<br>扫码添加微信，为您一对一专业解答</p>
+                <div class="contact-qrcode-box">
+                    <img src="images/wechat-qrcode.jpg" alt="微信二维码" class="qrcode-image">
+                </div>
+                <p class="contact-wechat-id">微信号：请联系页面管理员获取</p>
+            </div>
+
+            <button class="bazi-reset-btn" onclick="resetBazi()">
+                重新精析
+            </button>
+        </section>
+
+        <!-- 温馨提示 -->
+        <div class="wuxing-tip" style="margin-top:30px;">
+            <h3 class="wuxing-tip-title">温馨提示</h3>
+            <p class="wuxing-tip-text">
+                本功能基于中华传统八字命理学知识，仅供文化学习与参考。<br>
+                排盘结果因节气精确度可能有微小偏差，深度分析请咨询专业人士。<br>
+                命理之说仅供参考，人生际遇终由己造。
+            </p>
+        </div>
+    </div>
+
+    <div class="cloud-divider" style="margin:30px 0;">&#9729; &#9729; &#9729;</div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="footer-brand">易道</p>
+            <p class="footer-desc">传承千年易学智慧，融合现代科技呈现</p>
+            <p class="footer-copy">&copy; 2026 易道 | 仅供文化学习与娱乐参考，不构成任何决策建议</p>
+        </div>
+    </footer>
+
+    <script src="js/toast.js"></script>
+    <script src="js/wuxing-bazi.js?v=20260628"></script>
+</body>
+</html>
