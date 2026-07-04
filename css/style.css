@@ -3597,9 +3597,10 @@ body.home-page {
 }
 
 .guardian-zodiac-blessing {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: #999;
-    line-height: 1.6;
+    letter-spacing: 1px;
+    line-height: 1.5;
 }
 
 /* 详情页返回按钮 */
@@ -4987,8 +4988,28 @@ body.home-page {
         gap: 12px;
     }
 
+    .guardian-zodiac-info {
+        padding: 10px 6px;
+    }
+
     .guardian-zodiac-name {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+        margin-bottom: 2px;
+    }
+
+    .guardian-zodiac-guardian {
+        font-size: 0.72rem;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+    }
+
+    .guardian-zodiac-blessing {
+        font-size: 0.62rem;
+        letter-spacing: 0;
+        line-height: 1.4;
+        color: #888;
+        padding: 0 2px;
     }
 
     .guardian-list-header {
@@ -5303,6 +5324,24 @@ body.home-page {
     .guardian-zodiac-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 8px;
+    }
+
+    .guardian-zodiac-info {
+        padding: 8px 4px;
+    }
+
+    .guardian-zodiac-name {
+        font-size: 0.78rem;
+        letter-spacing: 1px;
+    }
+
+    .guardian-zodiac-guardian {
+        font-size: 0.65rem;
+        letter-spacing: 0.5px;
+    }
+
+    .guardian-zodiac-blessing {
+        font-size: 0.56rem;
     }
 }
 
