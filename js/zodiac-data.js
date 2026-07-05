@@ -86,7 +86,7 @@ const zodiacData = [
     blessing: "光明遍照，福慧圆满，吉祥如意，幸福安康",
     image: "images/goat.webp",
     seal: "images/seal-goat.png",
-    video: CDN_MEDIA + "/images/dairulai-goat.mp4",
+    video: "images/goat-video.mp4",
     audio: CDN_MEDIA + "/audio/dari-mantra.mp3",
     description: "大日如来是光明与理智的象征，护佑属羊之人生活美满，万事如意。"
   },
