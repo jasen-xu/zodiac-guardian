@@ -72,8 +72,12 @@ function showFortuneResult(fortune, isNew) {
         levelColor = '#999'; // 灰色
     }
     
-    // 将诗词按换行符分割
-    const poemLines = fortune.poem.split('\n');
+    // 将诗词按换行符和逗号分割为短句
+    const poemLines = fortune.poem.split('\n').flatMap(line => {
+        // 按中文逗号/句号分割，但保留标点
+        const parts = line.match(/[^，。]+[，。]?/g) || [line];
+        return parts.map(p => p.trim()).filter(p => p);
+    });
     
     // 将宜忌内容按换行符分割
     const adviceLines = fortune.advice.split('\n');
@@ -91,8 +95,7 @@ function showFortuneResult(fortune, isNew) {
             </div>
             
             <div class="poem-container">
-                <div class="poem-line">${poemLines[0]}</div>
-                <div class="poem-line">${poemLines[1]}</div>
+                ${poemLines.map(line => `<div class="poem-line">${line}</div>`).join('')}
             </div>
             
             <div class="fortune-advice">
@@ -252,7 +255,10 @@ async function generateFortuneCard(fortune) {
     y += 40;
     
     // === 诗词区 ===
-    const poemLines = fortune.poem.split('\n').filter(l => l.trim());
+    const poemLines = fortune.poem.split('\n').flatMap(line => {
+        const parts = line.match(/[^，。]+[，。]?/g) || [line];
+        return parts.map(p => p.trim()).filter(p => p);
+    });
     
     // 引号装饰
     ctx.fillStyle = '#C9A87C';
