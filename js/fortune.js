@@ -42,7 +42,7 @@ function drawFortune() {
     
     // 延迟显示结果(模拟抽签过程)
     setTimeout(() => {
-        // 随机选择一个签文
+        // 随机选择一个诗文
         const randomIndex = Math.floor(Math.random() * fortuneData.length);
         const fortune = fortuneData[randomIndex];
         
@@ -60,11 +60,11 @@ function drawFortune() {
     }, 1500);
 }
 
-// 显示签文结果 - 诗词版
+// 显示诗文结果 - 诗词版
 function showFortuneResult(fortune, isNew) {
     const content = document.getElementById('fortuneContent');
     
-    // 根据签文等级设置颜色
+    // 根据诗文等级设置颜色
     let levelColor = '#4CAF50'; // 默认绿色
     if (fortune.level === '上上签') {
         levelColor = '#FF6B6B'; // 红色
@@ -111,7 +111,7 @@ function showFortuneResult(fortune, isNew) {
             </div>
             
             <button class="interpret-button" onclick="showInterpretation()">
-                📜 查看签文解读
+                📜 查看诗词赏析
             </button>
             
             <div class="fortune-share">
@@ -123,7 +123,7 @@ function showFortuneResult(fortune, isNew) {
     `;
 }
 
-// 显示签文解读
+// 显示诗文解读
 function showInterpretation() {
     const fortune = JSON.parse(localStorage.getItem('dailyFortune'));
     if (!fortune) return;
@@ -133,7 +133,7 @@ function showInterpretation() {
     
     content.innerHTML = `
         <div class="interpretation-header">
-            <h3>📖 签文解读</h3>
+            <h3>📖 诗词赏析</h3>
         </div>
         <div class="interpretation-text">
             ${fortune.interpretation}

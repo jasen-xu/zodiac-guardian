@@ -373,7 +373,7 @@ async function requestAIAnalysis(bazi, gender, year, month, day) {
     var aiSection = document.getElementById('aiAnalysisSection');
     var aiContent = document.getElementById('aiAnalysisContent');
     aiSection.style.display = 'block';
-    aiContent.innerHTML = '<div class="ai-loading"><div class="ai-spinner"></div><p>大师正在推演五行命理...</p></div>';
+    aiContent.innerHTML = '<div class="ai-loading"><div class="ai-spinner"></div><p>正在推演五行命理...</p></div>';
 
     try {
         var requestBody = {

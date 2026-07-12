@@ -25,10 +25,10 @@ const wenchuangData = [
     },
     {
         id: "blessing-bracelet",
-        name: "开光檀木手串",
+        name: "檀木手串",
         series: "祈愿系列",
         category: "prayer",
-        desc: "小叶紫檀108颗佛珠，高僧开光加持",
+        desc: "小叶紫檀108颗佛珠，匠心手作",
         price: "¥168 - ¥680",
         icon: "📿",
         color: "linear-gradient(135deg, #8B6B4A, #5C4033)",
@@ -39,7 +39,7 @@ const wenchuangData = [
         name: "手工刺绣护身符",
         series: "祈愿系列",
         category: "prayer",
-        desc: "苏绣锦囊符袋，内置开光平安符",
+        desc: "苏绣锦囊符袋，内置传统平安符",
         price: "¥128 - ¥298",
         icon: "🧧",
         color: "linear-gradient(135deg, #E8B4B4, #BC2C24)",
@@ -92,13 +92,13 @@ const wenchuangData = [
         link: "#"
     },
 
-    // === 堪舆系列 ===
+    // === 空间文化系列 ===
     {
         id: "pixiu-ornament",
         name: "纯铜貔貅摆件",
-        series: "堪舆系列",
-        category: "fengshui",
-        desc: "精铸黄铜貔貅，招财纳福，镇宅辟邪",
+        series: "空间文化系列",
+        category: "space",
+        desc: "精铸黄铜貔貅，传统吉祥寓意",
         price: "¥368 - ¥1580",
         icon: "🐉",
         color: "linear-gradient(135deg, #D4AF37, #8B7020)",
@@ -107,9 +107,9 @@ const wenchuangData = [
     {
         id: "compass",
         name: "精铜罗盘",
-        series: "堪舆系列",
-        category: "fengshui",
-        desc: "三合罗盘，纯铜铸造，堪舆必备",
+        series: "空间文化系列",
+        category: "space",
+        desc: "三合罗盘，纯铜铸造，传统文化雅器",
         price: "¥480 - ¥2680",
         icon: "🧭",
         color: "linear-gradient(135deg, #C9A87C, #8B6914)",
@@ -117,10 +117,10 @@ const wenchuangData = [
     },
     {
         id: "five-coins",
-        name: "开光五帝钱",
-        series: "堪舆系列",
-        category: "fengshui",
-        desc: "真品五帝铜钱，开光加持，化煞招财",
+        name: "五帝钱",
+        series: "空间文化系列",
+        category: "space",
+        desc: "真品五帝铜钱，传统民俗文化寓意",
         price: "¥168 - ¥398",
         icon: "🪙",
         color: "linear-gradient(135deg, #D4C090, #A89060)",
@@ -129,8 +129,8 @@ const wenchuangData = [
     {
         id: "wenchang-tower",
         name: "铜质文昌塔",
-        series: "堪舆系列",
-        category: "fengshui",
+        series: "空间文化系列",
+        category: "space",
         desc: "九层文昌塔，利学业考试，功名仕途",
         price: "¥298 - ¥880",
         icon: "🗼",

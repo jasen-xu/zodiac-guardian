@@ -93,8 +93,8 @@ function displayHexagram(hexagram) {
                 cursor: pointer;
                 box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
                 transition: all 0.3s ease;
-            ">✨ 大师解卦</button>
-            <p style="color: #6b4423; font-size: 12px; margin-top: 8px;">大师结合易经，为您深度解读</p>
+            ">✨ 智能解读</button>
+            <p style="color: #6b4423; font-size: 12px; margin-top: 8px;">结合易经智慧，为您深度解读</p>
             <div id="aiResult" style="display: none; margin-top: 20px; text-align: left;"></div>
         </div>
     `;
@@ -105,20 +105,20 @@ function displayHexagram(hexagram) {
 function generateAnswer(hexagram, question) {
     let answer = '';
     
-    // 根据卦象吉凶判断
+    // 根据卦象寓意判断
     const auspiciousHexagrams = ['乾为天', '坤为地', '地天泰', '天火同人', '火天大有', '地山谦', '雷地豫', '天雷无妄', '山天大畜', '火地晋', '风火家人', '风雷益', '地风升', '泽火革', '火风鼎', '雷火丰', '水火既济'];
     const inauspiciousHexagrams = ['天水讼', '天地否', '山地剥', '地火明夷', '水风井', '泽水困', '风山渐', '雷泽归妹', '火山旅', '巽为风', '兑为泽', '风水涣', '水泽节', '风泽中孚', '雷山小过'];
     
     let fortune = '';
     let fortuneLevel = '';
     if (auspiciousHexagrams.includes(hexagram.name)) {
-        fortune = '此卦为吉卦，预示着好的发展趋势。';
-        fortuneLevel = '吉';
+        fortune = '此卦寓意积极向好，提示顺其自然而行。';
+        fortuneLevel = '宜';
     } else if (inauspiciousHexagrams.includes(hexagram.name)) {
         fortune = '此卦提示需要谨慎，可能面临一些挑战。';
-        fortuneLevel = '需谨慎';
+        fortuneLevel = '需审慎';
     } else {
-        fortune = '此卦为中平之卦，吉凶参半，关键在于如何应对。';
+        fortune = '此卦为中平之卦，利弊参半，关键在于如何应对。';
         fortuneLevel = '中平';
     }
     
@@ -449,7 +449,7 @@ async function requestAIDivination() {
             border: 1px solid rgba(139, 69, 19, 0.2);
         ">
             <div style="font-size: 24px; margin-bottom: 10px;">🔮</div>
-            <p style="color: #6b4423;">大师正在深度解释卦象……</p>
+            <p style="color: #6b4423;">正在深度解读卦象……</p>
             <div style="
                 width: 40px; height: 40px;
                 border: 3px solid #8b4513;
@@ -495,7 +495,7 @@ async function requestAIDivination() {
                     padding: 25px;
                     box-shadow: 0 4px 15px rgba(139, 69, 19, 0.1);
                 ">
-                    <h4 style="color: #8b4513; margin-bottom: 15px; font-size: 1.3rem; border-bottom: 2px solid #cd853f; padding-bottom: 10px;">🧠 大师解读</h4>
+                    <h4 style="color: #8b4513; margin-bottom: 15px; font-size: 1.3rem; border-bottom: 2px solid #cd853f; padding-bottom: 10px;">🧠 智能解读</h4>
                     <div id="aiText" style="line-height: 2; color: #3e2723; font-size: 15px; white-space: pre-wrap;"></div>
                 </div>
             `;
@@ -520,7 +520,7 @@ async function requestAIDivination() {
         `;
     } finally {
         button.disabled = false;
-        button.textContent = '✨ 重新大师解卦';
+        button.textContent = '✨ 重新解读';
         button.style.opacity = '1';
     }
 }

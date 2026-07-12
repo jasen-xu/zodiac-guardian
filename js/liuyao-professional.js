@@ -76,13 +76,13 @@ class LiuyaoProfessional {
         const factors = [];
         let wangshuai = '中平';
         
-        if (this.hexagram.fortune === '吉') {
+        if (this.hexagram.fortune === '宜') {
             wangshuai = '旺';
-            factors.push('卦象吉利,用神得势');
+            factors.push('卦象寓意积极,用神得势');
             factors.push('月建生扶,日辰帮扶');
-        } else if (this.hexagram.fortune === '需谨慎') {
+        } else if (this.hexagram.fortune === '需审慎') {
             wangshuai = '衰';
-            factors.push('卦象不利,用神受制');
+            factors.push('卦象提示审慎,用神受制');
             factors.push('月建克泄,日辰冲克');
         } else {
             factors.push('卦象平稳,用神中和');
@@ -142,10 +142,10 @@ class LiuyaoProfessional {
         const lucky = ['天乙贵人', '文昌贵人', '天德贵人', '月德贵人'];
         const unlucky = ['白虎', '丧门', '吊客', '病符'];
         
-        if (this.hexagram.fortune === '吉') {
-            shenshas.push({ name: lucky[Math.floor(Math.random() * lucky.length)], type: '吉', desc: '有贵人相助,逢凶化吉' });
-        } else if (this.hexagram.fortune === '需谨慎') {
-            shenshas.push({ name: unlucky[Math.floor(Math.random() * unlucky.length)], type: '凶', desc: '需注意防范,小心行事' });
+        if (this.hexagram.fortune === '宜') {
+            shenshas.push({ name: lucky[Math.floor(Math.random() * lucky.length)], type: '宜', desc: '有贵人相助,逢险化夷' });
+        } else if (this.hexagram.fortune === '需审慎') {
+            shenshas.push({ name: unlucky[Math.floor(Math.random() * unlucky.length)], type: '慎', desc: '需注意防范,小心行事' });
         }
         
         return shenshas;
@@ -258,7 +258,7 @@ class LiuyaoProfessional {
                 <h4>📖 综合断卦</h4>
                 <p>根据上述分析,结合《火珠林》断卦原则:</p>
                 <ol>
-                    <li><strong>先看用神旺衰:</strong>用神${report.yongshen.wangshuai},主基调${this.hexagram.fortune === '吉' ? '吉利' : this.hexagram.fortune === '需谨慎' ? '不利' : '平稳'}</li>
+                    <li><strong>先看用神旺衰:</strong>用神${report.yongshen.wangshuai},主基调${this.hexagram.fortune === '宜' ? '积极向好' : this.hexagram.fortune === '需审慎' ? '宜审慎' : '平稳'}</li>
                     <li><strong>再看动爻变化:</strong>${report.dongyao.dongCount > 0 ? '有动爻,事情有变化' : '静卦,事情平稳'}</li>
                     <li><strong>分析世应关系:</strong>${report.shiying.desc}</li>
                     <li><strong>结合卦辞爻辞:</strong>${this.hexagram.interpretation.substring(0, 50)}...</li>
@@ -272,10 +272,10 @@ class LiuyaoProfessional {
 
     // 最终判断
     getFinalJudgment(report) {
-        if (this.hexagram.fortune === '吉') {
-            return '综合判断为吉,事情可成,但需把握时机,积极行动';
-        } else if (this.hexagram.fortune === '需谨慎') {
-            return '综合判断需谨慎,事情有阻碍,建议稳扎稳打,不可冒进';
+        if (this.hexagram.fortune === '宜') {
+            return '综合判断积极向好,事情可成,但需把握时机,积极行动';
+        } else if (this.hexagram.fortune === '需审慎') {
+            return '综合判断宜审慎,事情有阻碍,建议稳扎稳打,不可冒进';
         }
         return '综合判断为中平,事情成败关键在于人为努力';
     }
