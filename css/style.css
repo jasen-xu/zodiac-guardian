@@ -1717,6 +1717,87 @@ body {
     border-bottom: 1px solid #DCD2C0;
 }
 
+/* 今日小贴士 */
+.fortune-tips {
+    margin-bottom: 30px;
+}
+
+.tips-title {
+    font-size: 0.9rem;
+    color: #8B6914;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.tip-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.4);
+    border: 1px solid rgba(220,210,192,0.4);
+    border-radius: 8px;
+}
+
+.tip-icon {
+    font-size: 1rem;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.tip-label {
+    font-size: 0.8rem;
+    color: #888;
+    flex-shrink: 0;
+}
+
+.tip-value {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+}
+
+/* 每日格言 */
+.fortune-quote {
+    margin-bottom: 30px;
+    padding: 20px 25px;
+    background: rgba(255,255,255,0.3);
+    border: 1px solid rgba(220,210,192,0.4);
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+}
+
+.quote-mark {
+    font-size: 2rem;
+    color: #D4AF37;
+    opacity: 0.6;
+    font-family: 'STKaiti', 'KaiTi', serif;
+    line-height: 1;
+    display: block;
+}
+
+.quote-text {
+    font-size: 0.95rem;
+    color: #5C4033;
+    line-height: 1.8;
+    margin: 8px 0;
+    font-family: 'STKaiti', 'KaiTi', 'SimSun', serif;
+    letter-spacing: 1px;
+}
+
 /* 解读按钮样式 */
 .interpret-button {
     padding: 12px 36px;

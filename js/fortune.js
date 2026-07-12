@@ -113,6 +113,42 @@ function showFortuneResult(fortune, isNew) {
                 ${fortune.blessing}
             </div>
             
+            ${fortune.tips ? `
+            <div class="fortune-tips">
+                <div class="tips-title">今日小贴士</div>
+                <div class="tips-grid">
+                    <div class="tip-item">
+                        <span class="tip-icon" style="background:${fortune.tips.colorHex}"></span>
+                        <span class="tip-label">幸运色</span>
+                        <span class="tip-value">${fortune.tips.color}</span>
+                    </div>
+                    <div class="tip-item">
+                        <span class="tip-icon">✨</span>
+                        <span class="tip-label">幸运数</span>
+                        <span class="tip-value">${fortune.tips.number}</span>
+                    </div>
+                    <div class="tip-item">
+                        <span class="tip-icon">🧭</span>
+                        <span class="tip-label">吉方</span>
+                        <span class="tip-value">${fortune.tips.direction}</span>
+                    </div>
+                    <div class="tip-item">
+                        <span class="tip-icon">🍵</span>
+                        <span class="tip-label">宜食</span>
+                        <span class="tip-value">${fortune.tips.food}</span>
+                    </div>
+                </div>
+            </div>
+            ` : ''}
+            
+            ${fortune.quote ? `
+            <div class="fortune-quote">
+                <span class="quote-mark">“</span>
+                <p class="quote-text">${fortune.quote}</p>
+                <span class="quote-mark">”</span>
+            </div>
+            ` : ''}
+            
             <button class="interpret-button" onclick="showInterpretation()">
                 📜 查看诗词赏析
             </button>
@@ -167,7 +203,7 @@ function shareFortune() {
  */
 async function generateFortuneCard(fortune) {
     const canvas = document.createElement('canvas');
-    const W = 750, H = 1200;
+    const W = 750, H = 1400;
     canvas.width = W;
     canvas.height = H;
     const ctx = canvas.getContext('2d');
@@ -301,9 +337,55 @@ async function generateFortuneCard(fortune) {
     ctx.font = '24px "STKaiti", "KaiTi", "楷体", serif';
     const blessingParts = fortune.blessing.split(',');
     ctx.fillText(blessingParts.join('  ·  '), W / 2, y);
-    y += 60;
+    y += 50;
+    
+    // === 每日格言 ===
+    if (fortune.quote) {
+        drawDivider(ctx, W / 2, y);
+        y += 30;
+        ctx.fillStyle = '#C9A87C';
+        ctx.font = '36px "STKaiti", "KaiTi", serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('\u201C', W / 2 - 200, y);
+        ctx.fillText('\u201D', W / 2 + 200, y + 25);
+        ctx.fillStyle = '#5C4033';
+        ctx.font = '20px "STKaiti", "KaiTi", "楷体", serif';
+        ctx.fillText(fortune.quote, W / 2, y + 15);
+        y += 60;
+    }
+    
+    // === 小贴士 ===
+    if (fortune.tips) {
+        const tipLabels = [
+            {icon: '■', label: '幸运色', value: fortune.tips.color, color: fortune.tips.colorHex},
+            {icon: '✨', label: '幸运数', value: String(fortune.tips.number)},
+            {icon: '🧭', label: '吉方', value: fortune.tips.direction},
+            {icon: '🍵', label: '宜食', value: fortune.tips.food}
+        ];
+        const tipW = 150, tipGap = 10;
+        const startX = W / 2 - (tipW * 2 + tipGap * 1.5);
+        tipLabels.forEach((tip, i) => {
+            const tx = startX + (i % 2) * (tipW + tipGap);
+            const ty = y + Math.floor(i / 2) * 55;
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            roundRect(ctx, tx, ty, tipW, 45, 6);
+            ctx.fill();
+            ctx.fillStyle = tip.color || '#888';
+            ctx.font = '16px serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(tip.icon, tx + 10, ty + 28);
+            ctx.fillStyle = '#888';
+            ctx.font = '14px "Microsoft YaHei", sans-serif';
+            ctx.fillText(tip.label, tx + 35, ty + 20);
+            ctx.fillStyle = '#333';
+            ctx.font = '16px "Microsoft YaHei", sans-serif';
+            ctx.fillText(tip.value, tx + 35, ty + 38);
+        });
+        y += 130;
+    }
     
     // === 底部署名 ===
+    ctx.textAlign = 'center';
     ctx.fillStyle = '#C9A87C';
     ctx.font = '18px "STKaiti", "KaiTi", "楷体", serif';
     ctx.fillText('生肖守护神', W / 2, H - 80);
