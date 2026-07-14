@@ -1,0 +1,18 @@
+{
+  "name": "yidao-admin",
+  "version": "1.0.0",
+  "description": "易道管理后台 - 预约管理、用户管理",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js",
+    "init-db": "node db-init.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "pg": "^8.13.0",
+    "bcryptjs": "^2.4.3",
+    "express-session": "^1.18.0",
+    "dotenv": "^16.4.0"
+  }
+}

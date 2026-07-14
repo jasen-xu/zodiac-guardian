@@ -15,6 +15,8 @@ const DASHSCOPE_API_KEY = process.env.DASHSCOPE_API_KEY || '';
 const DASHSCOPE_API_URL = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation';
 const MODEL = process.env.MODEL || 'qwen-plus';
 const WECOM_WEBHOOK_KEY = process.env.WECOM_WEBHOOK_KEY || 'b2c597a8-9358-44fb-9823-d2f8835be74b';
+const SHANGHAI_API_URL = process.env.SHANGHAI_API_URL || '';  // 上海服务器API地址
+const SHANGHAI_API_KEY = process.env.SHANGHAI_API_KEY || '';  // 上海服务器API密钥
 const PORT = process.env.PORT || 9000;
 
 const MIME_TYPES = {
@@ -354,10 +356,28 @@ async function handleBookingAPI(req, res) {
                 // 发送企微通知
                 const notified = await sendWecomNotification(booking);
                 
+                // 存入上海服务器数据库（非阻塞，失败不影响通知）
+                let saved = false;
+                if (SHANGHAI_API_URL && SHANGHAI_API_KEY) {
+                    try {
+                        const saveResp = await fetch(`${SHANGHAI_API_URL}/api/bookings`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'X-API-Key': SHANGHAI_API_KEY },
+                            body: JSON.stringify(booking)
+                        });
+                        const saveResult = await saveResp.json();
+                        saved = saveResult.success;
+                        console.log(`[存库] ${saved ? '成功' : '失败'}:`, saveResult);
+                    } catch (e) {
+                        console.error('[存库] 网络错误:', e.message);
+                    }
+                }
+                
                 sendJSON(res, 200, { 
                     success: true, 
                     message: '预约提交成功，我们将48小时内联系您',
-                    notified
+                    notified,
+                    saved
                 });
             } catch (e) {
                 console.error('预约处理错误:', e.message);

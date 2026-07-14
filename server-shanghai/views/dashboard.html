@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>易道管理后台 - 仪表盘</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+        .navbar {
+            background: #1a1a2e;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-brand { color: white; font-size: 18px; font-weight: 700; }
+        .navbar-nav { display: flex; gap: 24px; align-items: center; }
+        .navbar-nav a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .navbar-nav a:hover, .navbar-nav a.active { color: white; }
+        .logout-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: rgba(255,255,255,0.8);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.2); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        .page-title { font-size: 22px; font-weight: 600; margin-bottom: 24px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .stat-label { font-size: 13px; color: #888; margin-bottom: 8px; }
+        .stat-value { font-size: 32px; font-weight: 700; color: #1a1a2e; }
+        .stat-card.highlight { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .stat-card.highlight .stat-label { color: rgba(255,255,255,0.8); }
+        .stat-card.highlight .stat-value { color: white; }
+        .section-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+        .recent-bookings {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .booking-table { width: 100%; border-collapse: collapse; }
+        .booking-table th {
+            text-align: left;
+            padding: 12px;
+            font-size: 13px;
+            color: #888;
+            border-bottom: 1px solid #eee;
+            font-weight: 500;
+        }
+        .booking-table td {
+            padding: 12px;
+            font-size: 14px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-pending { background: #fff3e0; color: #f57c00; }
+        .status-contacted { background: #e3f2fd; color: #1976d2; }
+        .status-completed { background: #e8f5e9; color: #388e3c; }
+        .status-cancelled { background: #f5f5f5; color: #999; }
+        .empty-state { text-align: center; padding: 40px; color: #999; }
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 12px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .booking-table { font-size: 13px; }
+            .booking-table th:nth-child(4),
+            .booking-table td:nth-child(4) { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">易道管理后台</div>
+        <div class="navbar-nav">
+            <a href="/admin" class="active">仪表盘</a>
+            <a href="/admin/bookings">预约管理</a>
+            <button class="logout-btn" onclick="logout()">退出登录</button>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="page-title">数据概览</h1>
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card highlight">
+                <div class="stat-label">待处理预约</div>
+                <div class="stat-value" id="statPending">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">总预约数</div>
+                <div class="stat-value" id="statTotal">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">本月新增</div>
+                <div class="stat-value" id="statMonth">-</div>
+            </div>
+        </div>
+        <div class="recent-bookings">
+            <div class="section-title">最近预约</div>
+            <table class="booking-table">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>手机</th>
+                        <th>服务类型</th>
+                        <th>地区</th>
+                        <th>状态</th>
+                        <th>时间</th>
+                    </tr>
+                </thead>
+                <tbody id="recentTable">
+                    <tr><td colspan="6" class="empty-state">加载中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        async function loadDashboard() {
+            try {
+                const [statsResp, bookingsResp] = await Promise.all([
+                    fetch('/admin/api/stats'),
+                    fetch('/admin/api/bookings?limit=5')
+                ]);
+                const statsData = await statsResp.json();
+                const bookingsData = await bookingsResp.json();
+
+                if (!statsData.success && statsData.error === '未登录') {
+                    window.location.href = '/admin/login';
+                    return;
+                }
+
+                if (statsData.success) {
+                    document.getElementById('statPending').textContent = statsData.data.pending;
+                    document.getElementById('statTotal').textContent = statsData.data.total;
+                    document.getElementById('statMonth').textContent = statsData.data.thisMonth;
+                }
+
+                if (bookingsData.success && bookingsData.data.bookings.length > 0) {
+                    const html = bookingsData.data.bookings.map(b => `
+                        <tr>
+                            <td>${escapeHtml(b.name)}</td>
+                            <td>${escapeHtml(b.phone)}</td>
+                            <td>${escapeHtml(b.typeName)}</td>
+                            <td>${escapeHtml(b.area || '-')}</td>
+                            <td><span class="status-badge status-${b.status}">${escapeHtml(b.statusName)}</span></td>
+                            <td>${formatTime(b.created_at)}</td>
+                        </tr>
+                    `).join('');
+                    document.getElementById('recentTable').innerHTML = html;
+                } else {
+                    document.getElementById('recentTable').innerHTML = 
+                        '<tr><td colspan="6" class="empty-state">暂无预约数据</td></tr>';
+                }
+            } catch (e) {
+                console.error('加载失败:', e);
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+
+        function formatTime(t) {
+            if (!t) return '-';
+            const d = new Date(t);
+            return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+        }
+
+        async function logout() {
+            await fetch('/admin/api/logout', { method: 'POST' });
+            window.location.href = '/admin/login';
+        }
+
+        loadDashboard();
+    </script>
+</body>
+</html>

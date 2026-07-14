@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>易道管理后台 - 预约管理</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f7fa; color: #333; }
+        .navbar { background: #1a1a2e; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+        .navbar-brand { color: white; font-size: 18px; font-weight: 700; }
+        .navbar-nav { display: flex; gap: 24px; align-items: center; }
+        .navbar-nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        .navbar-nav a:hover, .navbar-nav a.active { color: white; }
+        .logout-btn { background: rgba(255,255,255,0.1); border: none; color: rgba(255,255,255,0.8); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+        .page-title { font-size: 22px; font-weight: 600; }
+        .filters { display: flex; gap: 12px; flex-wrap: wrap; }
+        .filter-select, .filter-input {
+            padding: 8px 14px; border: 1px solid #ddd; border-radius: 8px;
+            font-size: 14px; background: white; outline: none;
+        }
+        .filter-input { width: 180px; }
+        .filter-select:focus, .filter-input:focus { border-color: #0f3460; }
+        .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px; font-size: 13px; color: #888; border-bottom: 1px solid #eee; font-weight: 500; white-space: nowrap; }
+        td { padding: 12px; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
+        tr:hover td { background: #fafafa; }
+        .status-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; cursor: pointer; }
+        .status-pending { background: #fff3e0; color: #f57c00; }
+        .status-contacted { background: #e3f2fd; color: #1976d2; }
+        .status-completed { background: #e8f5e9; color: #388e3c; }
+        .status-cancelled { background: #f5f5f5; color: #999; }
+        .source-tag { font-size: 12px; padding: 2px 8px; border-radius: 4px; background: #f0f0f0; }
+        .actions { display: flex; gap: 6px; }
+        .btn-sm { padding: 4px 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 12px; cursor: pointer; background: white; }
+        .btn-sm:hover { background: #f5f5f5; }
+        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+        .pagination button { padding: 8px 14px; border: 1px solid #ddd; border-radius: 6px; background: white; cursor: pointer; font-size: 13px; }
+        .pagination button.active { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+        .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+        .empty-state { text-align: center; padding: 40px; color: #999; }
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: white; border-radius: 12px; padding: 28px; width: 440px; max-width: 90vw; max-height: 80vh; overflow-y: auto; }
+        .modal-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+        .modal-row { display: flex; margin-bottom: 12px; }
+        .modal-label { width: 80px; color: #888; font-size: 13px; flex-shrink: 0; }
+        .modal-value { font-size: 14px; flex: 1; word-break: break-all; }
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+        .modal-btn { padding: 8px 20px; border-radius: 6px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 14px; }
+        .modal-btn.primary { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+        .remark-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; resize: vertical; min-height: 60px; margin-top: 12px; }
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 12px; }
+            .page-header { flex-direction: column; }
+            th:nth-child(7), td:nth-child(7) { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">易道管理后台</div>
+        <div class="navbar-nav">
+            <a href="/admin">仪表盘</a>
+            <a href="/admin/bookings" class="active">预约管理</a>
+            <button class="logout-btn" onclick="logout()">退出登录</button>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">预约管理</h1>
+            <div class="filters">
+                <select class="filter-select" id="statusFilter" onchange="loadBookings(1)">
+                    <option value="">全部状态</option>
+                    <option value="pending">待联系</option>
+                    <option value="contacted">已联系</option>
+                    <option value="completed">已完成</option>
+                    <option value="cancelled">已取消</option>
+                </select>
+                <input class="filter-input" id="searchInput" placeholder="搜索姓名/手机号" onkeyup="debounceSearch()">
+            </div>
+        </div>
+        <div class="card">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>姓名</th>
+                            <th>手机</th>
+                            <th>地区</th>
+                            <th>服务类型</th>
+                            <th>来源</th>
+                            <th>状态</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTable">
+                        <tr><td colspan="9" class="empty-state">加载中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal">
+            <div class="modal-title" id="modalTitle">预约详情</div>
+            <div id="modalContent"></div>
+            <textarea class="remark-input" id="remarkInput" placeholder="添加备注..."></textarea>
+            <div class="modal-actions">
+                <button class="modal-btn" onclick="closeModal()">关闭</button>
+                <button class="modal-btn primary" onclick="saveRemark()">保存备注</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        let currentBooking = null;
+        let searchTimer = null;
+
+        async function loadBookings(page) {
+            currentPage = page || 1;
+            const status = document.getElementById('statusFilter').value;
+            const search = document.getElementById('searchInput').value.trim();
+            const params = new URLSearchParams({ page: currentPage, limit: 20 });
+            if (status) params.set('status', status);
+            if (search) params.set('search', search);
+
+            try {
+                const resp = await fetch(`/admin/api/bookings?${params}`);
+                const result = await resp.json();
+                if (!result.success) {
+                    if (result.error === '未登录') window.location.href = '/admin/login';
+                    return;
+                }
+                const { bookings, pagination } = result.data;
+                renderTable(bookings);
+                renderPagination(pagination);
+            } catch (e) {
+                console.error('加载失败:', e);
+            }
+        }
+
+        function renderTable(bookings) {
+            if (bookings.length === 0) {
+                document.getElementById('bookingsTable').innerHTML = '<tr><td colspan="9" class="empty-state">暂无预约数据</td></tr>';
+                return;
+            }
+            document.getElementById('bookingsTable').innerHTML = bookings.map(b => `
+                <tr>
+                    <td>#${b.id}</td>
+                    <td>${esc(b.name)}</td>
+                    <td>${esc(b.phone)}</td>
+                    <td>${esc(b.area || '-')}</td>
+                    <td>${esc(b.typeName)}</td>
+                    <td><span class="source-tag">${esc(b.source || '-')}</span></td>
+                    <td><span class="status-badge status-${b.status}" onclick="cycleStatus(${b.id}, '${b.status}')">${esc(b.statusName)}</span></td>
+                    <td>${formatTime(b.created_at)}</td>
+                    <td><button class="btn-sm" onclick="showDetail(${b.id})">详情</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderPagination(p) {
+            if (p.pages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+            let html = `<button ${p.page<=1?'disabled':''} onclick="loadBookings(${p.page-1})">上一页</button>`;
+            for (let i = 1; i <= p.pages && i <= 7; i++) {
+                html += `<button class="${i===p.page?'active':''}" onclick="loadBookings(${i})">${i}</button>`;
+            }
+            html += `<button ${p.page>=p.pages?'disabled':''} onclick="loadBookings(${p.page+1})">下一页</button>`;
+            document.getElementById('pagination').innerHTML = html;
+        }
+
+        async function cycleStatus(id, currentStatus) {
+            const order = ['pending', 'contacted', 'completed', 'cancelled'];
+            const next = order[(order.indexOf(currentStatus) + 1) % order.length];
+            await fetch(`/admin/api/bookings/${id}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: next })
+            });
+            loadBookings(currentPage);
+        }
+
+        async function showDetail(id) {
+            const resp = await fetch(`/admin/api/bookings?page=1&limit=1000`);
+            const result = await resp.json();
+            if (!result.success) return;
+            const booking = result.data.bookings.find(b => b.id === id);
+            if (!booking) return;
+            currentBooking = booking;
+            document.getElementById('modalTitle').textContent = `预约 #${booking.id}`;
+            document.getElementById('modalContent').innerHTML = `
+                <div class="modal-row"><div class="modal-label">姓名</div><div class="modal-value">${esc(booking.name)}</div></div>
+                <div class="modal-row"><div class="modal-label">手机</div><div class="modal-value"><a href="tel:${booking.phone}">${esc(booking.phone)}</a></div></div>
+                <div class="modal-row"><div class="modal-label">地区</div><div class="modal-value">${esc(booking.area || '-')}</div></div>
+                <div class="modal-row"><div class="modal-label">服务类型</div><div class="modal-value">${esc(booking.typeName)}</div></div>
+                <div class="modal-row"><div class="modal-label">来源</div><div class="modal-value">${esc(booking.source || '-')}</div></div>
+                <div class="modal-row"><div class="modal-label">需求描述</div><div class="modal-value">${esc(booking.description || '-')}</div></div>
+                <div class="modal-row"><div class="modal-label">状态</div><div class="modal-value"><span class="status-badge status-${booking.status}">${esc(booking.statusName)}</span></div></div>
+                <div class="modal-row"><div class="modal-label">提交时间</div><div class="modal-value">${new Date(booking.created_at).toLocaleString('zh-CN')}</div></div>
+                <div class="modal-row"><div class="modal-label">备注</div><div class="modal-value">${esc(booking.remark || '-')}</div></div>
+            `;
+            document.getElementById('remarkInput').value = booking.remark || '';
+            document.getElementById('detailModal').classList.add('show');
+        }
+
+        function closeModal() { document.getElementById('detailModal').classList.remove('show'); }
+
+        async function saveRemark() {
+            if (!currentBooking) return;
+            const remark = document.getElementById('remarkInput').value.trim();
+            await fetch(`/admin/api/bookings/${currentBooking.id}/remark`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ remark })
+            });
+            closeModal();
+            loadBookings(currentPage);
+        }
+
+        function debounceSearch() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => loadBookings(1), 400);
+        }
+
+        function esc(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; }
+        function formatTime(t) { if(!t) return '-'; const d=new Date(t); return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; }
+
+        async function logout() { await fetch('/admin/api/logout',{method:'POST'}); window.location.href='/admin/login'; }
+
+        // Click outside modal to close
+        document.getElementById('detailModal').addEventListener('click', e => { if(e.target.classList.contains('modal-overlay')) closeModal(); });
+
+        loadBookings(1);
+    </script>
+</body>
+</html>
