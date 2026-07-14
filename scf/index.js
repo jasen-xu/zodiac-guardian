@@ -14,6 +14,7 @@ const http = require('http');
 const DASHSCOPE_API_KEY = process.env.DASHSCOPE_API_KEY || '';
 const DASHSCOPE_API_URL = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation';
 const MODEL = process.env.MODEL || 'qwen-plus';
+const WECOM_WEBHOOK_KEY = process.env.WECOM_WEBHOOK_KEY || 'b2c597a8-9358-44fb-9823-d2f8835be74b';
 const PORT = process.env.PORT || 9000;
 
 const MIME_TYPES = {
@@ -295,6 +296,79 @@ async function handleBaziAPI(req, res) {
     }
 }
 
+// ========== 预约表单处理 ==========
+
+async function sendWecomNotification(booking) {
+    const webhookUrl = `https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECOM_WEBHOOK_KEY}`;
+    const typeMap = { survey: '生命地理勘测', ceremony: '生命礼仪全案', heritage: '家族文化建档', selection: '选址分析', layout: '空间布局', decor: '软装搭配', other: '其他需求' };
+    const typeName = typeMap[booking.type] || booking.type || '未指定';
+    const source = booking.source || '祖庭服务';
+    
+    const content = [
+        `\uD83D\uDCCB \u65B0\u9884\u7EA6\u63D0\u4EA4`,
+        `\u6765\u6E90\uFF1A${source}`,
+        `\u59D3\u540D\uFF1A${booking.name}`,
+        `\u624B\u673A\uFF1A${booking.phone}`,
+        `\u5730\u533A\uFF1A${booking.area || '\u672A\u586B'}`,
+        `\u670D\u52A1\u7C7B\u578B\uFF1A${typeName}`,
+        `\u9700\u6C42\uFF1A${booking.desc || '\u672A\u586B'}`,
+        `\u63D0\u4EA4\u65F6\u95F4\uFF1A${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}`
+    ].join('\n');
+
+    const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            msgtype: 'text',
+            text: { content }
+        })
+    });
+
+    if (!response.ok) {
+        console.error('企微通知发送失败:', response.status);
+        return false;
+    }
+    const result = await response.json();
+    console.log('企微通知结果:', result);
+    return result.errcode === 0;
+}
+
+async function handleBookingAPI(req, res) {
+    try {
+        const chunks = [];
+        req.on('data', c => chunks.push(c));
+        req.on('end', async () => {
+            try {
+                const booking = JSON.parse(Buffer.concat(chunks).toString());
+                
+                // 基本验证
+                if (!booking.name || !booking.phone) {
+                    return sendJSON(res, 400, { success: false, error: '请填写姓名和手机号' });
+                }
+                if (!/^1\d{10}$/.test(booking.phone)) {
+                    return sendJSON(res, 400, { success: false, error: '手机号格式不正确' });
+                }
+
+                console.log(`[预约] ${booking.name}, ${booking.phone}, ${booking.type || 'other'}`);
+                
+                // 发送企微通知
+                const notified = await sendWecomNotification(booking);
+                
+                sendJSON(res, 200, { 
+                    success: true, 
+                    message: '预约提交成功，我们将48小时内联系您',
+                    notified
+                });
+            } catch (e) {
+                console.error('预约处理错误:', e.message);
+                sendJSON(res, 500, { success: false, error: e.message });
+            }
+        });
+    } catch (e) {
+        sendJSON(res, 500, { success: false, error: e.message });
+    }
+}
+
 // ========== HTTP 服务器 ==========
 
 const server = http.createServer((req, res) => {
@@ -314,6 +388,7 @@ const server = http.createServer((req, res) => {
     // API 路由
     if (url.pathname === '/api/divine' && method === 'POST') return handleDivineAPI(req, res);
     if (url.pathname === '/api/bazi' && method === 'POST') return handleBaziAPI(req, res);
+    if (url.pathname === '/api/booking' && method === 'POST') return handleBookingAPI(req, res);
     if (url.pathname === '/api/health') return sendJSON(res, 200, { status: 'ok', aiConfigured: !!DASHSCOPE_API_KEY, model: MODEL });
 
     // 静态文件
