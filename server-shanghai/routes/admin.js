@@ -232,7 +232,7 @@ router.get('/api/users', adminAuth, async (req, res) => {
 
         const [dataResult, countResult] = await Promise.all([
             db.query(
-                `SELECT id, phone, nickname, level, member_until, created_at
+                `SELECT id, phone, nickname, level, gender, birth_year, birth_month, birth_day, birth_hour, member_until, created_at
                  FROM users WHERE ${where}
                  ORDER BY created_at DESC LIMIT $${paramIdx++} OFFSET $${paramIdx++}`,
                 [...params, limit, offset]

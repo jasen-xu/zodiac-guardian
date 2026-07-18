@@ -73,6 +73,8 @@
                             <th>ID</th>
                             <th>手机号</th>
                             <th>昵称</th>
+                            <th>性别</th>
+                            <th>生辰</th>
                             <th>等级</th>
                             <th>解卦次数</th>
                             <th>注册时间</th>
@@ -80,7 +82,7 @@
                         </tr>
                     </thead>
                     <tbody id="usersTable">
-                        <tr><td colspan="7" class="empty-state">加载中...</td></tr>
+                        <tr><td colspan="9" class="empty-state">加载中...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -116,7 +118,7 @@
 
         function renderTable(users) {
             if (users.length === 0) {
-                document.getElementById('usersTable').innerHTML = '<tr><td colspan="7" class="empty-state">暂无用户数据</td></tr>';
+                document.getElementById('usersTable').innerHTML = '<tr><td colspan="9" class="empty-state">暂无用户数据</td></tr>';
                 return;
             }
             document.getElementById('usersTable').innerHTML = users.map(u => `
@@ -124,6 +126,8 @@
                     <td>#${u.id}</td>
                     <td>${esc(u.phone)}</td>
                     <td>${esc(u.nickname || '-')}</td>
+                    <td>${u.gender === 'male' ? '男' : u.gender === 'female' ? '女' : '-'}</td>
+                    <td>${formatBirth(u.birth_year, u.birth_month, u.birth_day, u.birth_hour)}</td>
                     <td><span class="level-badge level-${u.level}" onclick="cycleLevel(${u.id}, '${u.level}')">${esc(u.levelName)}</span></td>
                     <td>${u.usage?.divine || 0} 解卦 / ${u.usage?.bazi || 0} 八字</td>
                     <td>${formatTime(u.created_at)}</td>
@@ -172,6 +176,7 @@
 
         function esc(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; }
         function formatTime(t) { if(!t) return '-'; const d=new Date(t); return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`; }
+        function formatBirth(y,m,d,h) { if(!y) return '-'; let s=y+'年'+m+'月'+d+'日'; const hours=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥']; if(h!==null&&h!==undefined){const idx=Math.floor(((h+1)%24)/2); s+=' '+hours[idx]+'时';} return s; }
         async function logout() { await fetch('/admin/api/logout',{method:'POST'}); window.location.href='/admin/login'; }
 
         loadUsers(1);
