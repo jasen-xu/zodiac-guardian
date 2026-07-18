@@ -35,6 +35,11 @@ router.get('/bookings', adminAuth, (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'bookings.html'));
 });
 
+// 用户管理
+router.get('/users', adminAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'views', 'users.html'));
+});
+
 // ===== 认证 API =====
 
 // 登录
@@ -194,6 +199,89 @@ router.put('/api/bookings/:id/remark', adminAuth, async (req, res) => {
         res.json({ success: true, data: result.rows[0] });
     } catch (e) {
         console.error('更新备注失败:', e.message);
+        res.status(500).json({ success: false, error: '更新失败' });
+    }
+});
+
+// ===== 用户管理 API =====
+
+const LEVEL_MAP = { l0: '游客', l1: '注册用户', l2: '会员', l3: 'VIP' };
+
+// 用户列表
+router.get('/api/users', adminAuth, async (req, res) => {
+    try {
+        const page = Math.max(1, parseInt(req.query.page) || 1);
+        const limit = Math.min(50, Math.max(1, parseInt(req.query.limit) || 20));
+        const offset = (page - 1) * limit;
+        const level = req.query.level || '';
+        const search = req.query.search || '';
+
+        let where = '1=1';
+        const params = [];
+        let paramIdx = 1;
+
+        if (level) {
+            where += ` AND level = $${paramIdx++}`;
+            params.push(level);
+        }
+        if (search) {
+            where += ` AND (phone ILIKE $${paramIdx} OR nickname ILIKE $${paramIdx})`;
+            params.push(`%${search}%`);
+            paramIdx++;
+        }
+
+        const [dataResult, countResult] = await Promise.all([
+            db.query(
+                `SELECT id, phone, nickname, level, member_until, created_at
+                 FROM users WHERE ${where}
+                 ORDER BY created_at DESC LIMIT $${paramIdx++} OFFSET $${paramIdx++}`,
+                [...params, limit, offset]
+            ),
+            db.query(`SELECT COUNT(*) as count FROM users WHERE ${where}`, params)
+        ]);
+
+        // 查询每个用户的使用次数
+        const users = dataResult.rows;
+        for (const u of users) {
+            const usageResult = await db.query(
+                `SELECT service_type, COUNT(*) as count FROM usage_logs 
+                 WHERE user_id = $1 GROUP BY service_type`, [u.id]
+            );
+            u.usage = {};
+            usageResult.rows.forEach(r => { u.usage[r.service_type] = parseInt(r.count); });
+            u.levelName = LEVEL_MAP[u.level] || u.level;
+        }
+
+        const total = parseInt(countResult.rows[0].count);
+        res.json({
+            success: true,
+            data: { users, pagination: { page, limit, total, pages: Math.ceil(total / limit) } }
+        });
+    } catch (e) {
+        console.error('用户列表查询失败:', e.message);
+        res.status(500).json({ success: false, error: '查询失败' });
+    }
+});
+
+// 更新用户等级
+router.put('/api/users/:id/level', adminAuth, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { level } = req.body;
+        const validLevels = ['l0', 'l1', 'l2', 'l3'];
+        if (!validLevels.includes(level)) {
+            return res.status(400).json({ success: false, error: '无效的等级' });
+        }
+        const result = await db.query(
+            'UPDATE users SET level = $1, updated_at = NOW() WHERE id = $2 RETURNING *',
+            [level, id]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ success: false, error: '用户不存在' });
+        }
+        res.json({ success: true, data: result.rows[0] });
+    } catch (e) {
+        console.error('更新用户等级失败:', e.message);
         res.status(500).json({ success: false, error: '更新失败' });
     }
 });

@@ -1,0 +1,408 @@
+/* ==========================================
+   易道 - 用户登录组件样式
+   ========================================== */
+
+/* ===== 导航栏用户区域 ===== */
+.user-nav-area {
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+}
+
+.user-login-btn {
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    color: #ffd700;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.user-login-btn:hover {
+    background: rgba(255, 215, 0, 0.3);
+    border-color: #ffd700;
+}
+
+.user-login-btn.mobile {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    text-align: center;
+}
+
+/* 用户下拉菜单 */
+.user-dropdown {
+    position: relative;
+}
+
+.user-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+.user-dropdown-trigger:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.user-avatar-small {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b4513, #cd853f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.user-display-name {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-level-tag {
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    background: rgba(255, 215, 0, 0.2);
+    color: #ffd700;
+}
+
+.user-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    min-width: 180px;
+    overflow: hidden;
+    z-index: 1000;
+    animation: dropdownFadeIn 0.2s ease;
+}
+
+.user-dropdown-menu.show {
+    display: block;
+}
+
+@keyframes dropdownFadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-dropdown-info {
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #888;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.user-dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.user-dropdown-item:hover {
+    background: #f5f5f5;
+}
+
+.user-dropdown-item.logout {
+    color: #e53935;
+    border-top: 1px solid #f0f0f0;
+}
+
+.user-dropdown-item.logout:hover {
+    background: #fef2f2;
+}
+
+/* 移动端已登录状态 */
+.user-mobile-area {
+    margin-top: 8px;
+}
+
+.user-mobile-logged {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+}
+
+.user-mobile-logged .user-dropdown-item {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 6px 12px;
+    font-size: 12px;
+    width: auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+}
+
+.user-mobile-logged .user-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== 登录模态框 ===== */
+.yidao-login-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+
+.yidao-login-modal.show {
+    display: flex;
+}
+
+.yidao-login-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.yidao-login-box {
+    position: relative;
+    background: #fff;
+    border-radius: 16px;
+    width: 380px;
+    max-width: 92vw;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    animation: loginBoxIn 0.3s ease;
+}
+
+@keyframes loginBoxIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.yidao-login-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+}
+
+.yidao-login-close:hover {
+    color: #333;
+}
+
+.yidao-login-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.yidao-login-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+}
+
+.yidao-login-subtitle {
+    font-size: 13px;
+    color: #888;
+}
+
+/* 表单 */
+.yidao-form-group {
+    margin-bottom: 16px;
+}
+
+.yidao-form-label {
+    display: block;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.yidao-form-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+    background: #fafafa;
+}
+
+.yidao-form-input:focus {
+    border-color: #8b4513;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.08);
+}
+
+.yidao-form-input.code {
+    flex: 1;
+}
+
+.yidao-code-row {
+    display: flex;
+    gap: 10px;
+}
+
+.yidao-code-btn {
+    white-space: nowrap;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #8b4513, #a0522d);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 100px;
+}
+
+.yidao-code-btn:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.yidao-code-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.yidao-login-submit {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.3s;
+}
+
+.yidao-login-submit:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(26, 26, 46, 0.3);
+}
+
+.yidao-login-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.yidao-login-tips {
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 16px;
+}
+
+.yidao-link {
+    color: #8b4513;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* 提示信息 */
+.yidao-login-message {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 12px;
+    min-height: 20px;
+    transition: all 0.3s;
+}
+
+.yidao-login-message.error {
+    color: #e53935;
+}
+
+.yidao-login-message.success {
+    color: #43a047;
+}
+
+.yidao-login-message.info {
+    color: #1976d2;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+    .user-nav-area {
+        margin-left: auto;
+    }
+
+    .user-display-name {
+        max-width: 60px;
+        font-size: 12px;
+    }
+
+    .user-level-tag {
+        display: none;
+    }
+
+    .yidao-login-box {
+        padding: 24px 20px;
+        margin: 0 12px;
+    }
+
+    .yidao-login-title {
+        font-size: 19px;
+    }
+
+    .user-dropdown-menu {
+        right: -10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-avatar-small {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .yidao-code-btn {
+        min-width: 85px;
+        padding: 10px 10px;
+        font-size: 12px;
+    }
+}

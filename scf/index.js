@@ -19,6 +19,75 @@ const SHANGHAI_API_URL = process.env.SHANGHAI_API_URL || '';  // 上海服务器
 const SHANGHAI_API_KEY = process.env.SHANGHAI_API_KEY || '';  // 上海服务器API密钥
 const PORT = process.env.PORT || 9000;
 
+// ========== JWT 解码（仅提取payload，不验证签名） ==========
+function decodeJWT(token) {
+    try {
+        if (!token) return null;
+        const parts = token.split('.');
+        if (parts.length !== 3) return null;
+        const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
+        // 检查是否过期
+        if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) return null;
+        return payload;
+    } catch (e) {
+        return null;
+    }
+}
+
+// 从请求中提取用户信息
+function extractUser(req) {
+    const authHeader = req.headers['authorization'] || '';
+    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
+    const decoded = decodeJWT(token);
+    return decoded ? { userId: decoded.id, phone: decoded.phone, level: decoded.level } : null;
+}
+
+// 提取客户端IP
+function getClientIP(req) {
+    return req.headers['x-forwarded-for']?.split(',')[0]?.trim()
+        || req.headers['x-real-ip']
+        || req.connection?.remoteAddress
+        || '';
+}
+
+// 调用上海服务器检查额度
+async function checkQuota(user, ip, serviceType) {
+    if (!SHANGHAI_API_URL || !SHANGHAI_API_KEY) return { allowed: true }; // 未配置则不限制
+    try {
+        const resp = await fetch(`${SHANGHAI_API_URL}/api/user/check-quota`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-API-Key': SHANGHAI_API_KEY },
+            body: JSON.stringify({
+                userId: user?.userId || null,
+                phone: user?.phone || ip,
+                serviceType
+            })
+        });
+        return await resp.json();
+    } catch (e) {
+        console.error('[额度检查] 网络错误:', e.message);
+        return { allowed: true }; // 网络错误时放行，避免阻断服务
+    }
+}
+
+// 调用上海服务器消耗额度
+async function consumeQuota(user, ip, serviceType) {
+    if (!SHANGHAI_API_URL || !SHANGHAI_API_KEY) return;
+    try {
+        await fetch(`${SHANGHAI_API_URL}/api/user/consume-quota`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-API-Key': SHANGHAI_API_KEY },
+            body: JSON.stringify({
+                userId: user?.userId || null,
+                phone: user?.phone || ip,
+                serviceType
+            })
+        });
+    } catch (e) {
+        console.error('[额度消耗] 网络错误:', e.message);
+    }
+}
+
 const MIME_TYPES = {
     '.html': 'text/html; charset=utf-8',
     '.css': 'text/css; charset=utf-8',
@@ -70,7 +139,7 @@ function sendJSON(res, statusCode, data) {
         'Content-Type': 'application/json; charset=utf-8',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type'
+        'Access-Control-Allow-Headers': 'Content-Type,Authorization'
     });
     res.end(JSON.stringify(data));
 }
@@ -157,13 +226,29 @@ async function handleDivineAPI(req, res) {
                     return sendJSON(res, 500, { success: false, error: '服务器未配置 AI Key' });
                 }
 
-                console.log(`[解卦] 问题: "${question}", 卦名: ${hexagramName}`);
+                // 额度检查
+                const user = extractUser(req);
+                const clientIP = getClientIP(req);
+                const quota = await checkQuota(user, clientIP, 'divine');
+                if (quota.success && !quota.data?.allowed) {
+                    return sendJSON(res, 403, {
+                        success: false,
+                        error: quota.data?.remaining === 0
+                            ? (user ? '本月解卦次数已用完，下月刷新' : '今日免费体验次数已用完，请登录获取更多次数')
+                            : '额度不足'
+                    });
+                }
+
+                console.log(`[解卦] 问题: "${question}", 卦名: ${hexagramName}, 用户: ${user?.userId || '游客'}`);
                 const interpretation = await callQwenAPI(question, {
                     name: hexagramName, symbol: hexagramSymbol || '', meaning: meaning || '',
                     lines: lines || [], category: category || '', fortune: fortune || '',
                     najia: najia || null, palace: najia?.palace || '', element: najia?.element || '',
                     liuqin: liuqin || [], liushen: liushen || [], shiying: shiying || null
                 });
+
+                // 解卦成功，消耗额度
+                await consumeQuota(user, clientIP, 'divine');
 
                 sendJSON(res, 200, { success: true, data: { question, hexagramName, interpretation, timestamp: new Date().toISOString() } });
             } catch (e) {
@@ -280,12 +365,28 @@ async function handleBaziAPI(req, res) {
                     return sendJSON(res, 500, { success: false, error: '服务器未配置 AI Key' });
                 }
 
-                console.log(`[八字] ${birthDate}, 日主: ${dayMaster}`);
+                // 额度检查
+                const user = extractUser(req);
+                const clientIP = getClientIP(req);
+                const quota = await checkQuota(user, clientIP, 'bazi');
+                if (quota.success && !quota.data?.allowed) {
+                    return sendJSON(res, 403, {
+                        success: false,
+                        error: quota.data?.remaining === 0
+                            ? (user ? '本月八字分析次数已用完，下月刷新' : '八字分析需要登录后使用')
+                            : '额度不足'
+                    });
+                }
+
+                console.log(`[八字] ${birthDate}, 日主: ${dayMaster}, 用户: ${user?.userId || '游客'}`);
                 const interpretation = await callBaziQwenAPI({
                     yearPillar, monthPillar, dayPillar, hourPillar,
                     dayMaster, dayMasterElement, fiveElements, hiddenElements,
                     gender, birthDate
                 });
+
+                // 分析成功，消耗额度
+                await consumeQuota(user, clientIP, 'bazi');
 
                 sendJSON(res, 200, { success: true, data: { interpretation, timestamp: new Date().toISOString() } });
             } catch (e) {
@@ -400,7 +501,7 @@ const server = http.createServer((req, res) => {
         res.writeHead(200, {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type'
+            'Access-Control-Allow-Headers': 'Content-Type,Authorization'
         });
         return res.end();
     }

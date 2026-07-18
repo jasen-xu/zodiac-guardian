@@ -477,13 +477,32 @@ async function requestAIDivination() {
             shiying: currentHexagram.shiying || null
         };
 
+        // 携带 JWT Token（如果已登录）
+        const headers = { 'Content-Type': 'application/json' };
+        const yidaoToken = localStorage.getItem('yidao_token');
+        if (yidaoToken) headers['Authorization'] = 'Bearer ' + yidaoToken;
+
         const response = await fetch(AI_API_BASE + '/api/divine', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify(requestBody)
         });
 
         const result = await response.json();
+
+        if (!response.ok && response.status === 403) {
+            // 额度不足
+            aiResult.innerHTML = `
+                <div style="background:#fff5f5;border:1px solid #fed7d7;border-radius:12px;padding:16px;color:#8b0000;">
+                    <p>⚠️ ${result.error || '次数已用完'}</p>
+                    <p style="font-size:12px;color:#6b4423;margin-top:8px;">登录后可获得更多解卦次数</p>
+                </div>
+            `;
+            button.disabled = false;
+            button.textContent = '✨ 重新解读';
+            button.style.opacity = '1';
+            return;
+        }
 
         if (result.success) {
             // 打字机效果显示结果

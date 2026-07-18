@@ -31,8 +31,22 @@ app.set('trust proxy', 1);
 // 静态文件（管理后台 CSS/JS）
 app.use('/admin/static', express.static(path.join(__dirname, 'views', 'static')));
 
+// CORS（允许 yi-yao.net 前端调用）
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin && (origin.includes('yi-yao.net') || origin.includes('localhost'))) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-API-Key');
+    if (req.method === 'OPTIONS') return res.sendStatus(204);
+    next();
+});
+
 // API 路由
 app.use('/api/bookings', require('./routes/booking'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/user', require('./routes/user'));
 
 // 管理后台路由
 app.use('/admin', require('./routes/admin'));

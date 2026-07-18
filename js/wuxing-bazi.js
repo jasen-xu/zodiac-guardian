@@ -389,13 +389,26 @@ async function requestAIAnalysis(bazi, gender, year, month, day) {
             birthDate: year + '年' + month + '月' + day + '日'
         };
 
+        var headers = { 'Content-Type': 'application/json' };
+        var yidaoToken = localStorage.getItem('yidao_token');
+        if (yidaoToken) headers['Authorization'] = 'Bearer ' + yidaoToken;
+
         var response = await fetch(BAZI_API_BASE + '/api/bazi', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             body: JSON.stringify(requestBody)
         });
 
         var result = await response.json();
+
+        if (!response.ok && response.status === 403) {
+            aiContent.innerHTML =
+                '<div class="ai-error">' +
+                '<p>' + (result.error || '次数已用完') + '</p>' +
+                '<p class="ai-error-detail">登录后可获得更多分析次数</p>' +
+                '</div>';
+            return;
+        }
 
         if (result.success) {
             var html = markdownToHTML(result.data.interpretation);
