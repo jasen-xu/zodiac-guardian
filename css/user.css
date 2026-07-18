@@ -364,6 +364,56 @@
     color: #1976d2;
 }
 
+/* ===== 用户资料表单 ===== */
+.yidao-gender-row {
+    display: flex;
+    gap: 20px;
+    padding: 8px 0;
+}
+
+.yidao-gender-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #333;
+}
+
+.yidao-gender-option input[type="radio"] {
+    accent-color: #8b4513;
+    width: 16px;
+    height: 16px;
+}
+
+.yidao-birth-row {
+    display: flex;
+    gap: 8px;
+}
+
+.yidao-form-select {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fafafa;
+    color: #333;
+    appearance: auto;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.yidao-form-select:focus {
+    outline: none;
+    border-color: #8b4513;
+    background: #fff;
+}
+
+.yidao-form-select.full {
+    width: 100%;
+}
+
 /* ===== 响应式 ===== */
 @media (max-width: 768px) {
     .user-nav-area {
@@ -404,5 +454,14 @@
         min-width: 85px;
         padding: 10px 10px;
         font-size: 12px;
+    }
+
+    .yidao-birth-row {
+        gap: 4px;
+    }
+
+    .yidao-form-select {
+        padding: 8px 6px;
+        font-size: 13px;
     }
 }

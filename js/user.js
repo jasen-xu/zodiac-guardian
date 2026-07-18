@@ -26,6 +26,7 @@
     function init() {
         injectStyles();
         injectModal();
+        injectProfileModal();
         injectNav();
         checkLogin();
     }
@@ -47,6 +48,10 @@
                 if (result.success && result.data) {
                     currentUser = result.data;
                     renderNavLoggedIn();
+                    // 检测资料是否完整
+                    if (!currentUser.gender || !currentUser.birthYear) {
+                        setTimeout(showProfile, 800);
+                    }
                 } else {
                     localStorage.removeItem('yidao_token');
                     token = null;
@@ -118,6 +123,7 @@
             + '  <div class="user-dropdown-menu" id="userDropdownMenu">'
             + '    <div class="user-dropdown-info">手机号：' + maskPhone(currentUser.phone) + '</div>'
             + '    <button class="user-dropdown-item" onclick="YiDaoUser.showUsage()">我的额度</button>'
+            + '    <button class="user-dropdown-item" onclick="YiDaoUser.showProfile()">编辑资料</button>'
             + '    <button class="user-dropdown-item logout" onclick="YiDaoUser.logout()">退出登录</button>'
             + '  </div>'
             + '</div>';
@@ -263,8 +269,11 @@
                     setTimeout(function () {
                         hideLogin();
                         renderNavLoggedIn();
-                        // 触发自定义事件，其他模块可监听
                         window.dispatchEvent(new CustomEvent('yidao-login', { detail: currentUser }));
+                        // 检测资料是否完整，提示填写
+                        if (!currentUser.gender || !currentUser.birthYear) {
+                            setTimeout(showProfile, 800);
+                        }
                     }, 500);
                 } else {
                     showMsg(result.error || '登录失败', 'error');
@@ -370,6 +379,161 @@
         alert('易道服务条款\n\n1. 本服务仅供传统文化学习与娱乐参考\n2. 所有解读内容不构成任何决策建议\n3. 请妥善保管您的账号信息\n4. 我们尊重并保护您的个人隐私');
     }
 
+    // ========== 用户资料收集 ==========
+
+    function injectProfileModal() {
+        // 生成年份选项（1940-2026）
+        var yearOpts = '<option value="">请选择</option>';
+        for (var y = 2026; y >= 1940; y--) yearOpts += '<option value="' + y + '">' + y + '年</option>';
+        // 月份选项
+        var monthOpts = '<option value="">请选择</option>';
+        for (var m = 1; m <= 12; m++) monthOpts += '<option value="' + m + '">' + m + '月</option>';
+        // 日期选项
+        var dayOpts = '<option value="">请选择</option>';
+        for (var d = 1; d <= 31; d++) dayOpts += '<option value="' + d + '">' + d + '日</option>';
+        // 时辰选项（地支对应小时）
+        var hourOpts = '<option value="">不详</option>'
+            + '<option value="0">子时（23-1点）</option>'
+            + '<option value="1">丑时（1-3点）</option>'
+            + '<option value="3">寅时（3-5点）</option>'
+            + '<option value="5">卯时（5-7点）</option>'
+            + '<option value="7">辰时（7-9点）</option>'
+            + '<option value="9">巳时（9-11点）</option>'
+            + '<option value="11">午时（11-13点）</option>'
+            + '<option value="13">未时（13-15点）</option>'
+            + '<option value="15">申时（15-17点）</option>'
+            + '<option value="17">酉时（17-19点）</option>'
+            + '<option value="19">戌时（19-21点）</option>'
+            + '<option value="21">亥时（21-23点）</option>';
+
+        var modal = document.createElement('div');
+        modal.id = 'yidaoProfileModal';
+        modal.className = 'yidao-login-modal';
+        modal.innerHTML = ''
+            + '<div class="yidao-login-overlay" onclick="YiDaoUser.hideProfile()"></div>'
+            + '<div class="yidao-login-box">'
+            + '  <button class="yidao-login-close" onclick="YiDaoUser.hideProfile()">&times;</button>'
+            + '  <div class="yidao-login-header">'
+            + '    <h2 class="yidao-login-title">完善个人资料</h2>'
+            + '    <p class="yidao-login-subtitle">填写性别和生辰，获取更精准的个性化服务</p>'
+            + '  </div>'
+            + '  <div class="yidao-login-form">'
+            + '    <div class="yidao-form-group">'
+            + '      <label class="yidao-form-label">性别</label>'
+            + '      <div class="yidao-gender-row">'
+            + '        <label class="yidao-gender-option"><input type="radio" name="yidaoGender" value="male"> <span>男</span></label>'
+            + '        <label class="yidao-gender-option"><input type="radio" name="yidaoGender" value="female"> <span>女</span></label>'
+            + '      </div>'
+            + '    </div>'
+            + '    <div class="yidao-form-group">'
+            + '      <label class="yidao-form-label">出生日期</label>'
+            + '      <div class="yidao-birth-row">'
+            + '        <select class="yidao-form-select" id="yidaoBirthYear">' + yearOpts + '</select>'
+            + '        <select class="yidao-form-select" id="yidaoBirthMonth">' + monthOpts + '</select>'
+            + '        <select class="yidao-form-select" id="yidaoBirthDay">' + dayOpts + '</select>'
+            + '      </div>'
+            + '    </div>'
+            + '    <div class="yidao-form-group">'
+            + '      <label class="yidao-form-label">出生时辰</label>'
+            + '      <select class="yidao-form-select full" id="yidaoBirthHour">' + hourOpts + '</select>'
+            + '    </div>'
+            + '    <button class="yidao-login-submit" id="yidaoProfileBtn" onclick="YiDaoUser.saveProfile()">保存</button>'
+            + '    <p class="yidao-login-tips" style="margin-top:8px"><span class="yidao-link" onclick="YiDaoUser.hideProfile()">稍后填写</span></p>'
+            + '  </div>'
+            + '  <div class="yidao-login-message" id="yidaoProfileMsg"></div>'
+            + '</div>';
+        document.body.appendChild(modal);
+    }
+
+    function showProfile() {
+        var modal = document.getElementById('yidaoProfileModal');
+        if (!modal) return;
+        // 预填已有数据
+        if (currentUser) {
+            if (currentUser.gender) {
+                var radio = modal.querySelector('input[name="yidaoGender"][value="' + currentUser.gender + '"]');
+                if (radio) radio.checked = true;
+            }
+            if (currentUser.birthYear) document.getElementById('yidaoBirthYear').value = currentUser.birthYear;
+            if (currentUser.birthMonth) document.getElementById('yidaoBirthMonth').value = currentUser.birthMonth;
+            if (currentUser.birthDay) document.getElementById('yidaoBirthDay').value = currentUser.birthDay;
+            if (currentUser.birthHour !== null && currentUser.birthHour !== undefined) {
+                document.getElementById('yidaoBirthHour').value = currentUser.birthHour;
+            }
+        }
+        modal.classList.add('show');
+        showProfileMsg('', '');
+    }
+
+    function hideProfile() {
+        document.getElementById('yidaoProfileModal').classList.remove('show');
+    }
+
+    function showProfileMsg(text, type) {
+        var el = document.getElementById('yidaoProfileMsg');
+        if (el) { el.textContent = text; el.className = 'yidao-login-message' + (type ? ' ' + type : ''); }
+    }
+
+    function saveProfile() {
+        var genderEl = document.querySelector('input[name="yidaoGender"]:checked');
+        var gender = genderEl ? genderEl.value : '';
+        var birthYear = parseInt(document.getElementById('yidaoBirthYear').value) || null;
+        var birthMonth = parseInt(document.getElementById('yidaoBirthMonth').value) || null;
+        var birthDay = parseInt(document.getElementById('yidaoBirthDay').value) || null;
+        var birthHourVal = document.getElementById('yidaoBirthHour').value;
+        var birthHour = birthHourVal !== '' ? parseInt(birthHourVal) : null;
+
+        if (!gender) { showProfileMsg('请选择性别', 'error'); return; }
+        if (!birthYear || !birthMonth || !birthDay) { showProfileMsg('请选择完整的出生日期', 'error'); return; }
+
+        var btn = document.getElementById('yidaoProfileBtn');
+        btn.disabled = true;
+        btn.textContent = '保存中...';
+        showProfileMsg('', '');
+
+        fetch(AUTH_API + '/api/user/profile', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                gender: gender,
+                birthYear: birthYear,
+                birthMonth: birthMonth,
+                birthDay: birthDay,
+                birthHour: birthHour
+            })
+        })
+            .then(function (r) { return r.json(); })
+            .then(function (result) {
+                if (result.success) {
+                    // 更新本地用户数据
+                    if (currentUser) {
+                        currentUser.gender = gender;
+                        currentUser.birthYear = birthYear;
+                        currentUser.birthMonth = birthMonth;
+                        currentUser.birthDay = birthDay;
+                        currentUser.birthHour = birthHour;
+                    }
+                    showProfileMsg('保存成功！', 'success');
+                    setTimeout(function () {
+                        hideProfile();
+                        window.dispatchEvent(new CustomEvent('yidao-profile-saved', { detail: currentUser }));
+                    }, 600);
+                } else {
+                    showProfileMsg(result.error || '保存失败', 'error');
+                }
+                btn.disabled = false;
+                btn.textContent = '保存';
+            })
+            .catch(function (e) {
+                showProfileMsg('网络错误，请稍后重试', 'error');
+                btn.disabled = false;
+                btn.textContent = '保存';
+            });
+    }
+
     // ========== 工具函数 ==========
 
     function escHtml(s) {
@@ -402,6 +566,9 @@
         toggleDropdown: toggleDropdown,
         showUsage: showUsage,
         showTerms: showTerms,
+        showProfile: showProfile,
+        hideProfile: hideProfile,
+        saveProfile: saveProfile,
         getUser: function () { return currentUser; },
         getToken: function () { return token; },
         isLoggedIn: function () { return !!currentUser; }

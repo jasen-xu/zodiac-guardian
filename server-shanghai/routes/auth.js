@@ -82,7 +82,12 @@ router.post('/login', async (req, res) => {
                     phone: user.phone,
                     nickname: user.nickname,
                     level: user.level,
-                    memberUntil: user.member_until
+                    memberUntil: user.member_until,
+                    gender: user.gender,
+                    birthYear: user.birth_year,
+                    birthMonth: user.birth_month,
+                    birthDay: user.birth_day,
+                    birthHour: user.birth_hour
                 }
             }
         });
@@ -111,7 +116,12 @@ router.get('/me', requireAuth, async (req, res) => {
                 nickname: user.nickname,
                 level: user.level,
                 memberUntil: user.member_until,
-                createdAt: user.created_at
+                createdAt: user.created_at,
+                gender: user.gender,
+                birthYear: user.birth_year,
+                birthMonth: user.birth_month,
+                birthDay: user.birth_day,
+                birthHour: user.birth_hour
             }
         });
     } catch (e) {

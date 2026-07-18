@@ -125,4 +125,49 @@ router.post('/consume-quota', apiKeyAuth, async (req, res) => {
     }
 });
 
+/**
+ * PUT /api/user/profile
+ * 保存用户资料（性别+生辰）
+ */
+router.put('/profile', requireAuth, async (req, res) => {
+    try {
+        const { gender, birthYear, birthMonth, birthDay, birthHour } = req.body;
+
+        // 校验
+        if (gender && !['male', 'female'].includes(gender)) {
+            return res.json({ success: false, error: '性别值无效' });
+        }
+        if (birthYear && (birthYear < 1920 || birthYear > 2026)) {
+            return res.json({ success: false, error: '出生年份无效' });
+        }
+        if (birthMonth && (birthMonth < 1 || birthMonth > 12)) {
+            return res.json({ success: false, error: '出生月份无效' });
+        }
+        if (birthDay && (birthDay < 1 || birthDay > 31)) {
+            return res.json({ success: false, error: '出生日期无效' });
+        }
+        if (birthHour !== undefined && birthHour !== null && (birthHour < 0 || birthHour > 23)) {
+            return res.json({ success: false, error: '出生时辰无效' });
+        }
+
+        await db.query(
+            `UPDATE users SET
+                gender = COALESCE($2, gender),
+                birth_year = COALESCE($3, birth_year),
+                birth_month = COALESCE($4, birth_month),
+                birth_day = COALESCE($5, birth_day),
+                birth_hour = COALESCE($6, birth_hour),
+                updated_at = NOW()
+            WHERE id = $1`,
+            [req.user.id, gender || null, birthYear || null, birthMonth || null, birthDay || null, birthHour ?? null]
+        );
+
+        console.log(`[资料更新] 用户#${req.user.id}: gender=${gender}, birth=${birthYear}-${birthMonth}-${birthDay} ${birthHour}时`);
+        res.json({ success: true, message: '资料已保存' });
+    } catch (e) {
+        console.error('保存资料失败:', e.message);
+        res.status(500).json({ success: false, error: '保存失败' });
+    }
+});
+
 module.exports = router;
