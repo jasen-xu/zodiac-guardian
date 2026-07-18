@@ -537,7 +537,7 @@ const server = http.createServer((req, res) => {
     if (method === 'OPTIONS') {
         res.writeHead(200, {
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+            'Access-Control-Allow-Methods': 'GET,POST,PUT,OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type,Authorization'
         });
         return res.end();
