@@ -6,8 +6,16 @@
 (function () {
     'use strict';
 
-    // API 基础地址（上海服务器）
-    var AUTH_API = 'https://admin.yi-yao.net';
+    // API 基础地址（通过香港 SCF 代理，解决 HTTPS 跨域问题）
+    var SCF_HK_URL = 'https://1436877587-1kd9vq3oux.ap-hongkong.tencentscf.com';
+    var AUTH_API = (function() {
+        var host = window.location.hostname;
+        if (host === 'yi-yao.net' || host === 'www.yi-yao.net') return SCF_HK_URL;
+        if (host.includes('tcloudbaseapp.com')) return SCF_HK_URL;
+        if (host.includes('tencentcs.com')) return '';  // 同源
+        if (host.includes('localhost') || host.includes('127.0.0.1')) return '';
+        return SCF_HK_URL;
+    })();
 
     // 状态
     var currentUser = null;

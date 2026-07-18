@@ -88,6 +88,43 @@ async function consumeQuota(user, ip, serviceType) {
     }
 }
 
+// ========== 认证代理（转发到上海服务器） ==========
+async function handleAuthProxy(req, res, url) {
+    if (!SHANGHAI_API_URL) {
+        return sendJSON(res, 503, { success: false, error: '服务器未配置' });
+    }
+    // 读取请求体（POST/PUT）
+    let body = null;
+    if (req.method === 'POST' || req.method === 'PUT') {
+        body = await new Promise(resolve => {
+            let data = '';
+            req.on('data', chunk => { data += chunk; });
+            req.on('end', () => resolve(data));
+        });
+    }
+    const targetPath = url.pathname;
+    try {
+        const resp = await fetch(`${SHANGHAI_API_URL}${targetPath}`, {
+            method: req.method,
+            headers: {
+                'Content-Type': 'application/json',
+                ...(req.headers['authorization'] ? { 'Authorization': req.headers['authorization'] } : {})
+            },
+            body
+        });
+        const text = await resp.text();
+        try {
+            return sendJSON(res, resp.status, JSON.parse(text));
+        } catch (e) {
+            res.writeHead(resp.status, { 'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*' });
+            return res.end(text);
+        }
+    } catch (e) {
+        console.error('[认证代理] 错误:', e.message);
+        return sendJSON(res, 502, { success: false, error: '代理请求失败' });
+    }
+}
+
 const MIME_TYPES = {
     '.html': 'text/html; charset=utf-8',
     '.css': 'text/css; charset=utf-8',
@@ -510,6 +547,10 @@ const server = http.createServer((req, res) => {
     if (url.pathname === '/api/divine' && method === 'POST') return handleDivineAPI(req, res);
     if (url.pathname === '/api/bazi' && method === 'POST') return handleBaziAPI(req, res);
     if (url.pathname === '/api/booking' && method === 'POST') return handleBookingAPI(req, res);
+    // 认证 & 用户 API 代理（转发到上海服务器）
+    if (url.pathname.startsWith('/api/auth/') || url.pathname.startsWith('/api/user/')) {
+        return handleAuthProxy(req, res, url);
+    }
     if (url.pathname === '/api/health') return sendJSON(res, 200, { status: 'ok', aiConfigured: !!DASHSCOPE_API_KEY, model: MODEL });
 
     // 静态文件
