@@ -6390,3 +6390,513 @@ button:active,
         font-size: 0.85rem;
     }
 }
+
+/* ===== 黄历择日页面 ===== */
+.huangli-page {
+    min-height: 100vh;
+    background-color: #F9F6F0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    padding-top: 64px;
+}
+
+.huangli-container {
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px 40px;
+}
+
+.huangli-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.huangli-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    letter-spacing: 8px;
+    padding-left: 8px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+}
+
+.huangli-subtitle {
+    color: #9A7B3C;
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 6px;
+}
+
+/* 今日黄历卡片 */
+.today-huangli {
+    background: linear-gradient(135deg, #A68B4B 0%, #BFA05A 100%);
+    border-radius: 16px;
+    padding: 24px;
+    color: #fff;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(166, 139, 75, 0.15);
+}
+
+.today-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.today-solar .solar-year {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.today-solar .solar-date {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 4px 0;
+}
+
+.today-solar .solar-week {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.today-lunar {
+    text-align: right;
+}
+
+.today-lunar .lunar-date-text {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-family: 'SimSun', 'STSong', serif;
+}
+
+.jieqi-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    margin-top: 4px;
+}
+
+.today-ganzhi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.ganzhi-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50px;
+}
+
+.gz-label {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+.gz-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.today-yiji {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.yiji-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.yiji-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.yi-icon {
+    background: rgba(240, 214, 138, 0.25);
+    color: #F5E6B8;
+}
+
+.ji-icon {
+    background: rgba(180, 170, 158, 0.3);
+    color: #E0D8CE;
+}
+
+.yiji-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.yi-tag, .ji-tag {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.yi-tag {
+    background: rgba(240, 214, 138, 0.18);
+    color: #F0DCA8;
+}
+
+.ji-tag {
+    background: rgba(180, 170, 158, 0.2);
+    color: #DDD5CA;
+}
+
+/* 日期选择 */
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 12px;
+    padding-left: 4px;
+}
+
+.section-desc {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: -8px;
+    margin-bottom: 12px;
+    padding-left: 4px;
+}
+
+.date-picker-section {
+    margin-bottom: 24px;
+}
+
+.date-picker-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.date-picker-row select {
+    flex: 1;
+    min-width: 80px;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+}
+
+.today-btn {
+    padding: 10px 16px;
+    background: #A68B4B;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* 所选日期黄历 */
+.selected-huangli {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f0e8d8;
+}
+
+.selected-huangli .today-solar .solar-date {
+    color: #9A7B3C;
+}
+
+.selected-huangli .today-lunar .lunar-date-text {
+    color: #9A7B3C;
+}
+
+.selected-huangli .today-ganzhi {
+    background: #f9f6f0;
+}
+
+.selected-huangli .gz-label {
+    color: #888;
+}
+
+.selected-huangli .gz-value {
+    color: #333;
+}
+
+.selected-huangli .yi-tag {
+    background: rgba(166, 139, 75, 0.1);
+    color: #7A6530;
+}
+
+.selected-huangli .ji-tag {
+    background: rgba(120, 110, 100, 0.08);
+    color: #7A716A;
+}
+
+.selected-huangli .yi-icon {
+    background: rgba(166, 139, 75, 0.12);
+    color: #8B7335;
+}
+
+.selected-huangli .ji-icon {
+    background: rgba(120, 110, 100, 0.1);
+    color: #6B6158;
+}
+
+/* 择日查询 */
+.zheri-section {
+    margin-bottom: 24px;
+}
+
+.event-type-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.event-type-btn {
+    padding: 10px 8px;
+    border: 1px solid #e0d8c8;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.event-type-btn:hover {
+    border-color: #D4AF37;
+    background: rgba(212, 175, 55, 0.08);
+}
+
+.event-type-btn.active {
+    border-color: #D4AF37;
+    background: #D4AF37;
+    color: #fff;
+}
+
+.search-date-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #D4AF37, #C4981F);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+
+.auspicious-results {
+    animation: fadeInUp 0.4s ease;
+}
+
+.results-title {
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.result-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #f0e8d8;
+}
+
+.result-solar {
+    font-weight: 600;
+    color: #9A7B3C;
+    font-size: 0.95rem;
+}
+
+.result-week {
+    color: #888;
+    font-size: 0.8rem;
+    margin-left: 8px;
+}
+
+.result-lunar {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.no-result {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-size: 0.9rem;
+}
+
+/* 月历视图 */
+.calendar-section {
+    margin-bottom: 24px;
+}
+
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.calendar-nav button {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.calendar-nav button:hover {
+    background: #f0e8d8;
+}
+
+.calendar-nav span {
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f0e8d8;
+}
+
+.cal-weekday {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #999;
+    padding: 6px 0;
+    font-weight: 500;
+}
+
+.cal-empty {
+    padding: 8px 0;
+}
+
+.cal-day {
+    text-align: center;
+    padding: 6px 2px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    min-height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cal-day:hover {
+    background: #f9f6f0;
+}
+
+.cal-today {
+    background: #A68B4B !important;
+    color: #fff;
+}
+
+.cal-today .cal-lunar {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.cal-solar {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.cal-lunar {
+    font-size: 0.6rem;
+    color: #999;
+    margin-top: 1px;
+    line-height: 1.2;
+}
+
+.cal-jieqi {
+    color: #D4AF37;
+    font-weight: 600;
+}
+
+/* 黄历页响应式 */
+@media (max-width: 480px) {
+    .huangli-container {
+        padding: 20px 14px 30px;
+    }
+
+    .today-huangli {
+        padding: 18px;
+    }
+
+    .today-solar .solar-date {
+        font-size: 1.3rem;
+    }
+
+    .event-type-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+    }
+
+    .event-type-btn {
+        padding: 8px 4px;
+        font-size: 0.78rem;
+    }
+
+    .ganzhi-item {
+        min-width: 42px;
+    }
+
+    .cal-day {
+        padding: 4px 1px;
+        min-height: 38px;
+    }
+
+    .cal-solar {
+        font-size: 0.78rem;
+    }
+
+    .cal-lunar {
+        font-size: 0.55rem;
+    }
+}

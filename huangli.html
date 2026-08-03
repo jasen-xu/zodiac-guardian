@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黄历择日 - 易道</title>
+    <link rel="stylesheet" href="css/style.css?v=20260802">
+</head>
+<body class="huangli-page">
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">易道</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">返回首页</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="huangli-container">
+        <header class="huangli-header">
+            <h1 class="huangli-title">黄历择日</h1>
+            <div class="gold-line" style="margin:12px auto;"></div>
+            <p class="huangli-subtitle">传统黄历宜忌查询，择吉日而行</p>
+        </header>
+
+        <!-- 今日黄历 -->
+        <div class="today-huangli" id="todayHuangli">
+            <div class="today-header">
+                <div class="today-solar" id="todaySolar"></div>
+                <div class="today-lunar" id="todayLunar"></div>
+            </div>
+            <div class="today-ganzhi" id="todayGanzhi"></div>
+            <div class="today-yiji" id="todayYiJi"></div>
+        </div>
+
+        <!-- 日期选择 -->
+        <div class="date-picker-section">
+            <h3 class="section-title">选择日期查看</h3>
+            <div class="date-picker-row">
+                <select id="yearSelect" onchange="onDateChange()"></select>
+                <select id="monthSelect" onchange="onDateChange()"></select>
+                <select id="daySelect" onchange="onDateChange()"></select>
+                <button class="today-btn" onclick="goToday()">回到今天</button>
+            </div>
+        </div>
+
+        <!-- 所选日期黄历 -->
+        <div class="selected-huangli" id="selectedHuangli" style="display:none;">
+            <div class="selected-header">
+                <div class="selected-solar" id="selectedSolar"></div>
+                <div class="selected-lunar" id="selectedLunar"></div>
+            </div>
+            <div class="selected-ganzhi" id="selectedGanzhi"></div>
+            <div class="selected-yiji" id="selectedYiJi"></div>
+        </div>
+
+        <!-- 择日查询 -->
+        <div class="zheri-section">
+            <h3 class="section-title">择日查询</h3>
+            <p class="section-desc">选择事项类型，查找近期吉日</p>
+            <div class="event-type-grid" id="eventTypeGrid">
+                <button class="event-type-btn active" data-type="嫁娶" onclick="selectEventType(this)">💒 嫁娶</button>
+                <button class="event-type-btn" data-type="出行" onclick="selectEventType(this)">🚗 出行</button>
+                <button class="event-type-btn" data-type="入宅" onclick="selectEventType(this)">🏠 入宅</button>
+                <button class="event-type-btn" data-type="开市" onclick="selectEventType(this)">🏪 开市</button>
+                <button class="event-type-btn" data-type="动土" onclick="selectEventType(this)">⛏️ 动土</button>
+                <button class="event-type-btn" data-type="祭祀" onclick="selectEventType(this)">🙏 祭祀</button>
+                <button class="event-type-btn" data-type="祈福" onclick="selectEventType(this)">🏮 祈福</button>
+                <button class="event-type-btn" data-type="交易" onclick="selectEventType(this)">📜 交易</button>
+            </div>
+            <button class="search-date-btn" onclick="searchAuspiciousDates()">查找吉日</button>
+            <div class="auspicious-results" id="auspiciousResults" style="display:none;"></div>
+        </div>
+
+        <!-- 月历视图 -->
+        <div class="calendar-section">
+            <h3 class="section-title">月历一览</h3>
+            <div class="calendar-nav">
+                <button onclick="changeMonth(-1)">◀</button>
+                <span id="calendarTitle"></span>
+                <button onclick="changeMonth(1)">▶</button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+
+        <div class="fortune-footer">
+            <a href="fortune.html" class="fortune-liuyao-btn">🎋 每日一签</a>
+            <button class="back-button" onclick="goBack()">返回</button>
+        </div>
+    </div>
+
+    <div class="cloud-divider">☁ ☁ ☁</div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="footer-desc">以上黄历信息仅供传统民俗文化参考，不构成任何决策建议</p>
+        </div>
+    </footer>
+
+    <script src="js/toast.js"></script>
+    <script src="js/huangli-data.js"></script>
+    <script src="js/huangli.js"></script>
+    <script src="js/user.js"></script>
+</body>
+</html>

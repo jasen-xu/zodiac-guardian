@@ -16,7 +16,8 @@ const HTML_FILES = [
     'caishen-xi.html', 'caishen-zhong.html',
     'wuxing.html', 'wuxing-jin.html', 'wuxing-mu.html', 'wuxing-shui.html',
     'wuxing-huo.html', 'wuxing-tu.html', 'wuxing-bazi.html',
-    'wenchuang.html', 'dongfangjing-renju.html', 'dongfangjing-zuting.html'
+    'wenchuang.html', 'dongfangjing-renju.html', 'dongfangjing-zuting.html',
+    'huangli.html'
 ];
 
 const DIRS = ['css', 'js', 'images', 'audio'];

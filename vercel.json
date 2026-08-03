@@ -78,6 +78,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "huangli.html",
+      "use": "@vercel/static"
+    },
+    {
       "src": "dongfangjing-renju.html",
       "use": "@vercel/static"
     },
@@ -142,6 +146,10 @@
     {
       "src": "/wenchuang\\.html",
       "dest": "/wenchuang.html"
+    },
+    {
+      "src": "/huangli\\.html",
+      "dest": "/huangli.html"
     },
     {
       "src": "/dongfangjing-renju\\.html",

@@ -10,6 +10,10 @@ const db = require('../db');
 const { requireAuth } = require('../middleware/jwtAuth');
 const { apiKeyAuth } = require('../middleware/auth');
 
+// 额度限制总开关：.env 中设置 QUOTA_ENABLED=false 可临时关闭所有限制（游客也不限次数）
+// 后续功能完善后删除该环境变量或改为 true 即可恢复限制
+const QUOTA_ENABLED = process.env.QUOTA_ENABLED !== 'false';
+
 // 各层级额度配置
 const QUOTA_CONFIG = {
     l0: { divine: { period: 'day', limit: 1 }, bazi: { period: 'day', limit: 0 } },
@@ -88,6 +92,14 @@ router.get('/usage', requireAuth, async (req, res) => {
  */
 router.post('/check-quota', apiKeyAuth, async (req, res) => {
     try {
+        // 限制开关关闭时，一律放行（不区分登录/游客）
+        if (!QUOTA_ENABLED) {
+            return res.json({
+                success: true,
+                data: { allowed: true, remaining: -1, used: 0, limit: -1 }
+            });
+        }
+
         const { userId, phone, serviceType } = req.body;
         const level = userId ? 'l1' : 'l0';  // 有 userId 视为注册用户
 
