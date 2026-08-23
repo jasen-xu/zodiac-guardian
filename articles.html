@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文化解析 - 易道</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/articles.css?v=20260823">
+</head>
+<body class="articles-page">
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">易道</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">返回首页</a>
+                <a href="wenchuang.html" class="nav-link">文创雅集</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <header class="articles-hero">
+        <span class="articles-hero-tag">系列文化解析</span>
+        <h1 class="articles-hero-title">溯源民俗 以文化人</h1>
+        <p class="articles-hero-desc">考据有据的传统文化解读，不附会、不玄虚，为每一件民俗器物讲清楚来龙去脉</p>
+    </header>
+
+    <div class="cloud-divider">☁ ☁ ☁</div>
+
+    <!-- 文章列表 -->
+    <section class="articles-wrap">
+        <div id="articleList">
+            <!-- 文章卡片通过 JS 动态生成 -->
+        </div>
+
+        <!-- 栏目说明 -->
+        <div class="articles-about">
+            <p class="articles-about-text">本栏目持续更新传统文化考据文章。读懂文化脉络，方知器物之重——更多生肖民俗雅物，尽在文创雅集。</p>
+            <a href="wenchuang.html" class="articles-about-link">逛逛文创雅集 →</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="footer-brand">易道</p>
+            <p class="footer-desc">传承千年民俗智慧，融合现代科技呈现</p>
+            <p class="footer-copy">© 2026 易道 | 内容基于传统典籍整理，仅供民俗文化科普</p>
+        </div>
+    </footer>
+
+    <script src="js/toast.js"></script>
+    <script src="js/articles-data.js?v=20260823"></script>
+    <script>
+        (function () {
+            var list = document.getElementById('articleList');
+            var html = '';
+            for (var i = 0; i < articlesData.length; i++) {
+                var a = articlesData[i];
+                html += '<a class="article-card" href="article-detail.html?id=' + encodeURIComponent(a.id) + '">'
+                    + '<div class="article-meta">'
+                    + '<span class="article-tag">' + a.tag + '</span>'
+                    + '<span class="article-date">' + a.date + ' · ' + a.readMinutes + '分钟读完</span>'
+                    + '</div>'
+                    + '<span class="article-title">' + a.title + '</span>'
+                    + '<span class="article-subtitle">' + a.subtitle + '</span>'
+                    + '<span class="article-summary">' + a.summary + '</span>'
+                    + '<div class="article-foot"><span class="article-read">阅读全文 →</span></div>'
+                    + '</a>';
+            }
+            list.innerHTML = html;
+        })();
+    </script>
+    <script src="js/user.js"></script>
+</body>
+</html>

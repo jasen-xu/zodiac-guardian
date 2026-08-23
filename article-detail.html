@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文化解析 - 易道</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/articles.css?v=20260823">
+</head>
+<body class="articles-page">
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">易道</a>
+            <div class="nav-links">
+                <a href="articles.html" class="nav-link">返回栏目</a>
+                <a href="wenchuang.html" class="nav-link">文创雅集</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 文章正文 -->
+    <section class="article-detail-wrap">
+        <a href="articles.html" class="article-detail-back">← 返回文化解析栏目</a>
+        <div class="article-detail-card" id="articleBody">
+            <!-- 文章内容通过 JS 动态生成 -->
+        </div>
+
+        <!-- 栏目说明 -->
+        <div class="articles-about" style="margin-top:24px;">
+            <p class="articles-about-text">读懂文化脉络，方知器物之重——更多生肖民俗雅物，尽在文创雅集。</p>
+            <a href="wenchuang.html" class="articles-about-link">逛逛文创雅集 →</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="footer-brand">易道</p>
+            <p class="footer-desc">传承千年民俗智慧，融合现代科技呈现</p>
+            <p class="footer-copy">© 2026 易道 | 内容基于传统典籍整理，仅供民俗文化科普</p>
+        </div>
+    </footer>
+
+    <script src="js/toast.js"></script>
+    <script src="js/articles-data.js?v=20260823"></script>
+    <script>
+        (function () {
+            // 从 URL 参数读取文章 id
+            var params = new URLSearchParams(window.location.search);
+            var id = params.get('id');
+            var article = null;
+            for (var i = 0; i < articlesData.length; i++) {
+                if (articlesData[i].id === id) { article = articlesData[i]; break; }
+            }
+            // 找不到文章时回列表页
+            if (!article) {
+                window.location.replace('articles.html');
+                return;
+            }
+
+            document.title = article.title + ' - 易道';
+
+            var body = document.getElementById('articleBody');
+            var html = '<div class="article-detail-head">'
+                + '<div class="article-meta">'
+                + '<span class="article-tag">' + article.tag + '</span>'
+                + '<span class="article-date">' + article.date + ' · ' + article.readMinutes + '分钟读完</span>'
+                + '</div>'
+                + '<h1 class="article-title">' + article.title + '</h1>'
+                + '<span class="article-subtitle">' + article.subtitle + '</span>'
+                + '</div>'
+                + '<hr class="article-detail-divider">';
+
+            for (var s = 0; s < article.sections.length; s++) {
+                var sec = article.sections[s];
+                if (sec.heading) {
+                    html += '<h2 class="article-section-heading">' + sec.heading + '</h2>';
+                }
+                for (var p = 0; p < sec.paragraphs.length; p++) {
+                    html += '<p class="article-paragraph">' + sec.paragraphs[p] + '</p>';
+                }
+            }
+
+            if (article.disclaimer) {
+                html += '<div class="article-disclaimer">⚠️ ' + article.disclaimer + '</div>';
+            }
+
+            body.innerHTML = html;
+            window.scrollTo(0, 0);
+        })();
+    </script>
+    <script src="js/user.js"></script>
+</body>
+</html>
