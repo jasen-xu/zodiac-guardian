@@ -1,0 +1,73 @@
+/* ============================================================
+   名寺古刹栏目样式
+   复用文化解析栏目基础样式（articles.css），在此补充专属元素
+   ============================================================ */
+
+@import url('articles.css?v=20260825');
+
+/* ---------- 分类徽章 ---------- */
+.temple-type-badge {
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px 12px;
+    border-radius: 12px;
+}
+
+.temple-type-badge.buddhist {
+    color: #8B6914;
+    background: rgba(212, 175, 55, 0.12);
+}
+
+.temple-type-badge.taoist {
+    color: #4A6741;
+    background: rgba(122, 158, 112, 0.15);
+}
+
+/* ---------- 地域与朝代 ---------- */
+.temple-region {
+    font-size: 12px;
+    color: #bbb;
+}
+
+.temple-era {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #A08B55;
+}
+
+/* ---------- 卡片内标题 ---------- */
+.temple-name {
+    display: block;
+    margin-top: 14px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    letter-spacing: 2px;
+}
+
+/* ---------- 筛选区（复用文创页筛选按钮结构，微调间距） ---------- */
+.temples-filter {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 26px;
+    flex-wrap: wrap;
+}
+
+/* ---------- 详情页头部 ---------- */
+.temple-detail-head .temple-name {
+    font-size: 26px;
+    margin-top: 16px;
+}
+
+/* ---------- 移动端适配 ---------- */
+@media (max-width: 600px) {
+    .temple-name {
+        font-size: 19px;
+    }
+
+    .temple-detail-head .temple-name {
+        font-size: 22px;
+    }
+}

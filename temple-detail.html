@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>名寺古刹 - 易道</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/temples.css?v=20260825">
+</head>
+<body class="articles-page">
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">易道</a>
+            <div class="nav-links">
+                <a href="temples.html" class="nav-link">返回栏目</a>
+                <a href="articles.html" class="nav-link">文化解析</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 寺院详情 -->
+    <section class="article-detail-wrap">
+        <a href="temples.html" class="article-detail-back">← 返回名寺古刹栏目</a>
+        <div class="article-detail-card" id="templeBody">
+            <!-- 寺院内容通过 JS 动态生成 -->
+        </div>
+
+        <!-- 栏目引导 -->
+        <div class="articles-about" style="margin-top:24px;">
+            <p class="articles-about-text">读懂文化脉络，方知器物之重——更多民俗雅物，尽在文创雅集。</p>
+            <a href="wenchuang.html" class="articles-about-link">逛逛文创雅集 →</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="footer-brand">易道</p>
+            <p class="footer-desc">传承千年民俗智慧，融合现代科技呈现</p>
+            <p class="footer-copy">© 2026 易道 | 内容为历史文化科普，仅供文化参考</p>
+        </div>
+    </footer>
+
+    <script src="js/toast.js"></script>
+    <script src="js/temples-data.js?v=20260825"></script>
+    <script>
+        (function () {
+            // 从 URL 参数读取寺院 id
+            var params = new URLSearchParams(window.location.search);
+            var id = params.get('id');
+            var temple = null;
+            for (var i = 0; i < templesData.length; i++) {
+                if (templesData[i].id === id) { temple = templesData[i]; break; }
+            }
+            // 找不到时回列表页
+            if (!temple) {
+                window.location.replace('temples.html');
+                return;
+            }
+
+            document.title = temple.name + ' - 名寺古刹 - 易道';
+
+            var typeCls = temple.type === '道教宫观' ? 'taoist' : 'buddhist';
+            var body = document.getElementById('templeBody');
+            var html = '<div class="temple-detail-head">'
+                + '<div class="article-meta">'
+                + '<span class="temple-type-badge ' + typeCls + '">' + temple.type + '</span>'
+                + '<span class="temple-region">' + temple.region + '</span>'
+                + '</div>'
+                + '<h1 class="temple-name">' + temple.name + '</h1>'
+                + '<span class="temple-era">' + temple.era + '</span>'
+                + '</div>'
+                + '<hr class="article-detail-divider">';
+
+            for (var s = 0; s < temple.sections.length; s++) {
+                var sec = temple.sections[s];
+                html += '<h2 class="article-section-heading">' + sec.heading + '</h2>';
+                for (var p = 0; p < sec.paragraphs.length; p++) {
+                    html += '<p class="article-paragraph">' + sec.paragraphs[p] + '</p>';
+                }
+            }
+
+            html += '<div class="article-disclaimer">⚠️ 本文内容基于史志、碑刻与考古资料整理，涉及宗教人物与传说之处已注明"相传"或文献来源，仅供历史文化参考。</div>';
+
+            body.innerHTML = html;
+            window.scrollTo(0, 0);
+        })();
+    </script>
+    <script src="js/user.js"></script>
+</body>
+</html>

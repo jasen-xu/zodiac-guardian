@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>名寺古刹 - 易道</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/temples.css?v=20260825">
+</head>
+<body class="articles-page">
+    <nav class="top-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">易道</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">返回首页</a>
+                <a href="articles.html" class="nav-link">文化解析</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <header class="articles-hero">
+        <span class="articles-hero-tag">名寺古刹 · 文化巡礼</span>
+        <h1 class="articles-hero-title">名寺古刹</h1>
+        <p class="articles-hero-desc">走访国内名山古寺与道观，以史志、碑刻与考古发现为据，讲述它们的历史沿革、建筑看点与文化地位</p>
+    </header>
+
+    <div class="cloud-divider">☁ ☁ ☁</div>
+
+    <!-- 寺院列表 -->
+    <section class="articles-wrap">
+        <!-- 分类筛选 -->
+        <div class="temples-filter">
+            <button class="wenchuang-filter-btn active" onclick="filterTemples('all', this)">全部</button>
+            <button class="wenchuang-filter-btn" onclick="filterTemples('佛教寺院', this)">佛教寺院</button>
+            <button class="wenchuang-filter-btn" onclick="filterTemples('道教宫观', this)">道教宫观</button>
+        </div>
+
+        <div id="templeList">
+            <!-- 寺院卡片通过 JS 动态生成 -->
+        </div>
+
+        <!-- 栏目说明 -->
+        <div class="articles-about">
+            <p class="articles-about-text">本栏目持续收录国内名寺古刹的文化介绍。内容为历史文化科普，涉及宗教人物与传说处均已注明文献来源或标注"相传"。持续更新中，欢迎品读。</p>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p class="footer-brand">易道</p>
+            <p class="footer-desc">传承千年民俗智慧，融合现代科技呈现</p>
+            <p class="footer-copy">© 2026 易道 | 内容为历史文化科普，仅供文化参考</p>
+        </div>
+    </footer>
+
+    <script src="js/toast.js"></script>
+    <script src="js/temples-data.js?v=20260825"></script>
+    <script>
+        function renderTemples(list) {
+            var wrap = document.getElementById('templeList');
+            var html = '';
+            for (var i = 0; i < list.length; i++) {
+                var t = list[i];
+                var typeCls = t.type === '道教宫观' ? 'taoist' : 'buddhist';
+                html += '<a class="article-card" href="temple-detail.html?id=' + encodeURIComponent(t.id) + '">'
+                    + '<div class="article-meta">'
+                    + '<span class="temple-type-badge ' + typeCls + '">' + t.type + '</span>'
+                    + '<span class="temple-region">' + t.region + '</span>'
+                    + '</div>'
+                    + '<span class="temple-name">' + t.name + '</span>'
+                    + '<span class="temple-era">' + t.era + '</span>'
+                    + '<span class="article-summary">' + t.summary + '</span>'
+                    + '<div class="article-foot"><span class="article-read">查看详情 →</span></div>'
+                    + '</a>';
+            }
+            wrap.innerHTML = html || '<p style="text-align:center;color:#999;">暂无该分类内容</p>';
+        }
+
+        function filterTemples(type, btn) {
+            var btns = document.querySelectorAll('.temples-filter .wenchuang-filter-btn');
+            for (var i = 0; i < btns.length; i++) { btns[i].classList.remove('active'); }
+            btn.classList.add('active');
+            if (type === 'all') { renderTemples(templesData); return; }
+            var filtered = [];
+            for (var j = 0; j < templesData.length; j++) {
+                if (templesData[j].type === type) { filtered.push(templesData[j]); }
+            }
+            renderTemples(filtered);
+        }
+
+        renderTemples(templesData);
+    </script>
+    <script src="js/user.js"></script>
+</body>
+</html>
