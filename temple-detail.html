@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>名寺古刹 - 易道</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/temples.css?v=20260825">
+    <link rel="stylesheet" href="css/temples.css?v=20260826">
 </head>
 <body class="articles-page">
     <nav class="top-nav">
@@ -42,7 +42,7 @@
     </footer>
 
     <script src="js/toast.js"></script>
-    <script src="js/temples-data.js?v=20260825"></script>
+    <script src="js/temples-data.js?v=20260826"></script>
     <script>
         (function () {
             // 从 URL 参数读取寺院 id
@@ -70,6 +70,7 @@
                 + '<h1 class="temple-name">' + temple.name + '</h1>'
                 + '<span class="temple-era">' + temple.era + '</span>'
                 + '</div>'
+                + (temple.image ? '<div class="temple-hero"><img src="' + temple.image + '" alt="' + temple.name + '"><span class="temple-hero-cap">' + temple.name + ' · 意象插画（AI 绘制，仅供参考）</span></div>' : '')
                 + '<hr class="article-detail-divider">';
 
             for (var s = 0; s < temple.sections.length; s++) {

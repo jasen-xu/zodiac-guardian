@@ -3,7 +3,44 @@
    复用文化解析栏目基础样式（articles.css），在此补充专属元素
    ============================================================ */
 
-@import url('articles.css?v=20260825');
+@import url('articles.css?v=20260826');
+
+/* ---------- 卡片头图 ---------- */
+.temple-card-img {
+    margin: -24px -24px 18px;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    background: #F5EFE2;
+}
+
+.temple-card-img img {
+    display: block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* ---------- 详情页头图 ---------- */
+.temple-hero {
+    margin: 24px 0 6px;
+    text-align: center;
+}
+
+.temple-hero img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #F0E8D8;
+}
+
+.temple-hero-cap {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #B7A67A;
+    letter-spacing: 1px;
+}
 
 /* ---------- 分类徽章 ---------- */
 .temple-type-badge {
@@ -63,6 +100,14 @@
 
 /* ---------- 移动端适配 ---------- */
 @media (max-width: 600px) {
+    .temple-card-img {
+        margin: -24px -24px 14px;
+    }
+
+    .temple-card-img img {
+        height: 160px;
+    }
+
     .temple-name {
         font-size: 19px;
     }

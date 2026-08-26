@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>名寺古刹 - 易道</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/temples.css?v=20260825">
+    <link rel="stylesheet" href="css/temples.css?v=20260826">
 </head>
 <body class="articles-page">
     <nav class="top-nav">
@@ -56,7 +56,7 @@
     </footer>
 
     <script src="js/toast.js"></script>
-    <script src="js/temples-data.js?v=20260825"></script>
+    <script src="js/temples-data.js?v=20260826"></script>
     <script>
         function renderTemples(list) {
             var wrap = document.getElementById('templeList');
@@ -65,6 +65,7 @@
                 var t = list[i];
                 var typeCls = t.type === '道教宫观' ? 'taoist' : 'buddhist';
                 html += '<a class="article-card" href="temple-detail.html?id=' + encodeURIComponent(t.id) + '">'
+                    + (t.image ? '<div class="temple-card-img"><img src="' + t.image + '" alt="' + t.name + '" loading="lazy"></div>' : '')
                     + '<div class="article-meta">'
                     + '<span class="temple-type-badge ' + typeCls + '">' + t.type + '</span>'
                     + '<span class="temple-region">' + t.region + '</span>'

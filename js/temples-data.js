@@ -10,6 +10,7 @@ var templesData = [
     name: '白马寺',
     region: '河南 · 洛阳',
     type: '佛教寺院',
+    image: 'images/temples/baima.jpg',
     era: '始建于东汉永平十一年（公元68年）',
     summary: '中国历史上第一座官办寺院，"祖庭""释源"之称由此而来。一座寺院，见证佛教从民间传闻走向国家视野。',
     sections: [
@@ -41,6 +42,7 @@ var templesData = [
     name: '少林寺',
     region: '河南 · 登封',
     type: '佛教寺院',
+    image: 'images/temples/shaolin.jpg',
     era: '始建于北魏太和十九年（公元495年）',
     summary: '禅宗祖庭与武术圣地。一块唐代碑刻、一片两百余座古塔的塔林，撑起"天下第一名刹"的实证底色。',
     sections: [
@@ -71,6 +73,7 @@ var templesData = [
     name: '灵隐寺',
     region: '浙江 · 杭州',
     type: '佛教寺院',
+    image: 'images/temples/lingyin.jpg',
     era: '始建于东晋咸和元年（公元326年）',
     summary: '江南禅宗重镇。一千七百年的香火兴废，半部江南佛教史；寺前飞来峰的三百余尊造像，是江南石窟艺术的孤本。',
     sections: [
@@ -101,6 +104,7 @@ var templesData = [
     name: '寒山寺',
     region: '江苏 · 苏州',
     type: '佛教寺院',
+    image: 'images/temples/hanshan.jpg',
     era: '始建于南朝梁代',
     summary: '中国最著名的"诗造之寺"。二十八个字的《枫桥夜泊》，让一座苏州小寺家喻户晓一千多年。',
     sections: [
@@ -131,6 +135,7 @@ var templesData = [
     name: '法门寺',
     region: '陕西 · 宝鸡',
     type: '佛教寺院',
+    image: 'images/temples/famen.jpg',
     era: '始建于东汉末年，唐为皇家寺院',
     summary: '一座唐代地宫的发现，改写了佛教考古史。佛指舍利与两千余件大唐国宝，在地下沉睡了1113年。',
     sections: [
@@ -161,6 +166,7 @@ var templesData = [
     name: '开元寺',
     region: '福建 · 泉州',
     type: '佛教寺院',
+    image: 'images/temples/kaiyuan.jpg',
     era: '始建于唐垂拱二年（公元686年）',
     summary: '海丝起点的千年梵刹。一对宋代石塔、一座印度教石柱，藏着宋元泉州作为世界港口的胸襟。',
     sections: [
@@ -191,6 +197,7 @@ var templesData = [
     name: '白云观',
     region: '北京 · 西城',
     type: '道教宫观',
+    image: 'images/temples/baiyun.jpg',
     era: '始建于唐开元二十九年（公元741年）',
     summary: '全真道第一丛林。丘处机西行见成吉思汗归来后驻锡于此，一部《道藏》刻版曾在此安睡两百年。',
     sections: [
@@ -221,6 +228,7 @@ var templesData = [
     name: '武当山',
     region: '湖北 · 十堰',
     type: '道教宫观',
+    image: 'images/temples/wudang.jpg',
     era: '明代永乐年间大规模营建',
     summary: '动用三十万人、历时十年建成的明代皇家道观群。金顶金殿是中国现存最大的铜铸鎏金建筑。',
     sections: [
