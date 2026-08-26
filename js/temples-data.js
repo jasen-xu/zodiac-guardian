@@ -261,6 +261,13 @@ var templesData = [
     type: '道教宫观',
     image: 'images/temples/tianning.jpg',
     era: '始建于唐乾元年间（公元758—759年）',
+    address: '浙江省丽水市龙泉市西街街道九村仰天湖',
+    navKeyword: '龙泉天宁宫',
+    photos: [
+      { src: 'images/temples/tianning-map.jpg', caption: '龙泉城区与天宁宫位置示意（资料图）', after: 1 },
+      { src: 'images/temples/tianning-lingzhi.jpg', caption: '覆土培植的灵芝（资料图）', after: 2 },
+      { src: 'images/temples/tianning-hall.jpg', caption: '天宁宫殿堂科仪实景（资料图）', after: 3 }
+    ],
     summary: '龙泉城区唯一的全真道观，与龙泉置县几乎同步而生。北宋崇宁年间宋徽宗御书"天宁万寿宫"，赐道藏四千五百余卷，是浙南历史渊源最深的道观之一。',
     sections: [
       {

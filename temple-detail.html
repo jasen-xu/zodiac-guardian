@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>名寺古刹 - 易道</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/temples.css?v=20260826">
+    <link rel="stylesheet" href="css/temples.css?v=20260826-3">
 </head>
 <body class="articles-page">
     <nav class="top-nav">
@@ -42,7 +42,7 @@
     </footer>
 
     <script src="js/toast.js"></script>
-    <script src="js/temples-data.js?v=20260826-2"></script>
+    <script src="js/temples-data.js?v=20260826-3"></script>
     <script>
         (function () {
             // 从 URL 参数读取寺院 id
@@ -79,9 +79,26 @@
                 for (var p = 0; p < sec.paragraphs.length; p++) {
                     html += '<p class="article-paragraph">' + sec.paragraphs[p] + '</p>';
                 }
+                // 小节后的配图（如有）
+                if (temple.photos) {
+                    for (var ph = 0; ph < temple.photos.length; ph++) {
+                        var photo = temple.photos[ph];
+                        if (photo.after === s + 1) {
+                            html += '<figure class="temple-photo"><img src="' + photo.src + '" alt="' + photo.caption + '" loading="lazy"><figcaption>' + photo.caption + '</figcaption></figure>';
+                        }
+                    }
+                }
             }
 
             html += '<div class="article-disclaimer">⚠️ 本文内容基于史志、碑刻与考古资料整理，涉及宗教人物与传说之处已注明"相传"或文献来源，仅供历史文化参考。</div>';
+
+            // 文末导航（如有地址信息）
+            if (temple.navKeyword) {
+                html += '<div class="temple-nav">'
+                    + '<a class="temple-nav-btn" href="https://uri.amap.com/search?keyword=' + encodeURIComponent(temple.navKeyword) + '" target="_blank" rel="noopener">📍 点击导航到' + temple.name + '</a>'
+                    + (temple.address ? '<p class="temple-nav-addr">地址：' + temple.address + '</p>' : '')
+                    + '</div>';
+            }
 
             body.innerHTML = html;
             window.scrollTo(0, 0);
