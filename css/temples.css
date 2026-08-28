@@ -117,6 +117,30 @@
     letter-spacing: 1px;
 }
 
+/* ---------- 文末祈福链接 ---------- */
+.temple-pray {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.temple-pray-btn {
+    display: inline-block;
+    padding: 12px 34px;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: #8B6914;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid #D4AF37;
+    border-radius: 24px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.temple-pray-btn:hover {
+    background: rgba(212, 175, 55, 0.22);
+    transform: translateY(-2px);
+}
+
 /* ---------- 文末导航 ---------- */
 .temple-nav {
     margin-top: 26px;

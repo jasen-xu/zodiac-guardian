@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三沙清凉寺祈福 - 易道</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: #0E0C08;
+        }
+
+        .pray-page {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #0E0C08;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 佛像图 */
+        .pray-image {
+            width: 100%;
+            flex: 1;
+            min-height: 100vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* 顶部题字 */
+        .pray-head {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 22px 16px 44px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(14,12,8,0.85), rgba(14,12,8,0));
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .pray-head .back-link {
+            position: absolute;
+            left: 16px;
+            top: 22px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            pointer-events: auto;
+        }
+
+        .pray-title {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 6px;
+            color: #D4AF37;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .pray-subtitle {
+            margin: 10px 0 0;
+            font-size: 13px;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.72);
+        }
+
+        /* 底部说明与声明 */
+        .pray-foot {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 18px 22px;
+            text-align: center;
+            background: linear-gradient(0deg, rgba(14,12,8,0.92), rgba(14,12,8,0));
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .pray-foot p {
+            margin: 0;
+            font-size: 12px;
+            line-height: 1.9;
+            color: rgba(255,255,255,0.66);
+            letter-spacing: 1px;
+        }
+
+        .pray-foot .mantra-name {
+            color: #D4AF37;
+        }
+
+        /* 播放控制按钮（自动播放被浏览器拦截时显示） */
+        .pray-play-btn {
+            position: absolute;
+            left: 50%;
+            bottom: 120px;
+            transform: translateX(-50%);
+            z-index: 10;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 2px solid #D4AF37;
+            background: rgba(212,175,55,0.18);
+            color: #D4AF37;
+            font-size: 24px;
+            line-height: 1;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 22px rgba(212,175,55,0.45);
+        }
+
+        .pray-play-hint {
+            position: absolute;
+            left: 50%;
+            bottom: 96px;
+            transform: translateX(-50%);
+            z-index: 10;
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+            letter-spacing: 2px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="pray-page">
+        <!-- 顶部题字 -->
+        <div class="pray-head">
+            <a href="temple-detail.html?id=qingliang-temple" class="back-link">← 返回寺院介绍</a>
+            <h1 class="pray-title">三沙清凉寺</h1>
+            <p class="pray-subtitle">梵音清凉 · 一心祈愿</p>
+        </div>
+
+        <!-- 佛像 -->
+        <img src="images/sansha-guanyin.jpg" alt="千手观音圣像" class="pray-image">
+
+        <!-- 楞严咒音频：默认自动播放、循环 -->
+        <audio id="prayAudio" autoplay loop preload="auto">
+            <source src="audio/sansha-lengyan.m4a" type="audio/mp4">
+        </audio>
+
+        <!-- 自动播放被拦截时的兜底按钮 -->
+        <button class="pray-play-btn" id="prayPlayBtn" aria-label="播放楞严咒">▶</button>
+        <span class="pray-play-hint" id="prayPlayHint">点击播放楞严咒</span>
+
+        <!-- 底部说明 -->
+        <div class="pray-foot">
+            <p>正在播放 <span class="mantra-name">《楞严咒》</span>（上海西林禅寺念诵版）</p>
+            <p style="margin-top:8px;">本页为祈福文化体验页面，梵音仅供静心聆听与文化参考，不构成任何超自然承诺。</p>
+        </div>
+    </div>
+
+    <script src="js/toast.js"></script>
+    <script>
+        (function () {
+            var audio = document.getElementById('prayAudio');
+            var btn = document.getElementById('prayPlayBtn');
+            var hint = document.getElementById('prayPlayHint');
+            var playing = false;
+
+            function setPlaying(state) {
+                playing = state;
+                btn.textContent = state ? '❚❚' : '▶';
+            }
+
+            // 尝试自动播放；被浏览器策略拦截时显示播放按钮
+            var p = audio.play();
+            if (p && p.catch) {
+                p.catch(function () {
+                    btn.style.display = 'flex';
+                    hint.style.display = 'block';
+                });
+            }
+            audio.addEventListener('play', function () { setPlaying(true); });
+            audio.addEventListener('pause', function () { setPlaying(false); });
+
+            btn.addEventListener('click', function () {
+                if (audio.paused) {
+                    audio.play().then(function () {
+                        btn.style.display = 'flex';
+                        hint.style.display = 'none';
+                    });
+                } else {
+                    audio.pause();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

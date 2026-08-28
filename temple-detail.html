@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>名寺古刹 - 易道</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/temples.css?v=20260826-3">
+    <link rel="stylesheet" href="css/temples.css?v=20260828">
 </head>
 <body class="articles-page">
     <nav class="top-nav">
@@ -42,7 +42,7 @@
     </footer>
 
     <script src="js/toast.js"></script>
-    <script src="js/temples-data.js?v=20260826-3"></script>
+    <script src="js/temples-data.js?v=20260828"></script>
     <script>
         (function () {
             // 从 URL 参数读取寺院 id
@@ -91,6 +91,11 @@
             }
 
             html += '<div class="article-disclaimer">⚠️ 本文内容基于史志、碑刻与考古资料整理，涉及宗教人物与传说之处已注明"相传"或文献来源，仅供历史文化参考。</div>';
+
+            // 文末祈福链接（如有祈福页）
+            if (temple.prayPage) {
+                html += '<div class="temple-pray"><a class="temple-pray-btn" href="' + temple.prayPage.url + '">🙏 ' + temple.prayPage.text + '</a></div>';
+            }
 
             // 文末导航（如有地址信息）
             if (temple.navKeyword) {
