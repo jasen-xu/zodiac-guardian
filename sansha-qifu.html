@@ -32,29 +32,43 @@
             display: block;
         }
 
-        /* 底部：楞严咒标识 + 寺院介绍入口 */
+        /* 右上竖排题字 */
+        .pray-inscription {
+            position: absolute;
+            top: 28px;
+            right: 18px;
+            z-index: 5;
+            writing-mode: vertical-rl;
+            font-size: 16px;
+            letter-spacing: 6px;
+            line-height: 1.9;
+            color: #D4AF37;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+            pointer-events: none;
+        }
+
+        /* 底部左：楞严咒标识；右：寺院介绍入口 */
         .pray-foot {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             padding: 34px 18px 20px;
-            text-align: center;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
             background: linear-gradient(0deg, rgba(14,12,8,0.82), rgba(14,12,8,0));
             z-index: 5;
         }
 
         .pray-foot .mantra-label {
-            display: block;
             font-size: 14px;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             color: #D4AF37;
             text-shadow: 0 1px 6px rgba(0,0,0,0.8);
         }
 
         .pray-foot .intro-link {
-            display: inline-block;
-            margin-top: 10px;
             font-size: 13px;
             letter-spacing: 2px;
             color: rgba(255,255,255,0.82);
@@ -112,7 +126,10 @@
         <button class="pray-play-btn" id="prayPlayBtn" aria-label="播放楞严咒">▶</button>
         <span class="pray-play-hint" id="prayPlayHint">点击播放楞严咒</span>
     
-        <!-- 底部：楞严咒 + 寺院介绍入口 -->
+        <!-- 右上竖排题字 -->
+        <p class="pray-inscription">一心祈福 梵音清凉</p>
+    
+        <!-- 底部：左楞严咒 / 右寺院介绍入口 -->
         <div class="pray-foot">
             <span class="mantra-label">《楞严咒》</span>
             <a href="temple-detail.html?id=qingliang-temple" class="intro-link">三沙清凉寺介绍</a>
