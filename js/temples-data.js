@@ -310,6 +310,8 @@ var templesData = [
     image: 'images/temples/qingliang.jpg',
     era: '创建年代待考（欢迎寺院提供史料）',
     prayPage: { url: 'sansha-qifu.html', text: '三沙清凉寺祈福' },
+    address: '浙江温州平阳 · 西湾风景区',
+    navKeyword: '三沙清凉寺',
     summary: '浙南平阳三沙的一座清净古寺，以"清凉"为名，以梵音为伴。寺内课诵《楞严咒》，线上亦可聆梵音、寄祈愿。',
     sections: [
       {
