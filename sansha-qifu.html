@@ -32,7 +32,7 @@
             display: block;
         }
 
-        /* 右上竖排题字 */
+        /* 右上竖排题字：素雅象牙金，月光洒金质感 */
         .pray-inscription {
             position: absolute;
             top: 28px;
@@ -42,8 +42,13 @@
             font-size: 16px;
             letter-spacing: 6px;
             line-height: 1.9;
+            font-weight: 500;
             color: #D4AF37;
-            text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+            background: linear-gradient(180deg, #F7F3E8 0%, #EFE6CD 45%, #E3D3A2 75%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6)) drop-shadow(0 0 8px rgba(245,240,225,0.18));
             pointer-events: none;
         }
 
