@@ -312,6 +312,9 @@ var templesData = [
     prayPage: { url: 'sansha-qifu.html', text: '三沙清凉寺祈福' },
     address: '浙江温州平阳 · 西湾风景区',
     navKeyword: '三沙清凉寺',
+    photos: [
+      { src: 'images/temples/qingliang-fashi.jpg', caption: '三沙清凉寺殿堂法事科仪实景（寺院供图）', after: 3 }
+    ],
     summary: '清凉寺俗名岭背堂，地处古盘山南麓，旧为墨城乡与西湾乡（现海西镇）的分界山，是东海古道南投段上的一处佛教圣地。清中叶香火旺盛，殿宇五间、厢房廊亭俱全；1926年建岭背堂，2010年前后五祖寺法师来此弘法，古寺重光。',
     sections: [
       {
