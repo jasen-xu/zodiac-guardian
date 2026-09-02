@@ -125,6 +125,47 @@ async function handleAuthProxy(req, res, url) {
     }
 }
 
+// ========== 商品数据与图片代理（转发到上海服务器） ==========
+async function handleProductsAPI(req, res) {
+    if (!SHANGHAI_API_URL) {
+        return sendJSON(res, 503, { success: false, error: '服务器未配置' });
+    }
+    try {
+        const resp = await fetch(`${SHANGHAI_API_URL}/api/products`);
+        const data = await resp.json();
+        return sendJSON(res, resp.status, data);
+    } catch (e) {
+        console.error('[商品代理] 错误:', e.message);
+        return sendJSON(res, 502, { success: false, error: '代理请求失败' });
+    }
+}
+
+// 商品图片代理（仅限 /uploads/products/ 前缀，避免任意路径转发）
+async function handleUploadsProxy(req, res, url) {
+    if (!SHANGHAI_API_URL || !url.pathname.startsWith('/uploads/products/')) {
+        res.writeHead(404, { 'Access-Control-Allow-Origin': '*' });
+        return res.end();
+    }
+    try {
+        const resp = await fetch(`${SHANGHAI_API_URL}${url.pathname}`);
+        if (!resp.ok) {
+            res.writeHead(resp.status, { 'Access-Control-Allow-Origin': '*' });
+            return res.end();
+        }
+        const buf = Buffer.from(await resp.arrayBuffer());
+        res.writeHead(200, {
+            'Content-Type': resp.headers.get('content-type') || getMimeType(url.pathname),
+            'Access-Control-Allow-Origin': '*',
+            'Cache-Control': 'public, max-age=604800'
+        });
+        res.end(buf);
+    } catch (e) {
+        console.error('[图片代理] 错误:', e.message);
+        res.writeHead(502, { 'Access-Control-Allow-Origin': '*' });
+        res.end();
+    }
+}
+
 const MIME_TYPES = {
     '.html': 'text/html; charset=utf-8',
     '.css': 'text/css; charset=utf-8',
@@ -547,6 +588,8 @@ const server = http.createServer((req, res) => {
     if (url.pathname === '/api/divine' && method === 'POST') return handleDivineAPI(req, res);
     if (url.pathname === '/api/bazi' && method === 'POST') return handleBaziAPI(req, res);
     if (url.pathname === '/api/booking' && method === 'POST') return handleBookingAPI(req, res);
+    if (url.pathname === '/api/products' && method === 'GET') return handleProductsAPI(req, res);
+    if (url.pathname.startsWith('/uploads/products/') && method === 'GET') return handleUploadsProxy(req, res, url);
     // 认证 & 用户 API 代理（转发到上海服务器）
     if (url.pathname.startsWith('/api/auth/') || url.pathname.startsWith('/api/user/')) {
         return handleAuthProxy(req, res, url);

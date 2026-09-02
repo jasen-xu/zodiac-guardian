@@ -1,13 +1,14 @@
 {
   "name": "yidao-admin",
   "version": "1.0.0",
-  "description": "易道管理后台 - 预约管理、用户管理",
+  "description": "易道管理后台 - 预约管理、用户管理、商品管理",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "node app.js",
     "init-db": "node db-init.js",
-    "migrate": "node db-migrate-users.js"
+    "migrate": "node db-migrate-users.js",
+    "migrate-products": "node db-migrate-products.js"
   },
   "dependencies": {
     "express": "^4.21.0",
@@ -15,6 +16,7 @@
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "express-session": "^1.18.0",
+    "multer": "^2.0.2",
     "dotenv": "^16.4.0",
     "tencentcloud-sdk-nodejs": "^4.0.0"
   }

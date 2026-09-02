@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>易道管理后台 - 商品管理</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f7fa; color: #333; }
+        .navbar { background: #1a1a2e; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+        .navbar-brand { color: white; font-size: 18px; font-weight: 700; }
+        .navbar-nav { display: flex; gap: 24px; align-items: center; }
+        .navbar-nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        .navbar-nav a:hover, .navbar-nav a.active { color: white; }
+        .logout-btn { background: rgba(255,255,255,0.1); border: none; color: rgba(255,255,255,0.8); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+        .page-title { font-size: 22px; font-weight: 600; }
+        .filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .filter-select, .filter-input { padding: 8px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; background: white; outline: none; }
+        .filter-input { width: 180px; }
+        .btn { padding: 8px 18px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; }
+        .btn-primary { background: #1a1a2e; color: white; }
+        .btn-primary:hover { background: #2d2d4e; }
+        .btn-gold { background: #C9A227; color: white; }
+        .btn-gold:hover { background: #b08e1f; }
+        .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px; font-size: 13px; color: #888; border-bottom: 1px solid #eee; font-weight: 500; white-space: nowrap; }
+        td { padding: 12px; font-size: 14px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+        tr:hover td { background: #fafafa; }
+        .thumb { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; display: block; }
+        .thumb-emoji { width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+        .status-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; cursor: pointer; }
+        .status-on { background: #e8f5e9; color: #2e7d32; }
+        .status-off { background: #f5f5f5; color: #999; }
+        .op-btn { padding: 4px 10px; border: 1px solid #ddd; border-radius: 6px; background: white; cursor: pointer; font-size: 12px; margin-right: 6px; }
+        .op-btn:hover { border-color: #1a1a2e; }
+        .op-btn.danger:hover { border-color: #c62828; color: #c62828; }
+        .empty-state { text-align: center; padding: 40px; color: #999; }
+        .low-stock { color: #c62828; font-weight: 600; }
+        /* 弹窗 */
+        .modal-mask { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 40px 16px; }
+        .modal-mask.show { display: flex; }
+        .modal { background: white; border-radius: 12px; width: 100%; max-width: 640px; padding: 24px; }
+        .modal-title { font-size: 18px; font-weight: 600; margin-bottom: 18px; }
+        .form-row { display: flex; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
+        .form-group { flex: 1; min-width: 160px; }
+        .form-group label { display: block; font-size: 13px; color: #666; margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; font-family: inherit; }
+        .form-group textarea { resize: vertical; min-height: 60px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #1a1a2e; }
+        .img-upload { display: flex; gap: 14px; align-items: center; }
+        .img-preview { width: 88px; height: 88px; border-radius: 8px; border: 1px dashed #ddd; display: flex; align-items: center; justify-content: center; font-size: 30px; overflow: hidden; flex-shrink: 0; background: #fafafa; }
+        .img-preview img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; }
+        .btn-plain { background: white; border: 1px solid #ddd; color: #666; }
+        .toast-msg { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #1a1a2e; color: white; padding: 10px 22px; border-radius: 8px; font-size: 14px; z-index: 200; display: none; }
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 12px; }
+            .page-header { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">易道管理后台</div>
+        <div class="navbar-nav">
+            <a href="/admin">仪表盘</a>
+            <a href="/admin/bookings">预约管理</a>
+            <a href="/admin/users">用户管理</a>
+            <a href="/admin/products" class="active">商品管理</a>
+            <button class="logout-btn" onclick="logout()">退出登录</button>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">商品管理</h1>
+            <div class="filters">
+                <select class="filter-select" id="categoryFilter" onchange="loadProducts()">
+                    <option value="">全部分类</option>
+                    <option value="prayer">灵犀珠系列</option>
+                    <option value="art">墨韵系列</option>
+                    <option value="space">空间文化系列</option>
+                </select>
+                <select class="filter-select" id="statusFilter" onchange="loadProducts()">
+                    <option value="">全部状态</option>
+                    <option value="on">已上架</option>
+                    <option value="off">已下架</option>
+                </select>
+                <input class="filter-input" id="searchInput" placeholder="搜索商品名/描述" onkeyup="debounceSearch()">
+                <button class="btn btn-gold" onclick="openModal()">＋ 新增商品</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>图片</th>
+                            <th>名称</th>
+                            <th>系列</th>
+                            <th>价格</th>
+                            <th>库存</th>
+                            <th>排序</th>
+                            <th>状态</th>
+                            <th>更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTable">
+                        <tr><td colspan="10" class="empty-state">加载中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增/编辑弹窗 -->
+    <div class="modal-mask" id="modalMask">
+        <div class="modal">
+            <div class="modal-title" id="modalTitle">新增商品</div>
+            <input type="hidden" id="fId">
+            <div class="form-row">
+                <div class="form-group" style="flex:2">
+                    <label>商品名称 *</label>
+                    <input id="fName" maxlength="100" placeholder="如：灵犀珠手串">
+                </div>
+                <div class="form-group">
+                    <label>系列</label>
+                    <select id="fSeries">
+                        <option value="灵犀珠系列">灵犀珠系列</option>
+                        <option value="墨韵系列">墨韵系列</option>
+                        <option value="空间文化系列">空间文化系列</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>分类（对应前台筛选）</label>
+                    <select id="fCategory">
+                        <option value="prayer">灵犀珠系列 (prayer)</option>
+                        <option value="art">墨韵系列 (art)</option>
+                        <option value="space">空间文化系列 (space)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>价格（展示文本）</label>
+                    <input id="fPrice" maxlength="50" placeholder="如：¥298 - ¥598">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>库存数量</label>
+                    <input id="fStock" type="number" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>排序（小的在前）</label>
+                    <input id="fSort" type="number" value="0">
+                </div>
+                <div class="form-group">
+                    <label>状态</label>
+                    <select id="fStatus">
+                        <option value="on">上架</option>
+                        <option value="off">下架</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>商品描述</label>
+                    <textarea id="fDesc" maxlength="500" placeholder="材质、工艺、寓意等"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>商品图片（jpg/png/gif/webp，≤5MB；不传则前台显示占位图标）</label>
+                    <div class="img-upload">
+                        <div class="img-preview" id="imgPreview">🎁</div>
+                        <div>
+                            <input type="file" id="fImage" accept="image/*" onchange="uploadImage(this)">
+                            <div style="font-size:12px;color:#999;margin-top:6px" id="uploadHint">选择文件后自动上传</div>
+                            <button class="op-btn" style="margin-top:6px" onclick="clearImage()">移除图片</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="fImageUrl">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>占位图标（emoji，无图片时显示）</label>
+                    <input id="fIcon" maxlength="8" value="🎁">
+                </div>
+                <div class="form-group" style="flex:2">
+                    <label>占位背景（CSS 渐变，无图片时显示）</label>
+                    <input id="fColor" maxlength="160" value="linear-gradient(135deg, #E8D5B7, #C9A87C)">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>购买链接（可空，默认前台提示"敬请期待"）</label>
+                    <input id="fLink" maxlength="500" placeholder="#">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-plain" onclick="closeModal()">取消</button>
+                <button class="btn btn-primary" id="saveBtn" onclick="saveProduct()">保存</button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-msg" id="toastMsg"></div>
+
+    <script>
+        let products = [];
+        let searchTimer = null;
+
+        async function loadProducts() {
+            const category = document.getElementById('categoryFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const search = document.getElementById('searchInput').value.trim();
+            const params = new URLSearchParams();
+            if (category) params.set('category', category);
+            if (status) params.set('status', status);
+            if (search) params.set('search', search);
+
+            try {
+                const resp = await fetch(`/admin/api/products?${params}`);
+                const result = await resp.json();
+                if (!result.success) {
+                    if (result.error === '未登录') window.location.href = '/admin/login';
+                    return;
+                }
+                products = result.data.products;
+                renderTable(products);
+            } catch (e) {
+                console.error('加载失败:', e);
+            }
+        }
+
+        function renderTable(list) {
+            if (list.length === 0) {
+                document.getElementById('productsTable').innerHTML = '<tr><td colspan="10" class="empty-state">暂无商品，点击右上角"新增商品"</td></tr>';
+                return;
+            }
+            document.getElementById('productsTable').innerHTML = list.map(p => `
+                <tr>
+                    <td>#${p.id}</td>
+                    <td>${p.image_url
+                        ? `<img class="thumb" src="${esc(p.image_url)}" alt="">`
+                        : `<div class="thumb-emoji" style="background:${esc(p.color)}">${esc(p.icon) || '🎁'}</div>`}</td>
+                    <td>${esc(p.name)}</td>
+                    <td>${esc(p.series)}</td>
+                    <td>${esc(p.price) || '-'}</td>
+                    <td class="${p.stock <= 5 ? 'low-stock' : ''}">${p.stock}</td>
+                    <td>${p.sort_order}</td>
+                    <td><span class="status-badge status-${p.status}" onclick="toggleStatus(${p.id}, '${p.status}')">${p.status === 'on' ? '已上架' : '已下架'}</span></td>
+                    <td>${formatTime(p.updated_at)}</td>
+                    <td>
+                        <button class="op-btn" onclick="openModal(${p.id})">编辑</button>
+                        <button class="op-btn danger" onclick="deleteProduct(${p.id}, '${esc(p.name)}')">删除</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ===== 弹窗 =====
+        function openModal(id) {
+            const p = id ? products.find(x => x.id === id) : null;
+            document.getElementById('modalTitle').textContent = p ? `编辑商品 #${p.id}` : '新增商品';
+            document.getElementById('fId').value = p ? p.id : '';
+            document.getElementById('fName').value = p ? p.name : '';
+            document.getElementById('fSeries').value = p ? p.series : '灵犀珠系列';
+            document.getElementById('fCategory').value = p ? p.category : 'prayer';
+            document.getElementById('fPrice').value = p ? p.price : '';
+            document.getElementById('fStock').value = p ? p.stock : 0;
+            document.getElementById('fSort').value = p ? p.sort_order : 0;
+            document.getElementById('fStatus').value = p ? p.status : 'on';
+            document.getElementById('fDesc').value = p ? (p.description || '') : '';
+            document.getElementById('fIcon').value = p ? (p.icon || '🎁') : '🎁';
+            document.getElementById('fColor').value = p ? (p.color || '') : 'linear-gradient(135deg, #E8D5B7, #C9A87C)';
+            document.getElementById('fLink').value = p ? (p.link || '') : '';
+            document.getElementById('fImageUrl').value = p ? (p.image_url || '') : '';
+            document.getElementById('fImage').value = '';
+            refreshPreview();
+            document.getElementById('modalMask').classList.add('show');
+        }
+
+        function closeModal() { document.getElementById('modalMask').classList.remove('show'); }
+
+        function refreshPreview() {
+            const url = document.getElementById('fImageUrl').value;
+            const icon = document.getElementById('fIcon').value || '🎁';
+            const color = document.getElementById('fColor').value || '#fafafa';
+            const box = document.getElementById('imgPreview');
+            box.innerHTML = url ? `<img src="${esc(url)}" alt="预览">` : icon;
+            box.style.background = url ? '#fafafa' : color;
+        }
+
+        async function uploadImage(input) {
+            if (!input.files || !input.files[0]) return;
+            const hint = document.getElementById('uploadHint');
+            hint.textContent = '上传中...';
+            try {
+                const fd = new FormData();
+                fd.append('image', input.files[0]);
+                const resp = await fetch('/admin/api/upload', { method: 'POST', body: fd });
+                const result = await resp.json();
+                if (result.success) {
+                    document.getElementById('fImageUrl').value = result.data.url;
+                    refreshPreview();
+                    hint.textContent = '✓ ' + result.data.url;
+                } else {
+                    hint.textContent = '上传失败: ' + result.error;
+                }
+            } catch (e) {
+                hint.textContent = '上传失败: ' + e.message;
+            }
+        }
+
+        function clearImage() {
+            document.getElementById('fImageUrl').value = '';
+            document.getElementById('fImage').value = '';
+            document.getElementById('uploadHint').textContent = '选择文件后自动上传';
+            refreshPreview();
+        }
+
+        async function saveProduct() {
+            const id = document.getElementById('fId').value;
+            const name = document.getElementById('fName').value.trim();
+            if (!name) { toast('请填写商品名称'); return; }
+
+            const body = {
+                name,
+                series: document.getElementById('fSeries').value,
+                category: document.getElementById('fCategory').value,
+                description: document.getElementById('fDesc').value.trim(),
+                price: document.getElementById('fPrice').value.trim(),
+                stock: document.getElementById('fStock').value,
+                image_url: document.getElementById('fImageUrl').value,
+                icon: document.getElementById('fIcon').value.trim() || '🎁',
+                color: document.getElementById('fColor').value.trim(),
+                link: document.getElementById('fLink').value.trim() || '#',
+                status: document.getElementById('fStatus').value,
+                sort_order: document.getElementById('fSort').value
+            };
+
+            const btn = document.getElementById('saveBtn');
+            btn.disabled = true;
+            try {
+                const resp = await fetch(id ? `/admin/api/products/${id}` : '/admin/api/products', {
+                    method: id ? 'PUT' : 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const result = await resp.json();
+                if (result.success) {
+                    toast(id ? '已保存' : '已新增');
+                    closeModal();
+                    loadProducts();
+                } else {
+                    toast(result.error || '保存失败');
+                }
+            } catch (e) {
+                toast('网络错误: ' + e.message);
+            }
+            btn.disabled = false;
+        }
+
+        async function toggleStatus(id, current) {
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+            const next = current === 'on' ? 'off' : 'on';
+            await fetch(`/admin/api/products/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...p, status: next })
+            });
+            loadProducts();
+        }
+
+        async function deleteProduct(id, name) {
+            if (!confirm(`确认删除商品「${name}」？此操作不可恢复。`)) return;
+            const resp = await fetch(`/admin/api/products/${id}`, { method: 'DELETE' });
+            const result = await resp.json();
+            toast(result.success ? '已删除' : (result.error || '删除失败'));
+            loadProducts();
+        }
+
+        function debounceSearch() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => loadProducts(), 400);
+        }
+
+        function toast(msg) {
+            const el = document.getElementById('toastMsg');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 2200);
+        }
+
+        function esc(s) { return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+        function formatTime(t) { if(!t) return '-'; const d=new Date(t); return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`; }
+        async function logout() { await fetch('/admin/api/logout',{method:'POST'}); window.location.href='/admin/login'; }
+
+        // 点击遮罩关闭弹窗
+        document.getElementById('modalMask').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+        loadProducts();
+    </script>
+</body>
+</html>

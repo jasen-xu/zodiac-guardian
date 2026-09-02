@@ -139,9 +139,50 @@ const wenchuangData = [
     }
 ];
 
-// 页面加载完成后渲染产品
+// API 基础地址（经 SCF 代理，与 user.js 同逻辑；本地联调直连后台 3001）
+var PRODUCT_API = (function () {
+    var host = window.location.hostname;
+    if (host === 'yi-yao.net' || host === 'www.yi-yao.net') return 'https://1436877587-1kd9vq3oux.ap-hongkong.tencentscf.com';
+    if (host === 'localhost' || host === '127.0.0.1') return 'http://localhost:3001';
+    return '';
+})();
+
+// 从管理后台加载商品（成功则替换静态数据，失败回退静态数据）
+function loadRemoteProducts(callback) {
+    if (!PRODUCT_API) return callback(false);
+    fetch(PRODUCT_API + '/api/products')
+        .then(function (r) { return r.json(); })
+        .then(function (result) {
+            if (result.success && result.data && result.data.products && result.data.products.length > 0) {
+                var remote = result.data.products.map(function (p) {
+                    return {
+                        id: p.id,
+                        name: p.name,
+                        series: p.series,
+                        category: p.category,
+                        desc: p.description || '',
+                        price: p.price || '',
+                        icon: p.icon || '🎁',
+                        color: p.color || 'linear-gradient(135deg, #E8D5B7, #C9A87C)',
+                        link: p.link || '#',
+                        image: p.image_url ? (PRODUCT_API + p.image_url) : ''
+                    };
+                });
+                wenchuangData.length = 0;
+                Array.prototype.push.apply(wenchuangData, remote);
+                callback(true);
+            } else {
+                callback(false);
+            }
+        })
+        .catch(function () { callback(false); });
+}
+
+// 页面加载完成后渲染产品（优先后台数据，失败回退静态数据）
 document.addEventListener('DOMContentLoaded', function() {
-    renderProducts('all');
+    loadRemoteProducts(function () {
+        renderProducts('all');
+    });
 });
 
 // 渲染产品
@@ -155,7 +196,9 @@ function renderProducts(category) {
         <div class="wenchuang-card" style="animation-delay: ${index * 0.06}s">
             <div class="wenchuang-card-image" style="background: ${product.color}">
                 <span class="card-series-tag">${product.series}</span>
-                <span>${product.icon}</span>
+                ${product.image
+                    ? `<img src="${product.image}" alt="${product.name}" loading="lazy">`
+                    : `<span>${product.icon}</span>`}
             </div>
             <div class="wenchuang-card-body">
                 <h3 class="wenchuang-card-name">${product.name}</h3>
