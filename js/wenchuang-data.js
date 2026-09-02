@@ -1,10 +1,10 @@
 // 文创产品数据
 const wenchuangData = [
-    // === 祈愿系列 ===
+    // === 灵犀珠系列 ===
     {
         id: "buddha-pendant",
         name: "本命佛纯银挂件",
-        series: "祈愿系列",
+        series: "灵犀珠系列",
         category: "prayer",
         desc: "十二生肖守护佛，999纯银铸造，精工细作",
         price: "¥298 - ¥598",
@@ -15,7 +15,7 @@ const wenchuangData = [
     {
         id: "peace-buckle",
         name: "和田玉平安扣",
-        series: "祈愿系列",
+        series: "灵犀珠系列",
         category: "prayer",
         desc: "天然和田玉，温润细腻，寓意平安吉祥",
         price: "¥388 - ¥1280",
@@ -26,7 +26,7 @@ const wenchuangData = [
     {
         id: "blessing-bracelet",
         name: "檀木手串",
-        series: "祈愿系列",
+        series: "灵犀珠系列",
         category: "prayer",
         desc: "小叶紫檀108颗佛珠，匠心手作",
         price: "¥168 - ¥680",
@@ -37,7 +37,7 @@ const wenchuangData = [
     {
         id: "amulet-bag",
         name: "手工刺绣护身符",
-        series: "祈愿系列",
+        series: "灵犀珠系列",
         category: "prayer",
         desc: "苏绣锦囊符袋，内置传统平安符",
         price: "¥128 - ¥298",
