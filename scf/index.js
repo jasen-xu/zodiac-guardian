@@ -130,13 +130,32 @@ async function handleProductsAPI(req, res) {
     if (!SHANGHAI_API_URL) {
         return sendJSON(res, 503, { success: false, error: '服务器未配置' });
     }
+    // 20 秒超时：避免上游偶发变慢时函数被网关强杀、看不到真实错误
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 20000);
     try {
-        const resp = await fetch(`${SHANGHAI_API_URL}/api/products`);
-        const data = await resp.json();
+        const resp = await fetch(`${SHANGHAI_API_URL}/api/products`, {
+            headers: { 'Accept': 'application/json', 'Accept-Encoding': 'identity' },
+            signal: ctrl.signal
+        });
+        // 先 text() 再 JSON.parse（对齐登录转发写法）：规避部分 Node 运行时 resp.json()
+        // 对含中文多字节响应的兼容问题——这正是登录转发正常、商品转发 502 的根因
+        const text = await resp.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (pe) {
+            // 上游返回的不是合法 JSON：回传状态码与内容片段，便于远程诊断
+            return sendJSON(res, 502, { success: false, error: '上游响应非JSON', status: resp.status, len: text.length, preview: text.slice(0, 200) });
+        }
         return sendJSON(res, resp.status, data);
     } catch (e) {
-        console.error('[商品代理] 错误:', e.message);
-        return sendJSON(res, 502, { success: false, error: '代理请求失败' });
+        const detail = String((e && e.message) || e);
+        const cause = e && e.cause ? String(e.cause.message || e.cause.code || e.cause) : '';
+        console.error('[商品代理] 错误:', detail, cause);
+        return sendJSON(res, 502, { success: false, error: '代理请求失败', detail, cause });
+    } finally {
+        clearTimeout(timer);
     }
 }
 
