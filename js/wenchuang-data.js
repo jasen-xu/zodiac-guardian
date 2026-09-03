@@ -139,10 +139,10 @@ const wenchuangData = [
     }
 ];
 
-// API 基础地址（经 SCF 代理，与 user.js 同逻辑；本地联调直连后台 3001）
+// API 基础地址（HTTPS 直连上海后台 admin.yi-yao.net，绕过 SCF 代理与天御验证码；本地联调直连后台 3001）
 var PRODUCT_API = (function () {
     var host = window.location.hostname;
-    if (host === 'yi-yao.net' || host === 'www.yi-yao.net') return 'https://1436877587-1kd9vq3oux.ap-hongkong.tencentscf.com';
+    if (host === 'yi-yao.net' || host === 'www.yi-yao.net') return 'https://admin.yi-yao.net';
     if (host === 'localhost' || host === '127.0.0.1') return 'http://localhost:3001';
     return '';
 })();
