@@ -140,8 +140,10 @@ const wenchuangData = [
 ];
 
 // API 基础地址（HTTPS 直连上海后台 admin.yi-yao.net，绕过 SCF 代理与天御验证码；本地联调直连后台 3001）
+// 本地预览：URL 加 ?api=prod 可让 localhost 直连生产后台，查看真实商品数据与图片
 var PRODUCT_API = (function () {
     var host = window.location.hostname;
+    if (/[?&]api=prod/.test(window.location.search)) return 'https://admin.yi-yao.net';
     if (host === 'yi-yao.net' || host === 'www.yi-yao.net') return 'https://admin.yi-yao.net';
     if (host === 'localhost' || host === '127.0.0.1') return 'http://localhost:3001';
     return '';
