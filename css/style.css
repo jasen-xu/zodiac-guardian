@@ -1215,6 +1215,8 @@ body {
 
 /* 产品卡片 */
 .wenchuang-card {
+    display: flex;
+    flex-direction: column;
     background: rgba(255, 255, 255, 0.4);
     border: 1px solid #DCD2C0;
     border-radius: 8px;
@@ -1260,6 +1262,9 @@ body {
 
 .wenchuang-card-body {
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .wenchuang-card-name {
@@ -1297,6 +1302,8 @@ body {
     text-decoration: none;
     letter-spacing: 2px;
     transition: all 0.3s;
+    margin-top: auto;
+    align-self: flex-start;
 }
 
 .wenchuang-card-link:hover {
