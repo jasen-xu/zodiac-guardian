@@ -221,11 +221,57 @@ function filterProducts(category, btn) {
     renderProducts(category);
 }
 
+// 复制文本到剪贴板（HTTPS 用 Clipboard API，降级用 execCommand）
+function copyToClipboard(text) {
+    return new Promise(function (resolve) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(function () { resolve(true); }, function () { resolve(legacyCopy(text)); });
+        } else {
+            resolve(legacyCopy(text));
+        }
+    });
+}
+function legacyCopy(text) {
+    try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, ta.value.length);
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+    } catch (e) { return false; }
+}
+
 // 购买按钮点击处理
 function handleBuyClick(event) {
-    const link = event.target.getAttribute('href');
-    if (link === '#') {
+    var a = event.currentTarget || event.target;
+    var link = (a.getAttribute('href') || '').trim();
+    // 空链接：敬请期待
+    if (!link || link === '#') {
         event.preventDefault();
         if (typeof Toast !== 'undefined') Toast.info('购买渠道即将开放，敬请期待'); else alert('购买渠道即将开放，敬请期待');
+        return;
     }
+    // 普通 http/https 网页链接：新标签直接打开（保持默认行为）
+    var lower = link.toLowerCase();
+    if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) return;
+    // 微信小店/小程序口令：网页无法直接跳转，复制口令 + 引导去微信粘贴
+    event.preventDefault();
+    var storeName = '微信小店';
+    var idx = link.indexOf('://');
+    if (idx > -1) {
+        var rest = link.substring(idx + 3);
+        var slash = rest.indexOf('/');
+        if (slash > -1) storeName = rest.substring(0, slash);
+    }
+    var msg = '小店口令已复制，打开微信粘贴即可进入「' + storeName + '」购买';
+    copyToClipboard(link).then(function (ok) {
+        if (typeof Toast === 'undefined') { alert(ok ? msg : ('请手动复制口令：' + link)); return; }
+        if (ok) Toast.success(msg, 6000);
+        else Toast.warning('复制失败，请手动复制口令：' + link, 8000);
+    });
 }
