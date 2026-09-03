@@ -195,7 +195,6 @@ function renderProducts(category) {
     grid.innerHTML = filtered.map((product, index) => `
         <div class="wenchuang-card" style="animation-delay: ${index * 0.06}s">
             <div class="wenchuang-card-image" style="background: ${product.color}">
-                <span class="card-series-tag">${product.series}</span>
                 ${product.image
                     ? `<img src="${product.image}" alt="${product.name}" loading="lazy">`
                     : `<span>${product.icon}</span>`}
