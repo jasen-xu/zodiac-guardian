@@ -268,10 +268,10 @@ function handleBuyClick(event) {
         var slash = rest.indexOf('/');
         if (slash > -1) storeName = rest.substring(0, slash);
     }
-    var msg = '小店口令已复制，打开微信粘贴即可进入「' + storeName + '」购买';
+    var msg = '口令已复制！打开微信→粘贴到聊天框(如文件传输助手)发送→点链接进「' + storeName + '」购买';
     copyToClipboard(link).then(function (ok) {
         if (typeof Toast === 'undefined') { alert(ok ? msg : ('请手动复制口令：' + link)); return; }
-        if (ok) Toast.success(msg, 6000);
+        if (ok) Toast.success(msg, 8000);
         else Toast.warning('复制失败，请手动复制口令：' + link, 8000);
     });
 }
