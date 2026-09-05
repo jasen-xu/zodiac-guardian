@@ -176,6 +176,12 @@
             </div>
             <div class="form-row">
                 <div class="form-group">
+                    <label>商品详情（详情页长文，用空行分段；文化寓意 / 材质工艺 / 尺寸规格等，≤5000 字。留空则详情页不显示此栏）</label>
+                    <textarea id="fDetail" maxlength="5000" style="min-height:160px" placeholder="详情页长文，用空行分段：文化寓意 / 材质工艺 / 尺寸规格等"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
                     <label>商品图片（jpg/png/gif/webp，≤5MB；不传则前台显示占位图标）</label>
                     <div class="img-upload">
                         <div class="img-preview" id="imgPreview">🎁</div>
@@ -292,6 +298,7 @@
             document.getElementById('fSort').value = p ? p.sort_order : 0;
             document.getElementById('fStatus').value = p ? p.status : 'on';
             document.getElementById('fDesc').value = p ? (p.description || '') : '';
+            document.getElementById('fDetail').value = p ? (p.detail || '') : '';
             document.getElementById('fIcon').value = p ? (p.icon || '🎁') : '🎁';
             document.getElementById('fColor').value = p ? (p.color || '') : 'linear-gradient(135deg, #E8D5B7, #C9A87C)';
             document.getElementById('fLink').value = p ? (p.link || '') : '';
@@ -388,6 +395,7 @@
                 series: document.getElementById('fSeries').value,
                 category: document.getElementById('fCategory').value,
                 description: document.getElementById('fDesc').value.trim(),
+                detail: document.getElementById('fDetail').value.trim(),
                 price: document.getElementById('fPrice').value.trim(),
                 stock: document.getElementById('fStock').value,
                 image_url: document.getElementById('fImageUrl').value,

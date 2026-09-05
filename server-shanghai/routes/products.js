@@ -82,10 +82,10 @@ router.post('/api/products', adminAuth, async (req, res) => {
         const err = validateBody(req.body);
         if (err) return res.status(400).json({ success: false, error: err });
 
-        const { name, series, category, description, price, stock, image_url, icon, color, link, qr_code, status, sort_order } = req.body;
+        const { name, series, category, description, price, stock, image_url, icon, color, link, qr_code, detail, status, sort_order } = req.body;
         const result = await db.query(
-            `INSERT INTO products (name, series, category, description, price, stock, image_url, icon, color, link, qr_code, status, sort_order)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *`,
+            `INSERT INTO products (name, series, category, description, price, stock, image_url, icon, color, link, qr_code, detail, status, sort_order)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *`,
             [
                 String(name).trim(),
                 series || '灵犀珠系列',
@@ -98,6 +98,7 @@ router.post('/api/products', adminAuth, async (req, res) => {
                 color || 'linear-gradient(135deg, #E8D5B7, #C9A87C)',
                 link || '#',
                 qr_code || '',
+                detail || '',
                 status || 'on',
                 parseInt(sort_order) || 0
             ]
@@ -115,11 +116,11 @@ router.put('/api/products/:id', adminAuth, async (req, res) => {
         const err = validateBody(req.body);
         if (err) return res.status(400).json({ success: false, error: err });
 
-        const { name, series, category, description, price, stock, image_url, icon, color, link, qr_code, status, sort_order } = req.body;
+        const { name, series, category, description, price, stock, image_url, icon, color, link, qr_code, detail, status, sort_order } = req.body;
         const result = await db.query(
             `UPDATE products SET name=$1, series=$2, category=$3, description=$4, price=$5, stock=$6,
-                image_url=$7, icon=$8, color=$9, link=$10, qr_code=$11, status=$12, sort_order=$13, updated_at=NOW()
-             WHERE id=$14 RETURNING *`,
+                image_url=$7, icon=$8, color=$9, link=$10, qr_code=$11, detail=$12, status=$13, sort_order=$14, updated_at=NOW()
+             WHERE id=$15 RETURNING *`,
             [
                 String(name).trim(),
                 series || '灵犀珠系列',
@@ -132,6 +133,7 @@ router.put('/api/products/:id', adminAuth, async (req, res) => {
                 color || 'linear-gradient(135deg, #E8D5B7, #C9A87C)',
                 link || '#',
                 qr_code || '',
+                detail || '',
                 status || 'on',
                 parseInt(sort_order) || 0,
                 req.params.id
