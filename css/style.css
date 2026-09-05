@@ -1310,6 +1310,26 @@ body {
     background: #C49B2F;
 }
 
+/* 卡片图片 / 名称可点进详情页 */
+.wenchuang-card-image-link {
+    display: block;
+    flex-shrink: 0;
+}
+.wenchuang-card-image-link .wenchuang-card-image img {
+    transition: transform 0.35s ease;
+}
+.wenchuang-card-image-link:hover .wenchuang-card-image img {
+    transform: scale(1.05);
+}
+.wenchuang-card-name-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+.wenchuang-card-name-link:hover .wenchuang-card-name {
+    color: #D4AF37;
+}
+
 /* ===== 购买方式弹窗（微信扫码 + 口令）===== */
 .buy-modal-mask {
     display: none;
@@ -1426,6 +1446,141 @@ body {
     color: #8C7B5A;
     line-height: 1.6;
     margin-top: 6px;
+}
+
+/* ===== 商品详情页（product.html）===== */
+.product-page {
+    background: #F9F6F0;
+    min-height: 100vh;
+}
+.product-detail {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 96px 24px 56px;
+}
+.product-back {
+    display: inline-block;
+    color: #A08C5B;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    transition: color 0.3s;
+}
+.product-back:hover { color: #D4AF37; }
+.product-main {
+    display: flex;
+    gap: 36px;
+    align-items: flex-start;
+}
+.product-gallery {
+    flex: 0 0 46%;
+    max-width: 400px;
+}
+.product-img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    display: block;
+    background: #fff;
+}
+.product-img-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+}
+.product-info { flex: 1; min-width: 0; }
+.product-name {
+    font-size: 1.7rem;
+    color: #2C2416;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+    line-height: 1.4;
+}
+.product-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+.product-tag {
+    background: #F3EDE1;
+    color: #A08C5B;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+.product-price {
+    font-size: 1.6rem;
+    color: #D4AF37;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+.product-desc {
+    color: #6B5B3E;
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+}
+.product-buy {
+    padding: 10px 30px;
+    font-size: 0.95rem;
+}
+.product-detail-text {
+    margin-top: 44px;
+}
+.product-section-title {
+    font-size: 1.2rem;
+    color: #2C2416;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #E0D5C0;
+    font-family: 'SimSun', 'STSong', serif;
+}
+.product-detail-text p {
+    color: #5A4D3C;
+    line-height: 2;
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+.product-empty {
+    text-align: center;
+    padding: 80px 20px;
+}
+.product-empty-text {
+    color: #8C7B5A;
+    font-size: 1rem;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+}
+.product-back-btn {
+    display: inline-block;
+    color: #fff;
+    background: #D4AF37;
+    text-decoration: none;
+    padding: 10px 26px;
+    border-radius: 6px;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+.product-back-btn:hover { background: #C49B2F; }
+
+@media (max-width: 768px) {
+    .product-detail { padding: 80px 16px 40px; }
+    .product-main { flex-direction: column; gap: 24px; }
+    .product-gallery { flex: none; width: 100%; max-width: 100%; }
+    .product-name { font-size: 1.4rem; }
 }
 
 /* 品牌理念 */

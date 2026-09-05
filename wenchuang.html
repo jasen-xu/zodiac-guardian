@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文创雅集 - 易道</title>
-    <link rel="stylesheet" href="css/style.css?v=20260903-3">
+    <link rel="stylesheet" href="css/style.css?v=20260905-1">
 </head>
 <body class="wenchuang-page">
     <nav class="top-nav">
@@ -65,27 +65,11 @@
         </div>
     </footer>
 
-    <!-- 购买方式弹窗：微信扫码 + 口令复制 -->
-    <div class="buy-modal-mask" id="buyModalMask" onclick="if(event.target===this)closeBuyModal()">
-        <div class="buy-modal">
-            <button class="buy-modal-close" onclick="closeBuyModal()" aria-label="关闭">✕</button>
-            <h3 class="buy-modal-title" id="buyModalTitle">前往购买</h3>
-            <p class="buy-modal-store">店铺：<span id="buyModalStore">微信小店</span></p>
-            <div class="buy-modal-qr-wrap" id="buyModalQrWrap">
-                <img class="buy-modal-qr" id="buyModalQrImg" src="" alt="微信小店二维码">
-                <p class="buy-modal-tip">用微信「扫一扫」，直达小店</p>
-            </div>
-            <div class="buy-modal-divider" id="buyModalDivider"><span>或</span></div>
-            <div class="buy-modal-kouling">
-                <code class="buy-modal-code" id="buyModalCode"></code>
-                <button class="buy-modal-copy" id="buyModalCopy" onclick="copyKoulingFromModal()">复制口令</button>
-            </div>
-            <p class="buy-modal-tip">复制后打开微信，粘贴到聊天框发送，点链接进店</p>
-        </div>
-    </div>
+    <!-- 购买方式弹窗（扫码 + 口令）由 js/product-common.js 动态注入，无需内联 -->
 
     <script src="js/toast.js"></script>
-    <script src="js/wenchuang-data.js?v=20260903-5"></script>
+    <script src="js/product-common.js?v=20260905-1"></script>
+    <script src="js/wenchuang-data.js?v=20260905-1"></script>
     <script src="js/user.js"></script>
 </body>
 </html>
