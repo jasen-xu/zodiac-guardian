@@ -204,6 +204,20 @@
                     <input id="fLink" maxlength="500" placeholder="#">
                 </div>
             </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>微信小店二维码（jpg/png，≤5MB；顾客点“前往购买”时弹窗展示，扫码进店。不同小店各传各的码）</label>
+                    <div class="img-upload">
+                        <div class="img-preview" id="qrPreview">📱</div>
+                        <div>
+                            <input type="file" id="fQr" accept="image/*" onchange="uploadQr(this)">
+                            <div style="font-size:12px;color:#999;margin-top:6px" id="qrUploadHint">选择文件后自动上传</div>
+                            <button class="op-btn" style="margin-top:6px" onclick="clearQr()">移除二维码</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="fQrUrl">
+                </div>
+            </div>
             <div class="modal-footer">
                 <button class="btn btn-plain" onclick="closeModal()">取消</button>
                 <button class="btn btn-primary" id="saveBtn" onclick="saveProduct()">保存</button>
@@ -283,7 +297,11 @@
             document.getElementById('fLink').value = p ? (p.link || '') : '';
             document.getElementById('fImageUrl').value = p ? (p.image_url || '') : '';
             document.getElementById('fImage').value = '';
+            document.getElementById('fQrUrl').value = p ? (p.qr_code || '') : '';
+            document.getElementById('fQr').value = '';
+            document.getElementById('qrUploadHint').textContent = '选择文件后自动上传';
             refreshPreview();
+            refreshQrPreview();
             document.getElementById('modalMask').classList.add('show');
         }
 
@@ -326,6 +344,40 @@
             refreshPreview();
         }
 
+        function refreshQrPreview() {
+            const url = document.getElementById('fQrUrl').value;
+            const box = document.getElementById('qrPreview');
+            box.innerHTML = url ? `<img src="${esc(url)}" alt="二维码预览">` : '📱';
+        }
+
+        async function uploadQr(input) {
+            if (!input.files || !input.files[0]) return;
+            const hint = document.getElementById('qrUploadHint');
+            hint.textContent = '上传中...';
+            try {
+                const fd = new FormData();
+                fd.append('image', input.files[0]);
+                const resp = await fetch('/admin/api/upload', { method: 'POST', body: fd });
+                const result = await resp.json();
+                if (result.success) {
+                    document.getElementById('fQrUrl').value = result.data.url;
+                    refreshQrPreview();
+                    hint.textContent = '✓ ' + result.data.url;
+                } else {
+                    hint.textContent = '上传失败: ' + result.error;
+                }
+            } catch (e) {
+                hint.textContent = '上传失败: ' + e.message;
+            }
+        }
+
+        function clearQr() {
+            document.getElementById('fQrUrl').value = '';
+            document.getElementById('fQr').value = '';
+            document.getElementById('qrUploadHint').textContent = '选择文件后自动上传';
+            refreshQrPreview();
+        }
+
         async function saveProduct() {
             const id = document.getElementById('fId').value;
             const name = document.getElementById('fName').value.trim();
@@ -342,6 +394,7 @@
                 icon: document.getElementById('fIcon').value.trim() || '🎁',
                 color: document.getElementById('fColor').value.trim(),
                 link: document.getElementById('fLink').value.trim() || '#',
+                qr_code: document.getElementById('fQrUrl').value,
                 status: document.getElementById('fStatus').value,
                 sort_order: document.getElementById('fSort').value
             };

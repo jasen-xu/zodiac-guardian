@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS products (
     icon VARCHAR(16) DEFAULT '🎁',
     color VARCHAR(160) DEFAULT 'linear-gradient(135deg, #E8D5B7, #C9A87C)',
     link VARCHAR(500) DEFAULT '#',
+    qr_code VARCHAR(500) DEFAULT '',
     status VARCHAR(10) DEFAULT 'on',
     sort_order INT DEFAULT 0,
     created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -34,6 +35,9 @@ CREATE TABLE IF NOT EXISTS products (
 );
 CREATE INDEX IF NOT EXISTS idx_products_status ON products(status, sort_order);
 CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);
+
+-- 兼容已存在的表：补充 qr_code 列（微信小店二维码图片 URL）
+ALTER TABLE products ADD COLUMN IF NOT EXISTS qr_code VARCHAR(500) DEFAULT '';
 `;
 
 // 种子数据：现有文创雅集 12 件商品（表为空时才写入）

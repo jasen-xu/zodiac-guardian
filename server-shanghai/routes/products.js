@@ -82,10 +82,10 @@ router.post('/api/products', adminAuth, async (req, res) => {
         const err = validateBody(req.body);
         if (err) return res.status(400).json({ success: false, error: err });
 
-        const { name, series, category, description, price, stock, image_url, icon, color, link, status, sort_order } = req.body;
+        const { name, series, category, description, price, stock, image_url, icon, color, link, qr_code, status, sort_order } = req.body;
         const result = await db.query(
-            `INSERT INTO products (name, series, category, description, price, stock, image_url, icon, color, link, status, sort_order)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
+            `INSERT INTO products (name, series, category, description, price, stock, image_url, icon, color, link, qr_code, status, sort_order)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *`,
             [
                 String(name).trim(),
                 series || '灵犀珠系列',
@@ -97,6 +97,7 @@ router.post('/api/products', adminAuth, async (req, res) => {
                 icon || '🎁',
                 color || 'linear-gradient(135deg, #E8D5B7, #C9A87C)',
                 link || '#',
+                qr_code || '',
                 status || 'on',
                 parseInt(sort_order) || 0
             ]
@@ -114,11 +115,11 @@ router.put('/api/products/:id', adminAuth, async (req, res) => {
         const err = validateBody(req.body);
         if (err) return res.status(400).json({ success: false, error: err });
 
-        const { name, series, category, description, price, stock, image_url, icon, color, link, status, sort_order } = req.body;
+        const { name, series, category, description, price, stock, image_url, icon, color, link, qr_code, status, sort_order } = req.body;
         const result = await db.query(
             `UPDATE products SET name=$1, series=$2, category=$3, description=$4, price=$5, stock=$6,
-                image_url=$7, icon=$8, color=$9, link=$10, status=$11, sort_order=$12, updated_at=NOW()
-             WHERE id=$13 RETURNING *`,
+                image_url=$7, icon=$8, color=$9, link=$10, qr_code=$11, status=$12, sort_order=$13, updated_at=NOW()
+             WHERE id=$14 RETURNING *`,
             [
                 String(name).trim(),
                 series || '灵犀珠系列',
@@ -130,6 +131,7 @@ router.put('/api/products/:id', adminAuth, async (req, res) => {
                 icon || '🎁',
                 color || 'linear-gradient(135deg, #E8D5B7, #C9A87C)',
                 link || '#',
+                qr_code || '',
                 status || 'on',
                 parseInt(sort_order) || 0,
                 req.params.id
@@ -146,17 +148,19 @@ router.put('/api/products/:id', adminAuth, async (req, res) => {
 // 删除商品（连同已上传的图片文件）
 router.delete('/api/products/:id', adminAuth, async (req, res) => {
     try {
-        const found = await db.query('SELECT image_url FROM products WHERE id = $1', [req.params.id]);
+        const found = await db.query('SELECT image_url, qr_code FROM products WHERE id = $1', [req.params.id]);
         if (found.rows.length === 0) return res.status(404).json({ success: false, error: '商品不存在' });
 
         await db.query('DELETE FROM products WHERE id = $1', [req.params.id]);
 
-        // 清理图片文件（仅限本服务上传目录内的文件）
-        const imgUrl = found.rows[0].image_url || '';
-        if (imgUrl.startsWith('/uploads/products/')) {
-            const filePath = path.join(UPLOAD_DIR, path.basename(imgUrl));
-            if (filePath.startsWith(UPLOAD_DIR) && fs.existsSync(filePath)) fs.unlinkSync(filePath);
-        }
+        // 清理图片文件（商品图 + 二维码，仅限本服务上传目录内的文件）
+        [found.rows[0].image_url, found.rows[0].qr_code].forEach(function (u) {
+            const url = u || '';
+            if (url.startsWith('/uploads/products/')) {
+                const filePath = path.join(UPLOAD_DIR, path.basename(url));
+                if (filePath.startsWith(UPLOAD_DIR) && fs.existsSync(filePath)) fs.unlinkSync(filePath);
+            }
+        });
         res.json({ success: true });
     } catch (e) {
         console.error('删除商品失败:', e.message);

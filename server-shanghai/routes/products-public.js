@@ -10,7 +10,7 @@ const db = require('../db');
 router.get('/', async (req, res) => {
     try {
         const result = await db.query(
-            `SELECT id, name, series, category, description, price, stock, image_url, icon, color, link
+            `SELECT id, name, series, category, description, price, stock, image_url, icon, color, link, qr_code
              FROM products WHERE status = 'on'
              ORDER BY sort_order ASC, id ASC`
         );
