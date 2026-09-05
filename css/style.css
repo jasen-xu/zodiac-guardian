@@ -1290,6 +1290,7 @@ body {
     font-weight: 600;
     margin-bottom: 12px;
     letter-spacing: 1px;
+    margin-top: auto;
 }
 
 .wenchuang-card-link {
@@ -1302,7 +1303,6 @@ body {
     text-decoration: none;
     letter-spacing: 2px;
     transition: all 0.3s;
-    margin-top: auto;
     align-self: flex-start;
 }
 
