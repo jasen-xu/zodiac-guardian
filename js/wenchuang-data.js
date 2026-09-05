@@ -167,6 +167,7 @@ function loadRemoteProducts(callback) {
                         icon: p.icon || '🎁',
                         color: p.color || 'linear-gradient(135deg, #E8D5B7, #C9A87C)',
                         link: p.link || '#',
+                        qr: p.qr_code ? (PRODUCT_API + p.qr_code) : '',
                         image: p.image_url ? (PRODUCT_API + p.image_url) : ''
                     };
                 });
@@ -205,7 +206,7 @@ function renderProducts(category) {
                 <h3 class="wenchuang-card-name">${product.name}</h3>
                 <p class="wenchuang-card-desc">${product.desc}</p>
                 <div class="wenchuang-card-price">${product.price}</div>
-                <a href="${product.link}" class="wenchuang-card-link" target="_blank" onclick="handleBuyClick(event)">前往购买 →</a>
+                <a href="${product.link}" class="wenchuang-card-link" target="_blank" data-qr="${product.qr || ''}" data-name="${product.name}" onclick="handleBuyClick(event)">前往购买 →</a>
             </div>
         </div>
     `).join('');
@@ -246,10 +247,24 @@ function legacyCopy(text) {
     } catch (e) { return false; }
 }
 
+// 从口令解析店铺名（格式 #微信小店://店铺名/短码）
+function parseStoreName(link) {
+    var storeName = '微信小店';
+    var idx = link.indexOf('://');
+    if (idx > -1) {
+        var rest = link.substring(idx + 3);
+        var slash = rest.indexOf('/');
+        if (slash > -1) storeName = rest.substring(0, slash);
+    }
+    return storeName;
+}
+
 // 购买按钮点击处理
 function handleBuyClick(event) {
     var a = event.currentTarget || event.target;
     var link = (a.getAttribute('href') || '').trim();
+    var qr = (a.getAttribute('data-qr') || '').trim();
+    var name = (a.getAttribute('data-name') || '').trim();
     // 空链接：敬请期待
     if (!link || link === '#') {
         event.preventDefault();
@@ -259,19 +274,58 @@ function handleBuyClick(event) {
     // 普通 http/https 网页链接：新标签直接打开（保持默认行为）
     var lower = link.toLowerCase();
     if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) return;
-    // 微信小店/小程序口令：网页无法直接跳转，复制口令 + 引导去微信粘贴
+    // 微信小店/小程序口令：网页无法直接跳转 → 弹窗给“扫码 + 口令”两种方式
     event.preventDefault();
-    var storeName = '微信小店';
-    var idx = link.indexOf('://');
-    if (idx > -1) {
-        var rest = link.substring(idx + 3);
-        var slash = rest.indexOf('/');
-        if (slash > -1) storeName = rest.substring(0, slash);
+    openBuyModal(link, qr, name);
+}
+
+// ===== 购买方式弹窗（微信扫码 + 口令复制）=====
+var _buyKouling = '';
+function openBuyModal(link, qr, name) {
+    _buyKouling = link;
+    var mask = document.getElementById('buyModalMask');
+    // 兜底：页面没有弹窗容器时，退回“复制口令 + toast”
+    if (!mask) {
+        copyToClipboard(link).then(function (ok) {
+            var msg = '口令已复制！打开微信→粘贴到聊天框(如文件传输助手)发送→点链接进「' + parseStoreName(link) + '」购买';
+            if (typeof Toast === 'undefined') { alert(ok ? msg : ('请手动复制口令：' + link)); return; }
+            if (ok) Toast.success(msg, 8000); else Toast.warning('复制失败，请手动复制口令：' + link, 8000);
+        });
+        return;
     }
-    var msg = '口令已复制！打开微信→粘贴到聊天框(如文件传输助手)发送→点链接进「' + storeName + '」购买';
-    copyToClipboard(link).then(function (ok) {
-        if (typeof Toast === 'undefined') { alert(ok ? msg : ('请手动复制口令：' + link)); return; }
-        if (ok) Toast.success(msg, 8000);
-        else Toast.warning('复制失败，请手动复制口令：' + link, 8000);
+    var storeName = parseStoreName(link);
+    document.getElementById('buyModalTitle').textContent = name ? ('购买 · ' + name) : '前往购买';
+    document.getElementById('buyModalStore').textContent = storeName;
+    var qrWrap = document.getElementById('buyModalQrWrap');
+    var divider = document.getElementById('buyModalDivider');
+    if (qr) {
+        document.getElementById('buyModalQrImg').src = qr;
+        qrWrap.style.display = '';
+        if (divider) divider.style.display = '';
+    } else {
+        qrWrap.style.display = 'none';
+        if (divider) divider.style.display = 'none';
+        copyToClipboard(link); // 无二维码时自动复制口令，少一步操作
+    }
+    document.getElementById('buyModalCode').textContent = link;
+    var copyBtn = document.getElementById('buyModalCopy');
+    if (copyBtn) copyBtn.textContent = '复制口令';
+    mask.classList.add('show');
+}
+function closeBuyModal() {
+    var mask = document.getElementById('buyModalMask');
+    if (mask) mask.classList.remove('show');
+}
+function copyKoulingFromModal() {
+    if (!_buyKouling) return;
+    copyToClipboard(_buyKouling).then(function (ok) {
+        var btn = document.getElementById('buyModalCopy');
+        if (btn) {
+            btn.textContent = ok ? '✓ 已复制' : '复制失败';
+            setTimeout(function () { btn.textContent = '复制口令'; }, 2500);
+        }
+        if (ok && typeof Toast !== 'undefined') Toast.success('口令已复制，去微信粘贴到聊天框发送', 3000);
     });
 }
+// ESC 关闭弹窗
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeBuyModal(); });

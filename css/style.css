@@ -1310,6 +1310,124 @@ body {
     background: #C49B2F;
 }
 
+/* ===== 购买方式弹窗（微信扫码 + 口令）===== */
+.buy-modal-mask {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.buy-modal-mask.show { display: flex; }
+.buy-modal {
+    position: relative;
+    background: #FDFBF7;
+    border: 1px solid #E0D5C0;
+    border-radius: 12px;
+    max-width: 380px;
+    width: 100%;
+    padding: 28px 24px 24px;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    animation: buyModalIn 0.25s ease;
+}
+@keyframes buyModalIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to { opacity: 1; transform: none; }
+}
+.buy-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    color: #999;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 50%;
+    line-height: 1;
+}
+.buy-modal-close:hover { background: #EFE7D8; color: #333; }
+.buy-modal-title {
+    font-size: 1.1rem;
+    color: #2C2416;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+.buy-modal-store {
+    font-size: 0.82rem;
+    color: #A08C5B;
+    margin-bottom: 16px;
+}
+.buy-modal-qr-wrap { margin-bottom: 8px; }
+.buy-modal-qr {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border: 1px solid #E0D5C0;
+    border-radius: 8px;
+    background: #fff;
+    padding: 6px;
+}
+.buy-modal-divider {
+    display: flex;
+    align-items: center;
+    color: #B0A183;
+    font-size: 0.78rem;
+    margin: 14px 0;
+}
+.buy-modal-divider::before,
+.buy-modal-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #E0D5C0;
+}
+.buy-modal-divider span { padding: 0 12px; }
+.buy-modal-kouling {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+    margin-bottom: 8px;
+}
+.buy-modal-code {
+    flex: 1;
+    min-width: 0;
+    background: #F3EDE1;
+    border: 1px dashed #CBBE9E;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    color: #6B5B3E;
+    word-break: break-all;
+    text-align: left;
+    font-family: inherit;
+}
+.buy-modal-copy {
+    flex-shrink: 0;
+    background: #D4AF37;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+.buy-modal-copy:hover { background: #C49B2F; }
+.buy-modal-tip {
+    font-size: 0.78rem;
+    color: #8C7B5A;
+    line-height: 1.6;
+    margin-top: 6px;
+}
+
 /* 品牌理念 */
 .wenchuang-philosophy {
     max-width: 600px;
