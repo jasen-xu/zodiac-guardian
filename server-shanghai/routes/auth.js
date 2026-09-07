@@ -21,7 +21,9 @@ router.post('/send-code', async (req, res) => {
             return res.json({ success: false, error: '请输入正确的手机号' });
         }
 
-        const result = await sms.sendVerificationCode(phone);
+        // 提取真实客户端 IP（app.js 已设 trust proxy，req.ip 为经 Nginx 转发后的真实 IP）
+        const ip = req.ip || (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.connection.remoteAddress;
+        const result = await sms.sendVerificationCode(phone, ip);
         if (!result.success) {
             return res.json({ success: false, error: result.error });
         }
