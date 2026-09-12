@@ -14,13 +14,31 @@ const { apiKeyAuth } = require('../middleware/auth');
 // 后续功能完善后删除该环境变量或改为 true 即可恢复限制
 const QUOTA_ENABLED = process.env.QUOTA_ENABLED !== 'false';
 
-// 各层级额度配置
+// 各层级额度配置（divine=六爻解卦, bazi=八字分析；period=计数周期, limit=周期内上限）
+// 会员/VIP 为“每个服务各自”的每月上限；member_until 过期后自动按 l1 计（见 resolveUserLevel）
 const QUOTA_CONFIG = {
-    l0: { divine: { period: 'day', limit: 1 }, bazi: { period: 'day', limit: 0 } },
-    l1: { divine: { period: 'month', limit: 3 }, bazi: { period: 'month', limit: 1 } },
-    l2: { divine: { period: 'month', limit: -1 }, bazi: { period: 'month', limit: -1 } },  // -1 = 无限
-    l3: { divine: { period: 'month', limit: -1 }, bazi: { period: 'month', limit: -1 } },
+    l0: { divine: { period: 'day', limit: 1 }, bazi: { period: 'day', limit: 0 } },        // 游客：六爻每日1次，八字不可用
+    l1: { divine: { period: 'month', limit: 3 }, bazi: { period: 'month', limit: 1 } },     // 注册：六爻每月3次，八字每月1次
+    l2: { divine: { period: 'month', limit: 10 }, bazi: { period: 'month', limit: 10 } },   // 会员：各每月10次
+    l3: { divine: { period: 'month', limit: 50 }, bazi: { period: 'month', limit: 50 } },   // VIP：各每月50次
 };
+
+/**
+ * 解析用户当前“有效等级”（修复原 level 硬编码缺陷）
+ * - 无 userId（游客）→ l0
+ * - 查 users 表真实 level（不依赖 JWT，避免等级变更后旧 token 不同步）
+ * - 会员 l2 / VIP l3 若 member_until 已过期 → 降级为 l1（member_until 为空视为长期有效）
+ */
+async function resolveUserLevel(userId) {
+    if (!userId) return 'l0';
+    const result = await db.query('SELECT level, member_until FROM users WHERE id = $1', [userId]);
+    if (!result.rows.length) return 'l1';  // 用户不存在，按注册兜底
+    const { level, member_until } = result.rows[0];
+    if ((level === 'l2' || level === 'l3') && member_until && new Date(member_until) < new Date()) {
+        return 'l1';  // 会员/VIP 已过期，降级为注册
+    }
+    return level || 'l1';
+}
 
 /**
  * 计算已使用次数
@@ -60,7 +78,8 @@ async function getUsageCount(userId, phone, serviceType, level) {
  */
 router.get('/usage', requireAuth, async (req, res) => {
     try {
-        const { id, phone, level } = req.user;
+        const { id, phone } = req.user;
+        const level = await resolveUserLevel(id);  // 数据库真实等级（含过期降级），与 check-quota 一致
         const divineUsage = await getUsageCount(id, phone, 'divine', level);
         const baziUsage = await getUsageCount(id, phone, 'bazi', level);
 
@@ -101,7 +120,7 @@ router.post('/check-quota', apiKeyAuth, async (req, res) => {
         }
 
         const { userId, phone, serviceType } = req.body;
-        const level = userId ? 'l1' : 'l0';  // 有 userId 视为注册用户
+        const level = await resolveUserLevel(userId);  // 查真实等级：游客l0/注册l1/会员l2/VIP l3，会员过期自动降级
 
         const usage = await getUsageCount(userId, phone, serviceType, level);
         const remaining = usage.limit === -1 ? -1 : Math.max(0, usage.limit - usage.used);
@@ -183,3 +202,6 @@ router.put('/profile', requireAuth, async (req, res) => {
 });
 
 module.exports = router;
+// 暴露内部函数与配置，供单元测试使用（挂在 router 函数上，不影响路由正常工作）
+module.exports.resolveUserLevel = resolveUserLevel;
+module.exports.QUOTA_CONFIG = QUOTA_CONFIG;
