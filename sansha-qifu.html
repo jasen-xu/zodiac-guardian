@@ -52,7 +52,21 @@
             pointer-events: none;
         }
 
-        /* 底部左：楞严咒标识；右：寺院介绍入口 */
+        /* 底部落款印章：寺院供图，自适应不超屏、保持原比例 */
+        .pray-seal {
+            position: absolute;
+            left: 18px;
+            bottom: 78px;
+            width: 96px;
+            max-width: 26vw;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.5);
+            opacity: 0.92;
+            z-index: 4;
+        }
+
+        /* 底部：寺院介绍入口（靠右） */
         .pray-foot {
             position: absolute;
             bottom: 0;
@@ -61,16 +75,9 @@
             padding: 34px 18px 20px;
             display: flex;
             align-items: flex-end;
-            justify-content: space-between;
+            justify-content: flex-end;
             background: linear-gradient(0deg, rgba(14,12,8,0.82), rgba(14,12,8,0));
             z-index: 5;
-        }
-
-        .pray-foot .mantra-label {
-            font-size: 14px;
-            letter-spacing: 3px;
-            color: #D4AF37;
-            text-shadow: 0 1px 6px rgba(0,0,0,0.8);
         }
 
         .pray-foot .intro-link {
@@ -128,15 +135,17 @@
         </audio>
     
         <!-- 自动播放被拦截时的兜底按钮 -->
-        <button class="pray-play-btn" id="prayPlayBtn" aria-label="播放楞严咒">▶</button>
-        <span class="pray-play-hint" id="prayPlayHint">点击播放楞严咒</span>
+        <button class="pray-play-btn" id="prayPlayBtn" aria-label="播放梵音">▶</button>
+        <span class="pray-play-hint" id="prayPlayHint">点击播放梵音</span>
     
         <!-- 右上竖排题字 -->
         <p class="pray-inscription">一心祈福 梵音清凉</p>
     
-        <!-- 底部：左楞严咒 / 右寺院介绍入口 -->
+        <!-- 底部落款印章（寺院供图） -->
+        <img src="images/qingliang-seal.png" alt="清凉寺护佑印章" class="pray-seal">
+
+        <!-- 底部：寺院介绍入口 -->
         <div class="pray-foot">
-            <span class="mantra-label">《楞严咒》</span>
             <a href="temple-detail.html?id=qingliang-temple" class="intro-link">三沙清凉寺介绍</a>
         </div>
     </div>
