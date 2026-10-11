@@ -141,14 +141,21 @@ function getHourPillar(dayGan, hourZhi) {
 }
 
 /**
- * 完整八字排盘
+ * 完整八字排盘（由生日推算四柱后统计五行）
  */
 function calculateBazi(year, month, day, hourZhi) {
     var yearPillar  = getYearPillar(year, month, day);
     var monthPillar = getMonthPillar(yearPillar.gan, month, day);
     var dayPillar   = getDayPillar(year, month, day);
     var hourPillar  = getHourPillar(dayPillar.gan, hourZhi);
+    return buildBaziFromPillars(yearPillar, monthPillar, dayPillar, hourPillar);
+}
 
+/**
+ * 由已知四柱构建完整八字结果（五行统计）
+ * 供“生日排盘”与“直接输入八字”两种入口共用
+ */
+function buildBaziFromPillars(yearPillar, monthPillar, dayPillar, hourPillar) {
     // 统计五行（天干 + 地支主气）
     var pillars = [yearPillar, monthPillar, dayPillar, hourPillar];
     var wxCount = { '金': 0, '木': 0, '水': 0, '火': 0, '土': 0 };
@@ -183,6 +190,42 @@ function calculateBazi(year, month, day, hourZhi) {
             '火': wxCount['火'] + hiddenWx['火'],
             '土': wxCount['土'] + hiddenWx['土']
         }
+    };
+}
+
+/**
+ * 解析用户直接输入的八字（四柱干支）
+ * 宽松格式：连续8字 / 空格分隔 / 带“年月日时”标注 均可
+ * 校验：天干、地支合法 + 每柱阴阳相配（等价六十甲子）
+ * 返回 { yearPillar, monthPillar, dayPillar, hourPillar } 或 { error }
+ */
+function parseBaziInput(raw) {
+    var pillarNames = ['年', '月', '日', '时'];
+    if (!raw || !raw.trim()) {
+        return { error: '请输入四柱八字' };
+    }
+    // 清洗：去掉空白、年月日时、常见分隔标点
+    var s = raw.replace(/[\s\u3000]/g, '').replace(/[年月日时，,、;；\u2014\/（）()\-]/g, '');
+    if (s.length !== 8) {
+        return { error: '八字应为 8 个字（四柱干支），当前 ' + s.length + ' 字' };
+    }
+    var chars = s.split('');
+    var pillars = [];
+    for (var i = 0; i < 4; i++) {
+        var gan = chars[i * 2];
+        var zhi = chars[i * 2 + 1];
+        var gi = TIAN_GAN.indexOf(gan);
+        var zi = DI_ZHI.indexOf(zhi);
+        if (gi < 0) { return { error: '第' + (i + 1) + '柱（' + pillarNames[i] + '柱）天干「' + gan + '」不是有效天干' }; }
+        if (zi < 0) { return { error: '第' + (i + 1) + '柱（' + pillarNames[i] + '柱）地支「' + zhi + '」不是有效地支' }; }
+        if (gi % 2 !== zi % 2) { return { error: '第' + (i + 1) + '柱「' + gan + zhi + '」干支阴阳不匹配，不是有效的六十甲子组合' }; }
+        pillars.push({ gan: gan, zhi: zhi });
+    }
+    return {
+        yearPillar: pillars[0],
+        monthPillar: pillars[1],
+        dayPillar: pillars[2],
+        hourPillar: pillars[3]
     };
 }
 
@@ -242,14 +285,52 @@ function updateDays() {
 }
 
 /**
+ * 当前输入方式：'birth'（生日）或 'bazi'（直接输入八字）
+ */
+var currentBaziMode = 'birth';
+
+/**
+ * 切换输入方式
+ */
+function switchBaziMode(mode) {
+    currentBaziMode = mode;
+    var birthMode = document.getElementById('birthMode');
+    var baziInputMode = document.getElementById('baziInputMode');
+    if (birthMode) birthMode.style.display = (mode === 'birth') ? 'block' : 'none';
+    if (baziInputMode) baziInputMode.style.display = (mode === 'bazi') ? 'block' : 'none';
+    var tabs = document.querySelectorAll('.bazi-mode-tab');
+    for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.toggle('active', tabs[i].getAttribute('data-mode') === mode);
+    }
+}
+
+/**
  * 开始精析
  */
 function startBaziAnalysis() {
+    var gender = document.querySelector('input[name="baziGender"]:checked');
+    if (!gender) {
+        showToast('请选择性别'); return;
+    }
+
+    if (currentBaziMode === 'bazi') {
+        // 方式二：直接输入八字
+        var raw = document.getElementById('baziManualInput').value;
+        var parsed = parseBaziInput(raw);
+        if (parsed.error) {
+            showToast(parsed.error); return;
+        }
+        var bazi = buildBaziFromPillars(parsed.yearPillar, parsed.monthPillar, parsed.dayPillar, parsed.hourPillar);
+        displayBaziResult(bazi, gender.value);
+        requestAIAnalysis(bazi, gender.value, null, null, null);
+        return;
+    }
+
+    // 方式一：按生日
     var year = parseInt(document.getElementById('baziYear').value);
     var month = parseInt(document.getElementById('baziMonth').value);
     var day = parseInt(document.getElementById('baziDay').value);
     var hourZhi = parseInt(document.getElementById('baziHour').value);
-    var gender = document.querySelector('input[name="baziGender"]:checked');
 
     if (!year || !month || !day) {
         showToast('请选择完整的出生日期'); return;
@@ -257,13 +338,10 @@ function startBaziAnalysis() {
     if (isNaN(hourZhi)) {
         showToast('请选择出生时辰'); return;
     }
-    if (!gender) {
-        showToast('请选择性别'); return;
-    }
 
-    var bazi = calculateBazi(year, month, day, hourZhi);
-    displayBaziResult(bazi, gender.value);
-    requestAIAnalysis(bazi, gender.value, year, month, day);
+    var bazi2 = calculateBazi(year, month, day, hourZhi);
+    displayBaziResult(bazi2, gender.value);
+    requestAIAnalysis(bazi2, gender.value, year, month, day);
 }
 
 /**
@@ -386,7 +464,7 @@ async function requestAIAnalysis(bazi, gender, year, month, day) {
             fiveElements: bazi.fiveElements,
             hiddenElements: bazi.hiddenElements,
             gender: gender,
-            birthDate: year + '年' + month + '月' + day + '日'
+            birthDate: (year != null) ? (year + '年' + month + '月' + day + '日') : '（手动输入八字，未提供公历生日）'
         };
 
         var headers = { 'Content-Type': 'application/json' };

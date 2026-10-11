@@ -6013,6 +6013,65 @@ button:active,
     margin-bottom: 28px;
 }
 
+/* ---- 输入方式切换 tab ---- */
+.bazi-mode-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 4px;
+    background: rgba(107, 68, 35, 0.07);
+    border-radius: 10px;
+}
+
+.bazi-mode-tab {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 0.92rem;
+    letter-spacing: 2px;
+    color: #6B4423;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.bazi-mode-tab.active {
+    color: #F5E6C8;
+    background: linear-gradient(135deg, #6B4F36, #8B6914);
+    box-shadow: 0 2px 8px rgba(74, 55, 40, 0.25);
+}
+
+/* ---- 直接输入八字 ---- */
+.bazi-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1.05rem;
+    letter-spacing: 3px;
+    color: #3E2723;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #DCD2C0;
+    border-radius: 8px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.bazi-input:focus {
+    border-color: #B8976A;
+    box-shadow: 0 0 0 3px rgba(184, 151, 106, 0.15);
+    outline: none;
+}
+
+.bazi-input-hint {
+    margin-top: 8px;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #8B7355;
+    letter-spacing: 0.5px;
+}
+
 .bazi-form-row {
     margin-bottom: 20px;
 }

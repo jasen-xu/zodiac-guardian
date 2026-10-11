@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>四柱五行精析 - 易道</title>
-    <link rel="stylesheet" href="css/style.css?v=20260728">
+    <link rel="stylesheet" href="css/style.css?v=20261011">
 </head>
 <body class="wuxing-bazi-page">
     <nav class="top-nav">
@@ -31,6 +31,13 @@
             <div class="bazi-form-card">
                 <h3 class="bazi-form-title">输入生辰信息</h3>
 
+                <div class="bazi-mode-tabs">
+                    <button type="button" class="bazi-mode-tab active" data-mode="birth" onclick="switchBaziMode('birth')">按生日排盘</button>
+                    <button type="button" class="bazi-mode-tab" data-mode="bazi" onclick="switchBaziMode('bazi')">直接输入八字</button>
+                </div>
+
+                <!-- 方式一：按生日 -->
+                <div id="birthMode">
                 <div class="bazi-form-row">
                     <label class="bazi-label">出生年份</label>
                     <select id="baziYear" class="bazi-select"></select>
@@ -64,6 +71,16 @@
                         <option value="10">戌时 (19:00-21:00)</option>
                         <option value="11">亥时 (21:00-23:00)</option>
                     </select>
+                </div>
+                </div><!-- /#birthMode -->
+
+                <!-- 方式二：直接输入八字 -->
+                <div id="baziInputMode" style="display:none;">
+                    <div class="bazi-form-row">
+                        <label class="bazi-label">四柱八字</label>
+                        <input type="text" id="baziManualInput" class="bazi-input" placeholder="如：甲子 乙丑 丙寅 丁卯" autocomplete="off">
+                        <p class="bazi-input-hint">按「年柱 月柱 日柱 时柱」顺序输入八个天干地支；空格与「年月日时」字样可省略，例如“甲子乙丑丙寅丁卯”。</p>
+                    </div>
                 </div>
 
                 <div class="bazi-form-row">
@@ -147,7 +164,7 @@
     </footer>
 
     <script src="js/toast.js"></script>
-    <script src="js/wuxing-bazi.js?v=20260728"></script>
+    <script src="js/wuxing-bazi.js?v=20261011"></script>
     <script src="js/user.js"></script>
 </body>
 </html>
